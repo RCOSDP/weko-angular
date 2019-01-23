@@ -1,0 +1,10 @@
+.button-create {
+  margin-left: 40px;
+}
+.button-delete {
+  margin-left: 10px;
+}
+#display_no {
+  width: 10%;
+  text-align: right;
+}

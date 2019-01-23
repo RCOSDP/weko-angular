@@ -1,0 +1,37 @@
+<div class="Mymodal" id="CofirmModalComponent" [style.display]="modalAberto.status">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" (click)="delCancle()">
+        &times;
+      </button>
+      <h4 class="modal-title" id="myModalLabel">
+        WEKO
+      </h4>
+    </div>
+    <div class="modal-body">
+      <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+      </p>
+      <!-- DELETEインデックス以下のインデックスおよびアイテムに対する処理を選択してください -->
+      <!-- Please choose processing about index and items! -->
+      {{langJsonM.Choose_Processing[1]}}
+    </div>
+    <div class="modal-footer modFooter">
+      <button type="button" class="btn btn-primary" (click)="delAll();"> 
+        <!-- すべて削除 -->
+        <!-- Delete all -->
+        {{langJsonM.Delete_all[1]}}
+      </button>
+      <button *ngIf="!parentIsRoot" type="button" class="btn btn-primary" (click)="delAndMove();"> 
+        <!-- 親インデックスへ移動 -->
+        <!-- Move items to parent Index -->
+        {{langJsonM.Move_items_to_parent_Index[1]}}
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal" (click)="delCancle();">
+        <!-- キャンセル -->
+        <!-- Cancle -->
+        {{langJsonM.Cancle[1]}}
+      </button>
+    </div>
+  </div>
+</div>

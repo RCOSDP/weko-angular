@@ -1,0 +1,121 @@
+<p>
+    <div class="container">
+        <div class="row" *ngIf="showFlg==0">
+            <div class="col-sm-12 col-md-12 col-md-12">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-11 col-md-11 textRight">
+                                <button type="button" class="btn btn-info" (click)="showAddAuthor()">Add Author</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-4">
+                            <input type="text" class="form-control" placeholder="" [(ngModel)]="searchKey">
+                        </div>
+                        <div class="col-sm-1 col-md-1">
+                            <button type="button" class="btn btn-info" (click)="searchButton()">&nbsp;&nbsp;
+                                {{langJson.Author_Search[1]}}
+                                &nbsp;&nbsp;</button>
+                        </div>
+                        <div class="col-sm-2 col-md-2"></div>
+                        <div class="col-sm-4 col-md-4 textRight">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label for="exampleInputName2">Display Number</label>
+                                    <select class="form-control" id="authorIdOption" [(ngModel)]="cntOfpage" (change)="setNumber(cntOfpage)" name="dis_select">
+                                        <option>25</option>
+                                        <option>50</option>
+                                        <option>100</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-sm-11 col-md-11">
+                        <table class="table table-striped">
+                            <caption></caption>
+                            <thead>
+                                <tr class="success">
+                                    <th *ngIf="total ==0" class="thWidth">{{langJson.Author_Name[1]}}</th>
+                                    <!-- <th class="thWidth">Mail Address</th> -->
+                                    <th *ngIf="sortNameFlg == 'noSort' && total !=0" class="thWidth">
+                                        <!-- <button class="btn btn-link" (click)="clickSort('asc','name')">{{langJson.Author_Name[1]}}</button> -->
+                                        {{langJson.Author_Name[1]}}
+                                    </th>
+                                    <th *ngIf="sortNameFlg != 'noSort'&& total !=0" class="thWidth">
+                                        <button *ngIf="sortNameFlg == 'asc'" class="btn btn-link" (click)="clickSort('desc','name')">{{langJson.Author_Name[1]}}
+                                            <span class="glyphicon glyphicon-triangle-top"></span>
+                                        </button>
+                                        <button *ngIf="sortNameFlg == 'desc'" class="btn btn-link" (click)="clickSort('asc','name')">{{langJson.Author_Name[1]}}
+                                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                                        </button>
+                                    </th>
+                                    <th *ngIf="total ==0" class="thWidth">{{langJson.Author_Mail_Address[1]}}</th>
+                                    <th *ngIf="sortEmailFlg == 'noSort'&& total !=0" class="thWidth">
+                                        <!-- <button class="btn btn-link" (click)="clickSort('asc','email')">{{langJson.Author_Mail_Address[1]}}</button> -->
+                                        {{langJson.Author_Mail_Address[1]}}
+                                    </th>
+                                    <th *ngIf="sortEmailFlg != 'noSort'&& total !=0" class="thWidth">
+                                        <button *ngIf="sortEmailFlg == 'asc'" class="btn btn-link" (click)="clickSort('desc','email')">{{langJson.Author_Mail_Address[1]}}
+                                            <span class="glyphicon glyphicon-triangle-top"></span>
+                                        </button>
+                                        <button *ngIf="sortEmailFlg == 'desc'" class="btn btn-link" (click)="clickSort('asc','email')">{{langJson.Author_Mail_Address[1]}}
+                                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                                        </button>
+                                    </th>
+                                    <th class="alignCenter"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let data of displayData;let i=index">
+                                    <tr class="">
+                                        <td [innerHTML]="data.authorNameInfo.authorName">
+                                        </td>
+                                        <td [innerHTML]="data.emailInfo.email">
+                                        </td>
+                                        <td class="textRight">
+                                            <!-- <button type="button" class="btn btn-info" (click)="update(i)">編集</button> -->
+                                            <button type="button" class="btn btn-info" (click)="input(i)">
+                                                <!-- 入力 -->
+                                                <!-- Import -->
+                                                {{langJson.Author_Import[1]}}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    <div *ngIf="searchZero" class="alert alert-danger col-sm-11 col-md-11">{{langJson.Author_Search_No_Result[1]}}</div>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 alignCenter">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#"><span aria-hidden="true">&lt;</span></a>
+                                    </li>
+                                    <li id="pageLink_1">
+                                        <a href="#" (click)="clickPage(1)">1</a>
+                                    </li>
+                                    <ng-container *ngFor="let index of pageList;let i=index">
+                                        <li id="{{'pageLink_'+index}}">
+                                            <a href="#" (click)="clickPage(index)">{{index}}</a>
+                                        </li>
+                                    </ng-container>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true">&gt;</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="showFlg==1">
+            <app-add-author (showFlg)="showFlga()"></app-add-author>
+        </div>
+    </div>
+    

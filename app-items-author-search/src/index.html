@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AppAngularJS</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+  <script>
+    function a(){
+      var a = $("#bb").val();
+      alert(a);
+    }
+  </script>
+</head>
+<body>
+  <!-- add by ryuu start -->
+  <input type="text" id="bb" value="" hidden>
+  <button class="btn btn-link" id="cc" onclick="a()" hidden>25</button>
+  <!-- add by ryuu end -->
+  <app-author-search></app-author-search>
+</body>
+</html>

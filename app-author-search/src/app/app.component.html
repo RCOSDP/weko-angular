@@ -1,0 +1,214 @@
+<p>
+  <!-- <div class="container"> -->
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-md-12">
+      <div class="row">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 textRight">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Merge</button>
+              &nbsp;&nbsp;
+              <button type="button" class="btn btn-info" (click)="authorAdd()">
+              {{langJson.Author_Add_Author[1]}}
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 col-md-4">
+            <input type="text" class="form-control" placeholder="" [(ngModel)]="searchKey">
+          </div>
+          <div class="col-sm-1 col-md-1">
+            <button type="button" class="btn btn-info" (click)="searchButton()">&nbsp;&nbsp;
+              <!-- 検索 -->
+              <!-- Search -->
+              {{langJson.Author_Search[1]}} &nbsp;&nbsp;
+            </button>
+          </div>
+          <div class="col-sm-3 col-md-3"></div>
+          <div class="col-sm-4 col-md-4 textRight">
+              <form class="form-inline">
+                  <div class="form-group">
+                    <label for="exampleInputName2">Display Number</label>
+                    <select class="form-control" id="authorIdOption" [(ngModel)]="cntOfpage" (change)="setNumber(cntOfpage)">
+                        <option>25</option>
+                        <option>50</option>
+                        <option>100</option>
+                      </select>
+                  </div>
+              </form>
+          </div>
+        </div>
+        <div>
+          <table class="table table-striped">
+            <caption></caption>
+            <thead>
+              <tr class="success">
+                <th class="thWidth10">
+                  <!-- 名寄せ元 -->
+                  Origin
+                </th>
+                <th class="thWidth10">
+                  <!-- 名寄せ先 -->
+                  Target
+                </th>
+                <th class="thWidth30">
+                  {{langJson.Author_Name[1]}}
+                </th>
+                <th class="thWidth30">
+                  <!-- メールアドレス -->
+                  Mail Address
+                </th>
+                <th class="thWidth10">
+                  <!-- アイテム数 -->
+                  Item Conut
+                </th>
+                <th class="thWidth10">
+                </th>
+                <!-- 20180827 author search edit end-->
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let data of displayData;let i=index">
+                <tr class="">
+                  <td class="alignCenter">
+                    <input type="checkbox" [(ngModel)]="data.flgFrom">
+                  </td>
+                  <td class="alignCenter">
+                    <input type="radio" name="authorRadio" value="data.id"  [checked]="gatherId == data.id" (click)="gatherId=data.id">
+                  </td>
+                  <td [innerHTML]="data.authorNameInfo.authorName">
+                  </td>
+                  <td [innerHTML]="data.emailInfo.email">
+                  </td>
+                  <td>
+                      {{data.itemCnt}}
+                  </td>
+                  <td class="textRight">
+                    <button type="button" class="btn btn-info" (click)="update(i)">
+                      {{langJson.Author_Edit[1]}}
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="searchZero" class="alert alert-danger">
+          <!-- 検索結果は0件です。 -->
+          <!-- Sorry，No results. -->
+          {{langJson.Author_Search_No_Result[1]}}
+        </div>
+        <div class="">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 alignCenter">
+              <ul class="pagination">
+                <li>
+                  <a href="#">
+                      <span aria-hidden="true">&lt;</span>
+                  </a>
+                </li>
+                <li id="pageLink_1">
+                  <a href="#" (click)="clickPage(1)">1</a>
+                </li>
+                <ng-container *ngFor="let index of pageList;let i=index">
+                  <li id="{{'pageLink_'+index}}">
+                    <a href="#" (click)="clickPage(index)">{{index}}</a>
+                  </li>
+                </ng-container>
+                <li>
+                  <a href="#">
+                      <span aria-hidden="true">&gt;</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <b>Origin</b>
+                <div>
+                  <table class="table table-striped">
+                    <caption></caption>
+                    <thead>
+                      <tr class="success">
+                        <!-- 20180827 author search edit start-->
+                        <th class="thWidth30">
+                          {{langJson.Author_Name[1]}}
+                        </th>
+                        <th class="thWidth30">
+                          <!-- メールアドレス -->
+                          Mail Address
+                        </th>
+                        <th class="thWidth20">
+                          Item Count
+                        </th>
+                        <!-- 20180827 author search edit end-->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let data of displayData;let i=index">
+                        <tr class="" *ngIf="data.flgFrom">
+                          <td [innerHTML]="data.authorNameInfo.authorName">
+                          </td>
+                          <td [innerHTML]="data.emailInfo.email">
+                          </td>
+                          <td>
+                            {{data.itemCnt}}
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+                  <b>Target</b>
+                    <div>
+                      <table class="table table-striped">
+                        <caption></caption>
+                        <thead>
+                          <tr class="success">
+                            <!-- 20180827 author search edit start-->
+                            <th class="thWidth30">
+                              {{langJson.Author_Name[1]}}
+                            </th>
+                            <th class="thWidth30">
+                              <!-- メールアドレス -->
+                              Mail Address
+                            </th>
+                            <th class="thWidth20">
+                              <!-- アイテム数 -->
+                              Item Count
+                            </th>
+                            <!-- 20180827 author search edit end-->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let data of displayData;let i=index">
+                            <tr class="" *ngIf="data.id == gatherId">
+                              <td [innerHTML]="data.authorNameInfo.authorName">
+                              </td>
+                              <td [innerHTML]="data.emailInfo.email">
+                              </td>
+                              <td>
+                                {{data.itemCnt}}
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+            </div>
+            <div class="modal-footer alignCenter">
+              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+              <button type="button" class="btn btn-info" (click)="gather()">名寄せ実行</button> -->
+              <button type="button" id="back_modal" class="btn btn-secondary" data-dismiss="modal">Back</button>
+              <button type="button" class="btn btn-info" (click)="gather()">Execute</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->

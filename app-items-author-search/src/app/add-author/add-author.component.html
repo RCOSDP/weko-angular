@@ -1,0 +1,237 @@
+<p>
+  <!-- <div class="container"> -->
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h5>
+                <p class="">
+                  <!-- 著者新規追加 -->
+                  <!-- Add New Author -->
+                  {{langJson.Author_Add_New_Author[1]}}
+                </p>
+              </h5>
+            </div>
+            <div class="panel-body">
+              <!-- 氏名　start -->
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div class="col-sm-1 col-md-1 textRight">
+                    <!-- 氏名 -->
+                    <!-- Name -->
+                    {{langJson.Author_Name[1]}}
+                  </div>
+                  <div class="col-sm-11 col-md-11">
+                    <ng-container *ngFor="let authorNameData of authorJsonObj.authorNameInfo;let i=index">
+                      <!-- for start -->
+                      <div class="">
+                        <div class="col-sm-12 col-md-12 divBottom">
+                          <div *ngIf="authorNameData.nameFormat != 'fullNm'" class="col-sm-3 col-md-3">
+                            <input type="text" class="form-control" placeholder="{{placeholderArry[i].familyName}}" [(ngModel)]="authorNameData.familyName" name="author_name_{{i}}">
+                          </div>
+                          <div *ngIf="authorNameData.nameFormat != 'fullNm'" class="col-sm-3 col-md-3">
+                            <input type="text" class="form-control" placeholder="{{placeholderArry[i].name}}" [(ngModel)]="authorNameData.firstName" name="author_name_{{i}}">
+                          </div>
+                          <div *ngIf="authorNameData.nameFormat == 'fullNm'" class="col-sm-6 col-md-6">
+                            <input type="text" class="form-control" placeholder="{{placeholderArry[i].fullName}}" [(ngModel)]="authorNameData.fullName" name="author_name_{{i}}">
+                          </div>
+                          <div class="col-sm-3 col-md-3">
+                            <div class="">
+                              <div class="col-sm-12 col-md-12">
+                                <div class="col-sm-6 col-md-6">
+                                  <select class="form-control" id="langOption" [(ngModel)]="authorNameData.language" (change)="inputChange(i,authorNameData.language)" >
+                                    <option *ngFor="let langOption of langOptions" [value]="langOption.id">{{langOption.value}}</option>
+                                  </select>
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                  <select class="form-control" id="nameOption" [(ngModel)]="authorNameData.nameFormat" (change)="nameFormatChange(i)">
+                                    <option *ngFor="let nameOption of nameOptions" [value]="nameOption.id">{{nameOption.value}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-2 col-md-2">
+                            <div class="">
+                              <div class="col-sm-12 col-md-12 alignCenter">
+                                <input type="radio" [ngModel]="authorNameData.nameShowFlg" [checked]="authorNameData.nameShowFlg == 'true'" (click)="authorNameData.nameShowFlg = 'true'"
+                                  name="{{'authorNameRadio_'+i}}" value="true">&nbsp;
+                                  <!-- 表示 -->
+                                  <!-- Display -->
+                                  {{langJson.Author_Display[1]}}
+                                <input type="radio" [ngModel]="authorNameData.nameShowFlg" [checked]="authorNameData.nameShowFlg == 'false'" (click)="authorNameData.nameShowFlg = 'false'"
+                                  name="{{'authorNameRadio_'+i}}" value="false">&nbsp;
+                                  <!-- 非表示 -->
+                                  <!-- Hide -->
+                                  {{langJson.Author_Hide[1]}}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-1 col-md-1">
+                            <button type="button" class="close delButton" (click)="delAuthorNameData(i)">
+                              <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <p></p>
+                    </ng-container>
+                    <!-- for end -->
+                    <!-- 第二行目　 start-->
+                    <div class="row ">
+                      <div class="col-sm-11 col-md-11 textRight">
+                        <button type="button" class="btn btn-link" (click)="addAuthorNameData()">+&nbsp;
+                          <!-- 著者項目を追加 -->
+                          <!-- Add author item -->
+                          {{langJson.Author_Add_Author_Item[1]}}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 氏名　end -->
+              <br>
+              <br>
+              <!-- 著者Id　start -->
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div class="col-sm-1 col-md-1 textRight">
+                    <!-- 著者ID -->
+                    <!-- Author ID -->
+                    {{langJson.Author_ID[1]}}
+                  </div>
+                  <div class="col-sm-11 col-md-11">
+                    <!-- for start -->
+                    <ng-container *ngFor="let authorIdData of authorJsonObj.authorIdInfo;let i=index">
+                      <div class="">
+                        <div class="col-sm-12 col-md-12 divBottom">
+                          <div class="col-sm-2 col-md-2">
+                            <select class="form-control" id="authorIdOption" [(ngModel)]="authorIdData.idType">
+                              <option *ngFor="let authorIdOption of authorIdOptions" [value]="authorIdOption.id">{{authorIdOption.value}}</option>
+                            </select>
+                          </div>
+                          <div class="col-sm-6 col-md-6">
+                            <input type="text" class="form-control" placeholder="" [(ngModel)]="authorIdData.authorId" name="author_id_{{i}}">
+                          </div>
+                          <div class="col-sm-1 col-md-1">
+                            <div class="">
+                              <div class="col-sm-12 col-md-12 textRight">
+                                <button type="button" class="btn btn-info">
+                                  <!-- 確認 -->
+                                  <!-- Confirm -->
+                                  {{langJson.Author_Confirm[1]}}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-2 col-md-2">
+                            <div class="">
+                              <div class="col-sm-12 col-md-12 alignCenter">
+                                <input type="radio" [ngModel]="authorIdData.authorIdShowFlg" [checked]="authorIdData.authorIdShowFlg =='true'" (click)="authorIdData.authorIdShowFlg = 'true'"
+                                  name="{{'authorIdRadio_'+i}}" value="true">&nbsp;
+                                  <!-- 表示 -->
+                                  <!-- Display -->
+                                  {{langJson.Author_Display[1]}}
+                                <input type="radio" [ngModel]="authorIdData.authorIdShowFlg" [checked]="authorIdData.authorIdShowFlg == 'false'" (click)="authorIdData.authorIdShowFlg = 'false'"
+                                  name="{{'authorIdRadio_'+i}}" value="false">&nbsp;
+                                  <!-- 非表示 -->
+                                  <!-- Hide -->
+                                  {{langJson.Author_Hide[1]}}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-1 col-md-1">
+                            <button type="button" class="close delButton" (click)="delAuthorIdData(i)">
+                              <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <p></p>
+                    </ng-container>
+                    <!-- 第二行目　 end-->
+                    <div class="row ">
+                      <div class="col-sm-11 col-md-11 textRight">
+                        <button type="button" class="btn btn-link" (click)="addAuthorIdInfo()">+&nbsp;
+                          <!-- 著者IDを追加 -->
+                          <!-- Add Author ID -->
+                          {{langJson.Author_Add_Author_ID[1]}}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <!-- email start -->
+              <!-- for start -->
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <div class="col-sm-1 col-md-1 textRight">
+                    <!-- E-Mail -->
+                    {{langJson.Author_EMail[1]}}
+                  </div>
+                  <div class="col-sm-11 col-md-11">
+                    <!-- 第一行目 -->
+                    <ng-container *ngFor="let emailInfoData of authorJsonObj.emailInfo;let i=index">
+                      <div class="">
+                        <div class="col-sm-12 col-md-12 divBottom">
+                          <div class="col-sm-11 col-md-11">
+                            <input type="text" class="form-control" placeholder="" [(ngModel)]="emailInfoData.email" name="autho_email_{{i}}">
+                          </div>
+                          <div class="col-sm-1 col-md-1">
+                            <button type="button" class="close delButton" (click)="delEmailData(i)">
+                              <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <p></p>
+                    </ng-container>
+                    <!-- 第一行目 -->
+                    <div class="row ">
+                      <div class="col-sm-11 col-md-11 textRight">
+                        <button type="button" class="btn btn-link" (click)="addEmailInfo()">+&nbsp;
+                          <!-- e-mailを追加 -->
+                          <!-- Add E-mail -->
+                          {{langJson.Author_Add_EMail[1]}}
+                        </button>
+                      </div>
+                    </div>
+                    <!-- 第二行目　 end-->
+                  </div>
+                </div>
+              </div>
+              <!--email end  -->
+              <br>
+              <br>
+              <br>
+              <!-- ボタン start-->
+              <div class="row alignCenter">
+                <div class="col-sm-1 col-md-1">
+                    <button *ngIf="deleteBtn" type="button" class="btn btn-info" (click)="deleteAuthor()">
+                        <!-- 削除 -->delete
+                      </button>
+                </div>
+                <div class="col-sm-9 col-md-9">
+                    <button type="button" class="btn btn-info" (click)="clearInputInfo()">
+                        <!-- 取消 -->
+                        <!-- Clear -->
+                        {{langJson.Author_Button_Clear[1]}}
+                      </button>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <button type="button" class="btn btn-info" (click)="save()">
+                        <!-- 保存 -->
+                        <!-- Save -->
+                        {{langJson.Author_Button_Save[1]}}
+                      </button>
+                </div>
+              </div>
+              <!-- ボタン　end -->
+            </div>
+          </div>
+        </div>
+    </div>
+  <!-- </div> -->
