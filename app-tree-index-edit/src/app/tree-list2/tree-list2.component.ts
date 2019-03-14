@@ -17,6 +17,9 @@ export class TreeList2Component implements OnInit {
   //表示様式フラグ　0:チェックボークスなし　1:チェックボークスあり
   @Input()
   public templflg: string = "0";
+  // display journal Flag: 0-Index Edit (not journal), 1- Journal
+  @Input()
+  public journalFlg: string = "0";
   //選択したnodeIｄ
   public selNodeId: any = "";
   //settings templite
@@ -278,6 +281,7 @@ export class TreeList2Component implements OnInit {
   seleNode(e: NodeEvent) {
     //選択したNodeIdを格納する
     this.selNodeId = e.node.id;
+    if (this.journalFlg == "0") {
     this.uploadFlg = false;
     this.checkFlg = false;
     if (this.selNodeId != "0") {
@@ -296,6 +300,12 @@ export class TreeList2Component implements OnInit {
       });
     } else {
       this.setRootDetailInit();
+      }
+    } else {
+      var urlArr = window.location.href.split('/');
+      let hostUrl = urlArr[0]+"//"+urlArr[2];
+      let geturl = hostUrl + "/indextree/journal/" + this.selNodeId;
+      window.location.assign(geturl);
     }
   }
   /**

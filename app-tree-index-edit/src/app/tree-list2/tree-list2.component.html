@@ -1,5 +1,5 @@
 <p></p>
-<div class="col-sm-12 col-md-12">
+<div *ngIf="templflg=='0' && journalFlg=='0'" class="col-sm-12 col-md-12">
   <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
       <p>
@@ -449,3 +449,19 @@
     </div>
     <app-cofirm-modal [modalAberto]="modalStatus" [parentIsRoot]="parentIsRoot" (buttonClickEvent)="deleteNode($event)"></app-cofirm-modal>
   </div>
+</div>
+<div *ngIf="journalFlg=='1'" class="col-sm-3 col-md-3 col-lg-3">
+  <p>
+    <button id="add" value="New" class="btn btn-info button-create" (click)="addNode()">
+      {{langJson.Add[1]}}
+    </button>
+    <button id="del" value="Delete" class="btn btn-info button-delete" (click)="deleNode()">
+      {{langJson.Delete[1]}}
+    </button>
+  </p>
+  <div>
+    <tree [tree]="treeH" [settings]="checkboxSettings" (nodeMoved)="handleMoved($event)" (nodeSelected)="seleNode($event)" #treeList></tree>
+  </div>
+  <input type="hidden" id="cur_index_id" [value]="selNodeId">
+  <app-cofirm-modal [modalAberto]="modalStatus" [parentIsRoot]="parentIsRoot" (buttonClickEvent)="deleteNode($event)"></app-cofirm-modal>
+</div>
