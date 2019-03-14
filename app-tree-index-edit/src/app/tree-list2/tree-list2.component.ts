@@ -46,6 +46,8 @@ export class TreeList2Component implements OnInit {
     id: "", index_name: null, index_name_english: null, comment: "",
     public_state: false, public_date: null, recursive_public_state: false,
     more_check: false, display_no: null, have_children: false,
+    coverpage_state: false, recursive_coverpage_check: false,
+    admin_coverpage: false,
     browsing_role: {
       deny: [{ id: "", name: ""}],
       allow: [{ id: "", name: ""}]
@@ -172,6 +174,8 @@ export class TreeList2Component implements OnInit {
         oopNodeController.setChildren(arr);
       }
     });
+    // Pull up recursive coverpage check
+    this.detailData.recursive_coverpage_check = false;
   }
   /**
    * i18n
