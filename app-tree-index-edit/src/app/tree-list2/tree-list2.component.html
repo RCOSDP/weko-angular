@@ -213,22 +213,24 @@
                     <div class="col-sm-10 col-md-10">
                       <div class="checkbox">
                         <label>
-                          <input *ngIf="detailData.admin_coverpage; else is_disable_cv" type="checkbox" id="coverpage_state" [(ngModel)]="detailData.coverpage_state">
+                          <input *ngIf="adminCoverpageSetting; else is_disable_cv" type="checkbox" id="coverpage_state" [(ngModel)]="detailData.coverpage_state">
                           <ng-template #is_disable_cv>
                             <input type="checkbox" id="coverpage_state" [(ngModel)]="detailData.coverpage_state" disabled='disabled'>
                           </ng-template>
                           Enable
                         </label>
                       </div>
-                      <div class="checkbox">
-                        <div class="col-sm-10 col-md-10">
-                          <label>
-                            <input *ngIf="detailData.admin_coverpage; else is_disable_cv" type="checkbox" id="recursive_coverpage_check" [(ngModel)]="detailData.recursive_coverpage_check">
-                            <ng-template #is_disable_cv>
-                              <input type="checkbox" id="recursive_coverpage_check" [(ngModel)]="detailData.recursive_coverpage_check" disabled='disabled'>
-                            </ng-template>
-                            {{langJson.Set_CoverPage_Recursively[1]}}
-                          </label>
+                      <div *ngIf="detailData.coverpage_state && adminCoverpageSetting">
+                        <div class="checkbox">
+                          <div class="col-sm-10 col-md-10">
+                            <label>
+                              <input *ngIf="adminCoverpageSetting; else is_disable_cv" type="checkbox" id="recursive_coverpage_check" [(ngModel)]="detailData.recursive_coverpage_check">
+                              <ng-template #is_disable_cv>
+                                <input type="checkbox" id="recursive_coverpage_check" [(ngModel)]="detailData.recursive_coverpage_check" disabled='disabled'>
+                              </ng-template>
+                              {{langJson.Set_CoverPage_Recursively[1]}}
+                            </label>
+                          </div>
                         </div>
                       </div>
                     </div>
