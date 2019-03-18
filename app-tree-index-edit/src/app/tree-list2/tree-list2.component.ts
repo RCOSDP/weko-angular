@@ -24,6 +24,8 @@ export class TreeList2Component implements OnInit {
   private setting: TreeModelSettings = {};
   //treeの設定
   public checkboxSettings: Ng2TreeSettings = {};
+  //pdf coverpage setting
+  private adminCoverpageSetting: boolean = false;
 
   public hiddenNodeId: string = "hidden";
   //Tree　json
@@ -47,6 +49,7 @@ export class TreeList2Component implements OnInit {
     id: "", index_name: null, index_name_english: null, comment: "",
     public_state: false, public_date: null, recursive_public_state: false,
     more_check: false, display_no: null, have_children: false,
+    coverpage_state: false, recursive_coverpage_check: false,
     browsing_role: {
       deny: [{ id: "", name: ""}],
       allow: [{ id: "", name: ""}]
@@ -182,12 +185,15 @@ export class TreeList2Component implements OnInit {
   setIndexTree() {
     //画面初期treeを取得
     let getTreeJsonUrl = document.getElementById('get_tree_json').innerText;
+    this.adminCoverpageSetting = (document.getElementById('admin_coverpage_setting').innerText == 'True');
     this.treeList2Service.getTreeInfo(getTreeJsonUrl).then(arr => {
       let oopNodeController = this.treeList.getControllerByNodeId("0");
       if (Array.isArray(arr) && arr.length > 0) {
         oopNodeController.setChildren(arr);
       }
     });
+    // Pull up recursive coverpage check
+    this.detailData.recursive_coverpage_check = false;
   }
   /**
    * i18n
@@ -344,6 +350,9 @@ export class TreeList2Component implements OnInit {
     if(!this.moreCheck()){
       alert("Invalid display number of index.");
       return;
+    }
+    if(!this.detailData.coverpage_state){
+      this.detailData.recursive_coverpage_check = false;
     }
     
     this.detailData.index_name = this.detailData.index_name.replace(/(^\s*)|(\s*$)/g, "");
