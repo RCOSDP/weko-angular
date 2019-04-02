@@ -99,7 +99,7 @@ export class TreeList2Service {
       geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=update";
     }
     if($("#item_management_bulk_delete").length!=0){
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=delete";
+      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort";
     }
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
