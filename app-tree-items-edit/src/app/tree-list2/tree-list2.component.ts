@@ -136,11 +136,12 @@ export class TreeList2Component implements OnInit {
    */
   sending() {
     let post_url = document.getElementById('post_url').innerText;
+    let pub_status = document.getElementById('pub_status').innerText;
     let post_success_url = document.getElementById('post_success_url').innerText;
     let post_error_url = document.getElementById('post_error_url').innerText;
     // let jsonStr ={"index":this.nodeIdList,"actions" :"publish"}
     // private 
-    let jsonStr ={"index":this.nodeIdList,"actions" :"private"}
+    let jsonStr ={"index":this.nodeIdList,"actions": pub_status}
     this.treeList2Service.setCheckedNode(post_url, jsonStr).then(res =>{
                                           //一旦設定
                                           if(post_success_url==""&&post_error_url==""){
@@ -162,9 +163,10 @@ export class TreeList2Component implements OnInit {
    */
   save(){
     let post_url = document.getElementById('post_url').innerText;
+    let pub_status = document.getElementById('pub_status').innerText;
     let post_success_url = document.getElementById('post_success_url').innerText;
     let post_error_url = document.getElementById('post_error_url').innerText;
-    let jsonStr ={"index":this.nodeIdList,"actions" :"private"}
+    let jsonStr ={"index":this.nodeIdList,"actions": pub_status}
     this.treeList2Service.setCheckedNode(post_url, jsonStr).then(res =>{
                                           //一旦設定
                                           if(post_success_url==""&&post_error_url==""){

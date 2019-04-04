@@ -92,8 +92,14 @@ export class TreeList2Service {
       let community = $("#community").val();
       geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&community="+ community;
     }
-    if($("#item_management").length!=0){
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&management=item&sort=custom_sort"
+    if($("#item_management_custom_sort").length!=0){
+      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=sort&sort=custom_sort";
+    }
+    if($("#item_management_bulk_update").length!=0){
+      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=update";
+    }
+    if($("#item_management_bulk_delete").length!=0){
+      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort";
     }
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
