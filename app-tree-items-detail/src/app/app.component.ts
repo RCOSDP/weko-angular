@@ -1,5 +1,5 @@
 import { Component,OnInit,Input,Output, ElementRef } from '@angular/core';
-import { TreeModel } from 'ng2-tree/src/tree.types';
+import { TreeModel } from '../../ng2-tree/src/tree.types';
 
 @Component({
   selector: 'app-tree-items',

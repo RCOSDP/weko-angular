@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TreeModel } from 'ng2-tree/src/tree.types';
+import { TreeModel } from '../../ng2-tree/src/tree.types';
 import { Http,RequestOptions, Headers} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import * as $ from 'jquery';
@@ -15,12 +15,12 @@ export class TreeList2Service {
   ) { }
 
  /**
-  *最新tree情報を取得する 
+  *最新tree情報を取得する
  */
   getTreeInfo(url: string): Promise<any> {
     //APIからtree情報を取得する
     let moreNodes = window.sessionStorage.getItem("moreNodes");
-    let selNode = window.sessionStorage.getItem("selNode")
+    let selNode = window.sessionStorage.getItem("selNode");
 
     var urlArr = window.location.href.split('/');
     let hostUrl = urlArr[0]+"//"+urlArr[2];
@@ -77,7 +77,7 @@ export class TreeList2Service {
   /**
    * nodeを選択した
    */
-  setSearchNodeId(url:any,nodeId:any){
+  setSearchNodeId(url:any, nodeId:any){
     var urlArr = window.location.href.split('/');
     let hostUrl = urlArr[0]+"//"+urlArr[2];
 
@@ -112,8 +112,9 @@ export class TreeList2Service {
    * エラー処理
    */
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // 
+    console.error('An error occurred', error); //
     return Promise.reject(error.message || error);
   }
 
 }
+

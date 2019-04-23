@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "8"
+install:
+  - npm i -g codecov
+script:
+  - npm i
+  - npm run lint && npm run test:cov
+after_success:
+  - codecov -f coverage/lcov.info

@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { TreeModel, NodeEvent, NodeMenuItemAction, TreeModelSettings, Ng2TreeSettings } from 'ng2-tree';
+import { TreeModel, NodeEvent, NodeMenuItemAction, TreeModelSettings, Ng2TreeSettings } from '../../../ng2-tree';
 import { TreeList2Service } from '../tree-list2.service';
 import { isJsObject } from '@angular/core/src/change_detection/change_detection_util';
 import { Response } from '@angular/http/src/static_response';
-import { Tree } from 'ng2-tree/src/tree';
+import { Tree } from '../../../ng2-tree/src/tree';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-tree-list2',
@@ -43,14 +44,16 @@ export class TreeList2Component implements OnInit {
     // Init select status
     let selNode = window.sessionStorage.getItem("selNode");
     if(selNode != null){
+      this.selNodeId = selNode;
       window.sessionStorage.removeItem("selNode");
     }
-    
+
     //チェックボックスあるかを設定する
     this.checkboxSettings = {
       rootIsVisible: false,
       showCheckboxes: false
     };
+
     //RootNodeを設定する
     this.treeH = {
       "value": "RootNode",
@@ -68,15 +71,16 @@ export class TreeList2Component implements OnInit {
       }
     };
     this.treeList.tree = this.treeH;
+
     //画面初期treeを取得
     // let getTreeJsonUrl = document.getElementById('get_tree_json').innerText;
     let getTreeJsonUrl = "null";
     this.treeList2Service.getTreeInfo(getTreeJsonUrl).then(arr => {
+
       //取得したデータを表示する
       this.treeH = {
         "value": "RootNode",
         "id": 1,
-        "children": arr,
         "settings": {
           'static': true,
           'rightMenu': true,
@@ -86,17 +90,26 @@ export class TreeList2Component implements OnInit {
             'leaf': 'weko-node-leaf',
             'empty': 'weko-node-empty'
           }
-        }
+        },
+        "children": arr
       };
       this.treeList.tree = this.treeH;
       let nodeController = this.treeList.getControllerByNodeId(1);
       nodeController.reloadChildren();
     });
-    
   }
 
-  ngAfterViewInit(): void {}
-  
+  ngAfterViewInit(): void {
+    if(this.selNodeId) {
+      setTimeout(()=>{ // Current library does not have a callback function for re-building tree
+        let nodeController2 = this.treeList.getControllerByNodeId(this.selNodeId);
+        if(nodeController2 != null) { 
+          nodeController2.noFireSelect();
+        }
+      }, 500);
+    }
+  }
+
   /**
  * Nodeを選択する
  */
@@ -116,7 +129,7 @@ export class TreeList2Component implements OnInit {
       if(selNode == null){
         window.sessionStorage.setItem("selNode", "true");
       }
-      
+
       let getTreeJsonUrl = "null";
       this.treeList2Service.getTreeInfo(getTreeJsonUrl).then(arr => {
         this.treeH = {
@@ -138,12 +151,13 @@ export class TreeList2Component implements OnInit {
         let oopNodeController = this.treeList.getControllerByNodeId(parentId);
         oopNodeController.reloadChildren();
       });
-      
       return;
     }
 
     //選択したNodeIdを格納する
     this.selNodeId = e.node.id;
+    window.sessionStorage.setItem("selNode", this.selNodeId);
+
     //サービスを呼び出し
     this.treeList2Service.setSearchNodeId(null, this.selNodeId);
   }
