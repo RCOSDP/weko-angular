@@ -30,12 +30,14 @@
             </div>
           </div>
           <div class="panel-footer">
-            <button class="btn btn-default" (click)="sending()">
+            <button class="btn btn-info next-button" (click)="sending()">
               <!-- Send -->
               {{langJson.Send[1]}}
+              <span class="glyphicon glyphicon-chevron-right"></span>
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-default" (click)="save()">
+            <button type="button" class="btn btn-primary save-button" (click)="save()">
+              <span class="glyphicon glyphicon-download-alt"></span>
               <!-- Save -->
               {{langJson.Save[1]}}
             </button>
