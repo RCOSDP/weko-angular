@@ -16,7 +16,7 @@ export class CofirmModalComponent implements OnInit {
     Choose_Processing: [],
     Delete_all: [],
     Move_items_to_parent_Index: [],
-    Cancle: []
+    Cancel: []
   };
   constructor(private treeList2Service: TreeList2Service) {
   }

@@ -17,9 +17,10 @@
       {{langJsonM.Choose_Processing[1]}}
     </div>
     <div class="modal-footer modFooter">
-      <button type="button" class="btn btn-primary" (click)="delAll();"> 
+      <button type="button" class="btn btn-danger delete-button" (click)="delAll();"> 
         <!-- すべて削除 -->
         <!-- Delete all -->
+        <span class="glyphicon glyphicon-trash"></span>
         {{langJsonM.Delete_all[1]}}
       </button>
       <button *ngIf="!parentIsRoot" type="button" class="btn btn-primary" (click)="delAndMove();"> 
@@ -27,10 +28,11 @@
         <!-- Move items to parent Index -->
         {{langJsonM.Move_items_to_parent_Index[1]}}
       </button>
-      <button type="button" class="btn btn-default" data-dismiss="modal" (click)="delCancle();">
+      <button type="button" class="btn btn-info cancel-button" data-dismiss="modal" (click)="delCancle();">
         <!-- キャンセル -->
         <!-- Cancle -->
-        {{langJsonM.Cancle[1]}}
+        <span class="glyphicon glyphicon-remove"></span>
+        {{langJsonM.Cancel[1]}}
       </button>
     </div>
   </div>
