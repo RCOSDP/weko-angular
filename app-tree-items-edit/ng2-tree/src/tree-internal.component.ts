@@ -327,8 +327,10 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (!this.checkboxElementRef) {
       return;
     }
+
     this.checkboxElementRef.nativeElement.indeterminate = false;
     this.treeService.fireNodeChecked(this.tree);
+    this.executeOnChildController(controller => controller.check());
     this.tree.checked = true;
   }
 
@@ -336,8 +338,10 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (!this.checkboxElementRef) {
       return;
     }
+
     this.checkboxElementRef.nativeElement.indeterminate = false;
     this.treeService.fireNodeUnchecked(this.tree);
+    this.executeOnChildController(controller => controller.uncheck());
     this.tree.checked = false;
   }
 
@@ -354,7 +358,7 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   updateCheckboxState(): void {
     // Calling setTimeout so the value of isChecked will be updated and after that I'll check the children status.
-      /*    setTimeout(() => {
+    setTimeout(() => {
       const checkedChildrenAmount = this.tree.checkedChildrenAmount();
       if (checkedChildrenAmount === 0) {
         this.checkboxElementRef.nativeElement.indeterminate = false;
@@ -369,7 +373,7 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.checkboxElementRef.nativeElement.indeterminate = true;
         this.treeService.fireNodeIndetermined(this.tree);
       }
-    });*/
+    });
   }
 
   private eventContainsId(event: NodeEvent): boolean {
