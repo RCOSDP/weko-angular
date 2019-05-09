@@ -50,7 +50,8 @@ export class TreeList2Component implements OnInit {
     Index_Tree:[],
     Designate_Index: [],
     Send: [],
-    Save: []
+    Save: [],
+    Quit: []
   };
 
   constructor(private treeList2Service: TreeList2Service) {
