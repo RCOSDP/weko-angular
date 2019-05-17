@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TreeModel } from 'ng2-tree/src/tree.types';
+import { TreeModel } from '../../ng2-tree/src/tree.types';
 import { Http,RequestOptions, Headers} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 

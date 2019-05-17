@@ -5,9 +5,13 @@
       <div class="row">
         <div class="row">
           <div class="col-sm-12 col-md-12 textRight">
-              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Merge</button>
+              <button type="button" class="btn btn-primary action-button" data-toggle="modal" data-target="#exampleModal">
+                <i class="fa fa-hand-o-right"></i>
+                Merge
+              </button>
               &nbsp;&nbsp;
-              <button type="button" class="btn btn-info" (click)="authorAdd()">
+              <button type="button" class="btn btn-light add-big-button" (click)="authorAdd()">
+              <span class="glyphicon glyphicon-plus"></span>
               {{langJson.Author_Add_Author[1]}}
             </button>
           </div>
@@ -17,9 +21,10 @@
             <input type="text" class="form-control" placeholder="" [(ngModel)]="searchKey">
           </div>
           <div class="col-sm-1 col-md-1">
-            <button type="button" class="btn btn-info" (click)="searchButton()">&nbsp;&nbsp;
+            <button type="button" class="btn btn-primary search-button" (click)="searchButton()">&nbsp;&nbsp;
               <!-- 検索 -->
               <!-- Search -->
+              <i class="fa fa-search-plus"></i>
               {{langJson.Author_Search[1]}} &nbsp;&nbsp;
             </button>
           </div>
@@ -83,7 +88,8 @@
                       {{data.itemCnt}}
                   </td>
                   <td class="textRight">
-                    <button type="button" class="btn btn-info" (click)="update(i)">
+                    <button type="button" class="btn btn-primary edit-button" (click)="update(i)">
+                      <span class="glyphicon glyphicon-edit"></span> 
                       {{langJson.Author_Edit[1]}}
                     </button>
                   </td>
@@ -203,8 +209,14 @@
             <div class="modal-footer alignCenter">
               <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
               <button type="button" class="btn btn-info" (click)="gather()">名寄せ実行</button> -->
-              <button type="button" id="back_modal" class="btn btn-secondary" data-dismiss="modal">Back</button>
-              <button type="button" class="btn btn-info" (click)="gather()">Execute</button>
+              <button type="button" id="back_modal" class="btn btn-info back-button" data-dismiss="modal">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                  Back
+              </button>
+              <button type="button" class="btn btn-primary action-button" (click)="gather()">
+                  <span class="glyphicon glyphicon-hand-right"></span>
+                  Execute
+              </button>
             </div>
           </div>
         </div>

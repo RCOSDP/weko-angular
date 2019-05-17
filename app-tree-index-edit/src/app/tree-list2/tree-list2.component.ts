@@ -99,7 +99,7 @@ export class TreeList2Component implements OnInit {
     Index_Edit: [],
     Index_Link: [],
     Index: [],
-    Janpanese: [],
+    Japanese: [],
     English: [],
     Comment: [],
     More_Function: [],

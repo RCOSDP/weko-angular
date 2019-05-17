@@ -117,9 +117,10 @@
                           <div class="col-sm-1 col-md-1">
                             <div class="">
                               <div class="col-sm-12 col-md-12 textRight">
-                                <button type="button" class="btn btn-info">
+                                <button type="button" class="btn btn-primary">
                                   <!-- 確認 -->
                                   <!-- Confirm -->
+                                  <span class="glyphicon glyphicon-hand-right"></span>
                                   {{langJson.Author_Confirm[1]}}
                                 </button>
                               </div>
@@ -211,20 +212,24 @@
               <!-- ボタン start-->
               <div class="row alignCenter">
                 <div class="col-sm-1 col-md-1">
-                    <button *ngIf="deleteBtn" type="button" class="btn btn-info" (click)="deleteAuthor()">
-                        <!-- 削除 -->delete
+                    <button *ngIf="deleteBtn" type="button" class="btn btn-danger delete-button" (click)="deleteAuthor()">
+                        <!-- 削除 -->
+                        <span class="glyphicon glyphicon-trash"></span>
+                        Delete
                       </button>
                 </div>
                 <div class="col-sm-9 col-md-9">
-                    <button type="button" class="btn btn-info" (click)="clearInputInfo()">
+                    <button type="button" class="btn btn-info clear-button" (click)="clearInputInfo()">
                         <!-- 取消 -->
                         <!-- Clear -->
+                        <span class="glyphicon glyphicon-remove"></span>
                         {{langJson.Author_Button_Clear[1]}}
                       </button>
                       &nbsp;&nbsp;&nbsp;&nbsp;
-                      <button type="button" class="btn btn-info" (click)="save()">
+                      <button type="button" class="btn btn-primary save-button" (click)="save()">
                         <!-- 保存 -->
                         <!-- Save -->
+                        <span class="glyphicon glyphicon-download-alt"></span>
                         {{langJson.Author_Button_Save[1]}}
                       </button>
                 </div>
