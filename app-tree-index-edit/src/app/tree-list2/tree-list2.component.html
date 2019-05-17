@@ -21,6 +21,13 @@
       </div>
     </div>
     <div *ngIf="templflg=='0'" class="col-sm-8 col-md-8 col-lg-8">
+      <div role="navigation">
+        <ul class="nav nav-tabs">
+          <li id="tab_display" role="presentation" class="active activity_li"><a href="/indextree">Index Edit</a></li>
+          <li role="presentation"><a [href]="'/indextree/journal/' + selNodeId">Journal</a></li>
+        </ul>
+      </div>
+      <br>
       <fieldset *ngIf="!inputFlg" disabled>
         <div class="panel panel-default">
           <div class="panel-heading">

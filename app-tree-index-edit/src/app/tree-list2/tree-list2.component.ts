@@ -18,6 +18,7 @@ export class TreeList2Component implements OnInit {
   @Input()
   public templflg: string = "0";
   //選択したnodeIｄ
+  @Input()
   public selNodeId: any = "";
   //settings templite
   private setting: TreeModelSettings = {};
@@ -153,6 +154,21 @@ export class TreeList2Component implements OnInit {
       };
     };
     this.setIndexTree();
+    //選択したNodeIdを格納する
+    if (this.selNodeId != null && this.selNodeId !="0") {
+      this.inputFlg = true;
+      let modTreeDetailUrl = document.getElementById('mod_tree_detail').innerText + this.selNodeId;
+      this.treeList2Service.getNodeInfo(modTreeDetailUrl).then(res => {
+        this.detailData = res;
+        if(this.detailData.image_name != ""){
+          let urlArr = window.location.href.split('/');
+          this.imgSrc = urlArr[0] + "//" + urlArr[2]+this.detailData.image_name;
+          this.privousUploadFlg = true;
+        }else{
+          this.privousUploadFlg = false;
+        }
+      });
+    }
   }
   /**
    * 画面をロードした後に処理を行う
