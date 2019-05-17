@@ -1,0 +1,475 @@
+<p></p>
+<div *ngIf="templflg=='0' && journalFlg=='0'" class="col-sm-12 col-md-12">
+  <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <p>
+        <button id="add" value="New" class="btn btn-light add-button button-create" (click)="addNode()">
+          <!-- 新規 -->
+          <!-- Add -->
+          <span class="glyphicon glyphicon-plus"></span>
+          {{langJson.Add[1]}}
+        </button>
+        <button id="del" value="Delete" class="btn btn-danger delete-button button-delete" (click)="deleNode()">
+          <!-- 削除 -->
+          <!-- Delete -->
+          <span class="glyphicon glyphicon-trash"></span>
+          {{langJson.Delete[1]}}
+        </button>
+      </p>
+      <div>
+        <tree [tree]="treeH" [settings]="checkboxSettings" (nodeMoved)="handleMoved($event)" (nodeSelected)="seleNode($event)" #treeList></tree>
+      </div>
+    </div>
+    <div *ngIf="templflg=='0'" class="col-sm-8 col-md-8 col-lg-8">
+      <fieldset *ngIf="!inputFlg" disabled>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <!-- インデックス編集 -->
+              <!-- INDEX EDIT -->
+              {{langJson.Index_Edit[1]}}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- インデックス -->
+                      <!-- Index -->
+                      {{langJson.Index[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <!-- 日本語 -->
+                          <!-- Japanese -->
+                          {{langJson.Japanese[1]}}
+                        </span>
+                        <input type="text" class="form-control" id="inputTitle_ja" placeholder="" [(ngModel)]="detailData.index_name">
+                      </div>
+                      <div class="row-line-space"></div>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <!-- 英語 -->
+                          <!-- English -->
+                          {{langJson.English[1]}}
+                        </span>
+                        <input type="text" class="form-control" id="inputTitle_en" placeholder="" [(ngModel)]="detailData.index_name_english">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- コメント -->
+                      <!-- Comment -->
+                      {{langJson.Comment[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" rows="3" id="inputComment" [(ngModel)]="detailData.comment"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button id="index-detail-submit" class="btn btn-light send-button" (click)="sendingdetail()">
+              <!-- 送信 -->
+              <!-- Send -->
+              <span class="glyphicon glyphicon-send"></span>
+              {{langJson.Send[1]}}
+            </button>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset *ngIf="inputFlg">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{langJson.Index_Edit[1]}}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">{{langJson.Index[1]}}</div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="input-group">
+                        <span class="input-group-addon">{{langJson.Japanese[1]}}</span>
+                        <input type="text" class="form-control" id="inputTitle_ja" placeholder="" [(ngModel)]="detailData.index_name">
+                      </div>
+                      <div class="row-line-space"></div>
+                      <div class="input-group">
+                        <span class="input-group-addon">{{langJson.English[1]}}<span class="text-danger">＊</span></span>
+                        <input type="text" class="form-control" id="inputTitle_en" placeholder="" [(ngModel)]="detailData.index_name_english">
+                      </div>
+                      <span *ngIf="checkFlg" class="text-danger">英語で入力は必要です。</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">{{langJson.Comment[1]}}</div>
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" rows="3" id="inputComment" [(ngModel)]="detailData.comment"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 0611 add start -->
+              <!-- 公開 -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      <!-- {{langJson.Display_Range[1]}} -->
+                      {{langJson.Publish[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <input type="checkbox" id="rss_display" [(ngModel)]="detailData.public_state">{{langJson.Open_To_Public[1]}}
+                      <p>
+                        <div *ngIf="detailData.public_state" class="input-group">
+                          <span class="input-group-addon">
+                            <!-- {{langJson.Japanese[1]}} -->
+                            {{langJson.Date[1]}}：
+                          </span>
+                          <input type="text" class="form-control" id="datepicker" placeholder="例：20180628" [(ngModel)]="detailData.public_date">
+                        </div>
+                        <p>
+                        <div *ngIf="detailData.public_state">
+                          <input type="checkbox" id="rss_display" [(ngModel)]="detailData.recursive_public_state">{{langJson.Set_Publish_Date_Recursively[1]}}
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- index link -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      {{langJson.Index_Link[1]}}
+                    </div>
+                      <div class="col-sm-10 col-md-10">
+                        <div>
+                          <input type="checkbox" id="index_link_enabled" [(ngModel)]="detailData.index_link_enabled"> Enable
+                        </div>
+                        <p>
+                        <div class="input-group">
+                          <span class="input-group-addon">{{langJson.Japanese[1]}}</span>
+                          <input type="text" class="form-control" id="indexLink_ja" placeholder="" [(ngModel)]="detailData.index_link_name">
+                        </div>
+                        <div class="row-line-space"></div>
+                        <div class="input-group">
+                          <span class="input-group-addon">{{langJson.English[1]}}<span class="text-danger">＊</span></span>
+                          <input type="text" class="form-control" id="indexLink_en" placeholder="" [(ngModel)]="detailData.index_link_name_english">
+                        </div>
+                        <span *ngIf="checkFlg" class="text-danger">英語で入力は必要です。</span>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <!-- more 機能 -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      {{langJson.More_Function[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="checkbox">
+                        <label>
+                          <input *ngIf="detailData.have_children; else is_disable" type="checkbox" id="more_check" [(ngModel)]="detailData.more_check">
+                          <ng-template #is_disable>
+                            <input type="checkbox" id="more_check" [(ngModel)]="detailData.more_check" disabled='disabled'>
+                          </ng-template>
+                          {{langJson.More_Check[1]}}
+                        </label>
+                      </div>
+                      <div *ngIf="detailData.more_check">
+                        <p>{{langJson.More_No[1]}}<br>
+                        <input type="text" id="display_no" class="form-control" [(ngModel)]="detailData.display_no">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- OAI-PMH -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      {{langJson.Harvest_Publish[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="rss_display" [(ngModel)]="detailData.harvest_public_state"> 
+                          {{langJson.Open_To_Public[1]}}
+                        </label>
+                        <p>
+                          <span class="text-danger">※{{langJson.Harvest_Message[1]}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 閲覧権限設定 -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                        <!-- Display range -->
+                        <!-- {{langJson.Display_Range[1]}} -->
+                        {{langJson.Browsing_Privilege[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="col-sm-5 col-md-5">
+                        <p>{{langJson.Role[1]}}<br>{{langJson.Authorized[1]}}
+                          <select multiple class="form-control" id="browsing_role_able" [(ngModel)]="roleModel.browsing_role_able">
+                            <option *ngFor="let browRoleAble of detailData.browsing_role.allow;let i = index" [value]="i">{{browRoleAble.name}}</option>
+                          </select>
+                      </div>
+                      <div class="col-sm-2 col-md-2">
+                        &nbsp;&nbsp;
+                        <p><br>
+                        <button type="button" class="btn btn-default" (click)="setBrowsingAllowToDeny(roleModel.browsing_role_able)">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        <p></p>
+                        <button type="button" class="btn btn-default" (click)="setBrowsingDenyToAllow(roleModel.browsing_role_unable)">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                      </div>
+                      <div class="col-sm-5 col-md-5">
+                        <p><br>{{langJson.Unauthorized[1]}}
+                          <select multiple class="form-control" id="browsing_role_unable" [(ngModel)]="roleModel.browsing_role_unable">
+                            <option *ngFor="let browsing_role_unable of detailData.browsing_role.deny;let i = index" [value]="i">{{browsing_role_unable.name}}</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-10 col-md-10">
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="checkbox" id="rss_display" [(ngModel)]="detailData.recursive_browsing_role">{{langJson.Set_Role_Recursively[1]}}
+                    </div>
+                  </div>
+                  <!-- 20180925 add start -->
+                  <!-- Read Permission by Group -->
+                  <div class="row">&nbsp;</div>
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="col-sm-5 col-md-5">
+                        <p>{{langJson.Group[1]}}<br>{{langJson.Authorized[1]}}
+                          <select multiple class="form-control" id="browsing_group_able" [(ngModel)]="groupModel.browsing_group_able">
+                            <option *ngFor="let browGroupAble of detailData.browsing_group.allow;let i = index" [value]="i">{{browGroupAble.name}}</option>
+                          </select>
+                      </div>
+                      <div class="col-sm-2 col-md-2">
+                        &nbsp;&nbsp;
+                        <p><br>
+                        <button type="button" class="btn btn-default" (click)="setBrowsingGroupAllowToDeny(groupModel.browsing_group_able)">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        <p></p>
+                        <button type="button" class="btn btn-default" (click)="setBrowsingGroupDenyToAllow(groupModel.browsing_group_unable)">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                      </div>
+                      <div class="col-sm-5 col-md-5">
+                        <p><br>{{langJson.Unauthorized[1]}}
+                          <select multiple class="form-control" id="browsing_group_unable" [(ngModel)]="groupModel.browsing_group_unable">
+                            <option *ngFor="let browsing_group_unable of detailData.browsing_group.deny;let i = index" [value]="i">{{browsing_group_unable.name}}</option>
+                          </select>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-10 col-md-10">
+                      &nbsp;&nbsp;&nbsp;
+                      <input type="checkbox" id="rss_display" [(ngModel)]="detailData.recursive_browsing_group">{{langJson.Set_Group_Recursively[1]}}
+                    </div>
+                  </div>
+                  <!-- 20180925 add end -->
+                </div>
+              </div>
+              <!-- 投稿権限設定 -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      <!-- {{langJson.Display_Range[1]}} -->
+                      {{langJson.Deposit_Privilege[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="col-sm-5 col-md-5">
+                        <p>{{langJson.Role[1]}}<br>{{langJson.Authorized[1]}}
+                          <select multiple class="form-control" id="contribute_role_able" [(ngModel)]="roleModel.contribute_role_able">
+                            <option *ngFor="let contribute_role_able of detailData.contribute_role.allow;let i = index" [value]="i">{{contribute_role_able.name}}</option>
+                          </select>
+                          <p></p>
+                      </div>
+                      <div class="col-sm-2 col-md-2">
+                        &nbsp;&nbsp;
+                        <p><br>
+                        <button type="button" class="btn btn-default" (click)="setContributeAllowToDeny(roleModel.contribute_role_able)">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        <p></p>
+                        <button type="button" class="btn btn-default" (click)="setContributeDenyToAllow(roleModel.contribute_role_unable)">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                      </div>
+                      <div class="col-sm-5 col-md-5">
+                        <p><br>{{langJson.Unauthorized[1]}}
+                          <select multiple class="form-control" id="contribute_role_unable" [(ngModel)]="roleModel.contribute_role_unable">
+                            <option *ngFor="let contribute_role_unable of detailData.contribute_role.deny;let i = index" [value]="i">{{contribute_role_unable.name}}</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-10 col-md-10">
+                      &nbsp;&nbsp;&nbsp;
+                      <input type="checkbox" id="rss_display" [(ngModel)]="detailData.recursive_contribute_role">{{langJson.Set_Role_Recursively[1]}}
+                    </div>
+                  </div>
+                  <!-- 20180925 add start -->
+                  <!-- Write Permission by Group -->
+                  <div class="row">&nbsp;</div>
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="col-sm-5 col-md-5">
+                        <p>{{langJson.Group[1]}}<br>{{langJson.Authorized[1]}}
+                          <select multiple class="form-control" id="contribute_group_able" [(ngModel)]="groupModel.contribute_group_able">
+                            <option *ngFor="let contribute_group_able of detailData.contribute_group.allow;let i = index" [value]="i">{{contribute_group_able.name}}</option>
+                          </select>
+                          <p></p>
+                      </div>
+                      <div class="col-sm-2 col-md-2">
+                        &nbsp;&nbsp;
+                        <p><br>
+                        <button type="button" class="btn btn-default" (click)="setContributeGroupAllowToDeny(groupModel.contribute_group_able)">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        <p></p>
+                        <button type="button" class="btn btn-default" (click)="setContributeGroupDenyToAllow(groupModel.contribute_group_unable)">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                      </div>
+                      <div class="col-sm-5 col-md-5">
+                        <p><br>{{langJson.Unauthorized[1]}}
+                          <select multiple class="form-control" id="contribute_group_unable" [(ngModel)]="groupModel.contribute_group_unable">
+                            <option *ngFor="let contribute_group_unable of detailData.contribute_group.deny;let i = index" [value]="i">{{contribute_group_unable.name}}</option>
+                          </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-10 col-md-10">
+                      &nbsp;&nbsp;&nbsp;
+                      <input type="checkbox" id="rss_display" [(ngModel)]="detailData.recursive_contribute_group">{{langJson.Set_Group_Recursively[1]}}
+                    </div>
+                  </div>
+                  <!-- 20180925 add end -->
+                </div>
+              </div>
+              <!-- 0611 add end -->
+              <!-- 0709 add start -->
+              <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-2 col-md-2">
+                        <!-- Display range -->
+                        {{langJson.Display_Format[1]}}<br>({{langJson.Search_Results[1]}})
+                      </div>
+                      <div class="col-sm-10 col-md-10">
+                        <div class="checkbox">
+                          <label>
+                            <input type="radio" [ngModel]="detailData.display_format" [checked]="detailData.display_format =='1'" (click)="detailData.display_format = '1'"
+                            name="display_format" value="1">&nbsp;{{langJson.List[1]}}&nbsp;&nbsp;
+                          </label>
+                          <label>
+                            <input type="radio" [ngModel]="detailData.display_format" [checked]="detailData.display_format == '2'" (click)="detailData.display_format = '2'"
+                              name="display_format" value="2">&nbsp;{{langJson.Contents_Table[1]}}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-10 col-md-10">
+                        {{langJson.File_Size[1]}} : 2MB<br>
+                        {{langJson.Image_Size[1]}} : 1024px × 1280px <br>
+                        {{langJson.File_Type[1]}} : gif, jpg, jpe, jpeg, png, bmp, tiff, tif
+                      </div>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <div class="col-sm-10 col-md-10">
+                            <input type="file" (change)="fileChange($event)" placeholder="Upload file" name="uploadFile" accept=".gif,.jpg,.jpe,.jpeg,.png,.bmp,.tiff,.tif">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>
+                        <div *ngIf="privousUploadFlg">
+                            <img [src]="imgSrc" class="img-thumbnail">
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <!-- 0709 add end -->
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button id="index-detail-submit" class="btn btn-light send-button" (click)="sendingdetail()">
+                <span class="glyphicon glyphicon-send"></span>
+                {{langJson.Send[1]}}
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <app-cofirm-modal [modalAberto]="modalStatus" [parentIsRoot]="parentIsRoot" (buttonClickEvent)="deleteNode($event)"></app-cofirm-modal>
+  </div>
+</div>
+<div *ngIf="journalFlg=='1'" class="col-sm-3 col-md-3 col-lg-3">
+  <p>
+    <button id="add" value="New" class="btn btn-light add-button button-create" (click)="addNode()">
+      <span class="glyphicon glyphicon-plus"></span>
+      {{langJson.Add[1]}}
+    </button>
+    <button id="del" value="Delete" class="btn btn-danger delete-button button-delete" (click)="deleNode()">
+      <span class="glyphicon glyphicon-trash"></span>
+      {{langJson.Delete[1]}}
+    </button>
+  </p>
+  <div>
+    <tree [tree]="treeH" [settings]="checkboxSettings" (nodeMoved)="handleMoved($event)" (nodeSelected)="seleNode($event)" #treeList></tree>
+  </div>
+  <input type="hidden" id="cur_index_id" [value]="selNodeId">
+  <app-cofirm-modal [modalAberto]="modalStatus" [parentIsRoot]="parentIsRoot" (buttonClickEvent)="deleteNode($event)"></app-cofirm-modal>
+</div>

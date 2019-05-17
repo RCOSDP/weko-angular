@@ -1,0 +1,24 @@
+  
+  /* The Close Button */
+  .close {
+    color: rgb(251, 5, 5);
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: rgb(253, 5, 5);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .modFooter{
+    text-align: center;
+  }
+
+  
+
+  
