@@ -15,7 +15,7 @@ export class TreeList2Service {
   ) { }
 
  /**
-  *最新tree情報を取得する 
+  *最新tree情報を取得する
  */
   getTreeInfo(url: string): Promise<any> {
     //APIからtree情報を取得する
@@ -93,13 +93,13 @@ export class TreeList2Service {
       geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&community="+ community;
     }
     if($("#item_management_custom_sort").length!=0){
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=sort&sort=custom_sort";
+      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=sort&sort=custom_sort";
     }
     if($("#item_management_bulk_update").length!=0){
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=update";
+      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=update";
     }
     if($("#item_management_bulk_delete").length!=0){
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort";
+        geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort";
     }
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
@@ -112,7 +112,7 @@ export class TreeList2Service {
    * エラー処理
    */
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // 
+    console.error('An error occurred', error); //
     return Promise.reject(error.message || error);
   }
 
