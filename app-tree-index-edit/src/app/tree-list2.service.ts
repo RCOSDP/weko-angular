@@ -24,7 +24,7 @@ export class TreeList2Service {
   };
 
   /**
-   *最新tree情報を取得する 
+   *最新tree情報を取得する
   */
   getTreeInfo(url: string): Promise<any[]> {
     //APIからtree情報を取得する
@@ -59,7 +59,7 @@ export class TreeList2Service {
       .catch(this.handleError);
   }
   /**
-   * 
+   *
    *最新Tree情報をApiへ設定する
    *@param nodeId selected nodeId
    *@param action move , all
@@ -103,7 +103,7 @@ export class TreeList2Service {
     headers.append('Accept', 'application/json');
     let options = new RequestOptions({ headers: headers });
     let urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/indextree/upload";
+    const url = urlArr[0] + "//" + urlArr[2] + "/admin/indexedit/upload";
     return this.http
         .post(url, formData, options)
         .toPromise()
@@ -116,7 +116,7 @@ export class TreeList2Service {
    * エラー処理
    */
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // 
+    console.error('An error occurred', error); //
     return Promise.reject(error.message || error);
   }
 

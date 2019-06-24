@@ -304,7 +304,7 @@ export class TreeList2Component implements OnInit {
     } else {
       var urlArr = window.location.href.split('/');
       let hostUrl = urlArr[0]+"//"+urlArr[2];
-      let geturl = hostUrl + "/indextree/journal/" + this.selNodeId;
+      let geturl = hostUrl + "/admin/indexjournal/" + this.selNodeId;
       window.location.assign(geturl);
     }
   }
