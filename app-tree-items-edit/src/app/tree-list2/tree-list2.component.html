@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
       <div class="panel-group">
-        <div class="panel panel-default">
+        <div class="panel panel-default" style="overflow: auto;white-space: nowrap;">
           <div class="panel-heading clearfix">
             <h3 class="panel-title">{{langJson.Index_Tree[1]}}</h3>
           </div>
@@ -31,7 +31,7 @@
           </div>
           <div class="panel-footer">
            <button type="button" class="btn btn-primary save-button" (click)="save()">
-              <span class="glyphicon glyphicon-download-alt"></span>
+              <span class="glyphicon glyphicon-saved"></span>
               <!-- Save -->
               {{langJson.Save[1]}}
             </button>
