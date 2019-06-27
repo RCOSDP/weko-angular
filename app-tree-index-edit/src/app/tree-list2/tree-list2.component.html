@@ -16,7 +16,8 @@
           {{langJson.Delete[1]}}
         </button>
       </p>
-      <div>
+      <div class="panel panel-default" style="overflow: auto;
+          white-space:nowrap;">
         <tree [tree]="treeH" [settings]="checkboxSettings" (nodeMoved)="handleMoved($event)" (nodeSelected)="seleNode($event)" #treeList></tree>
       </div>
     </div>
