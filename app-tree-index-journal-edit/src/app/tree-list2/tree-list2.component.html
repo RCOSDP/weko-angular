@@ -16,7 +16,8 @@
           {{langJson.Delete[1]}}
         </button>
       </p>
-      <div>
+      <div class="panel panel-default" style="overflow: auto; white-space:
+          nowrap;">
         <tree [tree]="treeH" [settings]="checkboxSettings" (nodeMoved)="handleMoved($event)" (nodeSelected)="seleNode($event)" #treeList></tree>
       </div>
     </div>
@@ -456,9 +457,10 @@
     <app-cofirm-modal [modalAberto]="modalStatus" [parentIsRoot]="parentIsRoot" (buttonClickEvent)="deleteNode($event)"></app-cofirm-modal>
   </div>
 </div>
-<div *ngIf="journalFlg=='1'" class="col-sm-3 col-md-3 col-lg-3">
-  <p>
-    <button id="add" value="New" class="btn btn-light add-button button-create" (click)="addNode()">
+<div *ngIf="journalFlg=='1'" class="col-sm-7 col-md-7 col-lg-4 col-xl-3">
+  <p style="display: inline-block;">
+    <button id="add" value="New" class="btn btn-light add-button button-create
+        pull-left" (click)="addNode()">
       <span class="glyphicon glyphicon-plus"></span>
       {{langJson.Add[1]}}
     </button>
@@ -467,7 +469,7 @@
       {{langJson.Delete[1]}}
     </button>
   </p>
-  <div>
+  <div class="panel panel-default" style="overflow:auto;white-space:nowrap;">
     <tree [tree]="treeH" [settings]="checkboxSettings" (nodeMoved)="handleMoved($event)" (nodeSelected)="seleNode($event)" #treeList></tree>
   </div>
   <input type="hidden" id="cur_index_id" [value]="selNodeId">
