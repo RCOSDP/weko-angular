@@ -10,7 +10,7 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
   //画面データを設定
-  //i18n 
+  //i18n
   public langJson = {
     Author_Name: [],
     Author_Add_Organization: [],
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     Author_Page_Next: [],
     Author_On_1_Page: []
   };
-  // JPCORE 対応start 20180402 
+  // JPCORE 対応start 20180402
   public authorJsonObj: any = {
     creator: {
       nameIdentifier: [
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // JPCORE 対応start 20180402 
+  // JPCORE 対応start 20180402
   //検索すると、サービスから戻ったデータ
   public searchJson: any = {
     hits: {
@@ -122,6 +122,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.setI18n();
+
+    // Show first page results upon load
+    $('#pageLink_1').addClass("active");
+    this.search(1);
   }
   /**
    * i18n
@@ -149,17 +153,17 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
   /**
-   *組織追加処理 
+   *組織追加処理
    */
   groupAdd() {
     // todo
   }
   /**
-   *著者追加 
+   *著者追加
    */
   authorAdd() {
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/authors/add"
+    const url = urlArr[0] + "//" + urlArr[2] + "/admin/authors/add"
     window.location.href = url;
   }
   /**
@@ -234,7 +238,7 @@ export class AppComponent implements OnInit {
   update(index: any) {
     let esIndexId = this.displayData[index].id;
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/authors/edit?id="+esIndexId;
+    const url = urlArr[0] + "//" + urlArr[2] + "/admin/authors/edit?id="+esIndexId;
     window.location.href = url;
   }
   /**
@@ -276,7 +280,7 @@ export class AppComponent implements OnInit {
     $('#pageLink_1').addClass("active");
   }
   /**
-   * 
+   *
    */
   gather(){
     let jsonData={idFrom:[],idFromPkId:[],idTo:"",};
@@ -295,7 +299,7 @@ export class AppComponent implements OnInit {
 
   }
   /**
-   *ページをクリック 
+   *ページをクリック
    */
   clickPage(index: number) {
     //ページリンクの選択状態を設定する
@@ -334,7 +338,7 @@ export class AppComponent implements OnInit {
             }
           }
         }
-        
+
         if (data._source.hasOwnProperty("authorNameInfo")) {
           let nameInfo = "";
           for (let d of data._source.authorNameInfo) {

@@ -10,7 +10,7 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
   //画面データを設定
-  //i18n 
+  //i18n
   public langJson = {
     Author_Add_New_Author: [],
     Author_Name: [],
@@ -94,8 +94,9 @@ export class AppComponent implements OnInit {
   ngAfterViewInit() {
     this.getAuthorData();
   }
+
   /**
-   * 
+   *
    */
   getAuthorData() {
     let urlStr = window.location.href;
@@ -114,7 +115,7 @@ export class AppComponent implements OnInit {
     }
   }
   /**
-   * 
+   *
    */
   setPageData(dataJson: any) {
     let info = dataJson.hits.hits[0]._source;
@@ -167,7 +168,7 @@ export class AppComponent implements OnInit {
   /**
    * 氏名情報を削除する
    * delete name info
-   * ＠@param index 削除する位置情報(position) 
+   * ＠@param index 削除する位置情報(position)
    */
   delAuthorNameData(index: any) {
     //全部削除する場合
@@ -191,7 +192,7 @@ export class AppComponent implements OnInit {
    */
   delAuthorIdData(index: any) {
     //全部削除する場合
-    // all authorId info  
+    // all authorId info
     if (this.authorJsonObj.authorIdInfo.length == 1) {
       let authorIdInfoObj = this.returnAuthorIdInfoObj();
       this.authorJsonObj.authorIdInfo.splice(index, 1, authorIdInfoObj);
@@ -312,7 +313,7 @@ export class AppComponent implements OnInit {
     return subEmailInfo;
   }
   /**
-   *placeholder案内内容を返す 
+   *placeholder案内内容を返す
    */
   returnPlaceholderInfo(): any {
     let placeholderInfo = {
@@ -332,9 +333,9 @@ export class AppComponent implements OnInit {
     let urlStr = window.location.href;
     if (urlStr.indexOf("edit")!= -1) {
       this.editPageDataJson(dbJson).then(res => {
-        alert(res.msg);
+        // alert(res.msg);  // Flash message one admin page instead
         var urlArr = window.location.href.split('/');
-        window.location.href = urlArr[0] + "//" + urlArr[2] + "/authors/";
+        window.location.href = urlArr[0] + "//" + urlArr[2] + "/admin/authors/";
       }).catch(res => {
         alert(res.msg);
       })
@@ -342,9 +343,9 @@ export class AppComponent implements OnInit {
       let timestamp = new Date().getTime().toString();
       dbJson.pk_id = timestamp;
       this.postPageDataJson(dbJson).then(res => {
-        alert(res.msg);
+        // alert(res.msg);  // Flash message one admin page instead
         var urlArr = window.location.href.split('/');
-        window.location.href = urlArr[0] + "//" + urlArr[2] + "/authors/";
+        window.location.href = urlArr[0] + "//" + urlArr[2] + "/admin/authors/";
       }).catch(res => {
         alert(res.msg);
       })
@@ -359,9 +360,9 @@ export class AppComponent implements OnInit {
     paramJson.Id = urlStr.substring(urlStr.indexOf("=")).replace("=", "");
     paramJson.pk_id = this.authorJsonObj.pk_id;
     this.deleteById(paramJson).then(res => {
-      alert(res.msg);
+      // alert(res.msg);  // Set flash instead
       var urlArr = window.location.href.split('/');
-      window.location.href = urlArr[0] + "//" + urlArr[2] + "/authors/";
+      window.location.href = urlArr[0] + "//" + urlArr[2] + "/admin/authors/";
     }).catch(res => {
       alert(res.msg);
     })
@@ -386,7 +387,7 @@ export class AppComponent implements OnInit {
     }
   }
   /**
-   *名前入力形式を変更する場合 
+   *名前入力形式を変更する場合
    */
   nameFormatChange(index: any) {
     //名前入力形式を変更する場合、入力した情報を再設定する
@@ -479,7 +480,7 @@ deleteById(esIdJsonObj: any): Promise<any> {
       .catch(this.handleError);
   }
   /**
-   * 
+   *
    */
   getDataOfAuthor(esid: any) {
     var urlArr = window.location.href.split('/');
@@ -495,7 +496,7 @@ deleteById(esIdJsonObj: any): Promise<any> {
    * エラー処理
    */
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // 
+    console.error('An error occurred', error); //
     return Promise.reject(error.message || error);
   }
 }

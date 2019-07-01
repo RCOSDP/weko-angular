@@ -89,7 +89,7 @@
                   </td>
                   <td class="textRight">
                     <button type="button" class="btn btn-primary edit-button" (click)="update(i)">
-                      <span class="glyphicon glyphicon-edit"></span> 
+                      <span class="glyphicon glyphicon-edit"></span>
                       {{langJson.Author_Edit[1]}}
                     </button>
                   </td>
@@ -98,7 +98,7 @@
             </tbody>
           </table>
         </div>
-        <div *ngIf="searchZero" class="alert alert-danger">
+        <div *ngIf="searchZero" class="alert alert-info">
           <!-- 検索結果は0件です。 -->
           <!-- Sorry，No results. -->
           {{langJson.Author_Search_No_Result[1]}}
