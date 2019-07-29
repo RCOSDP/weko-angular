@@ -50,6 +50,7 @@ export class TreeList2Component implements OnInit {
     public_state: false, public_date: null, recursive_public_state: false,
     more_check: false, display_no: null, have_children: false,
     coverpage_state: false, recursive_coverpage_check: false,
+    rss_status: false, 
     browsing_role: {
       deny: [{ id: "", name: ""}],
       allow: [{ id: "", name: ""}]
@@ -130,7 +131,9 @@ export class TreeList2Component implements OnInit {
     File_Size: [],
     Image_Size: [],
     File_Type: [],
-    Send: []
+    Send: [],
+    RSS_Icon: [],
+    Display: []
   };
   public formData:FormData = new FormData();
   private imgSrc = "";
@@ -359,6 +362,7 @@ export class TreeList2Component implements OnInit {
     if (this.detailData.index_name == ""){
       this.detailData.index_name = null;
     }
+    
     if(this.uploadFlg){
       this.treeList2Service.upload(this.formData,this.selNodeId).then(res=>{
         this.detailData.image_name = res.data.path;

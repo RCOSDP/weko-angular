@@ -207,6 +207,26 @@
                   </div>
                 </div>
               </div>
+              <!-- RSS icon setting -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      {{langJson.RSS_Icon[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="checkbox margin-0">
+                        <label>
+                          <input type="checkbox" id="rss_status" [(ngModel)]="detailData.rss_status">
+                          <!-- Display range -->
+                          {{langJson.Display[1]}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <!-- CoverPage Setting -->
               <div class="panel panel-default">
                 <div class="panel-body">
