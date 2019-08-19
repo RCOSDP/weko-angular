@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     ],
     authorIdInfo: [
       {
-        idType: "cinii",
+        idType: "1",
         authorId: "",
         authorIdShowFlg: "true"
       }
@@ -68,12 +68,13 @@ export class AppComponent implements OnInit {
     // { id: "fullNm", value: this.langJson.Author_familyNmAndNm[1] }
   ];
   // set data of group list
-  public authorIdOptions: any[] = [
-    { id: "cinii", value: "CiNii" },
-    { id: "kaken", value: "KAKEN" },
-    { id: "orcid", value: "ORCID" },
-    { id: "weko3", value: "WEKO3" }
-  ]
+  public authorIdOptions: [
+    {
+      id: -1,
+      name: "",
+      url: ""
+    }
+  ];
   //氏名が姓・名で入力する場合
   // set input guide
   public placeholderArry: any = [
@@ -90,6 +91,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.setI18n();
+    this.getAuthorsPrefixSettings();
   }
   ngAfterViewInit() {
     this.getAuthorData();
@@ -113,6 +115,17 @@ export class AppComponent implements OnInit {
     }else{
       this.deleteBtn = false;
     }
+  }
+  /**
+   * get authors prefix settings
+   */
+  getAuthorsPrefixSettings() {
+    this.getDataOfAuthorsPrefixSettings().then(
+      res => {
+        this.authorIdOptions = res;
+        console.log(res)
+      }
+    ).catch()
   }
   /**
    *
@@ -491,7 +504,18 @@ deleteById(esIdJsonObj: any): Promise<any> {
       .then(response => response.json() as any)
       .catch(this.handleError);
   }
-
+  /**
+   * call api (get author prefix prefix)
+   */
+  getDataOfAuthorsPrefixSettings() {
+    var urlArr = window.location.href.split('/');
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/search_prefix"
+    return this.http
+      .get(url)
+      .toPromise()
+      .then(response => response.json() as any)
+      .catch(this.handleError);
+  }
   /**
    * エラー処理
    */

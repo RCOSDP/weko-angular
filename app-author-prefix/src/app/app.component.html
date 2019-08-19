@@ -1,0 +1,72 @@
+<p>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-md-12">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <table class="table table-striped">
+              <thead>
+                <tr class="success">
+                  <th class="thWidth30">
+                    Name
+                  </th>
+                  <th class="thWidth50">
+                    URL
+                  </th>
+                  <th class="thWidth30">
+                    Control
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let data of displayData;let i=index">
+                  <tr>
+                    <td>
+                      <label *ngIf="control.edit_flag[i] == false">{{data.name}}</label>
+                      <input type="text" *ngIf="control.edit_flag[i] == true" size="35" value={{data.name_temp}} [(ngModel)]="data.name_temp">
+                    </td>
+                    <td>
+                      <label *ngIf="control.edit_flag[i] == false">{{data.url}}</label>
+                      <input type="text" *ngIf="control.edit_flag[i] == true" size="50" value={{data.url_temp}} [(ngModel)]="data.url_temp">
+                    </td>
+                    <td>
+                      <button *ngIf="control.edit_flag[i] == false" type="button" class="btn btn-primary edit-button" (click)="control.edit_flag[i] = true;data.name_temp = data.name;data.url_temp = data.url;">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        Edit
+                      </button>
+                      <button *ngIf="control.edit_flag[i] == true" type="button" class="btn btn-primary edit-button" (click)="update(i)">
+                        <span class="glyphicon glyphicon-save"></span>
+                        Save
+                      </button>
+                      <button *ngIf="control.edit_flag[i] == true" type="button" class="btn btn-primary edit-button" (click)="control.edit_flag[i] = false">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancel
+                      </button>
+                      <button *ngIf="control.edit_flag[i] == true" type="button" class="btn btn-danger delete-button" (click)="delete(data.id)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                <tr>
+                  <td>
+                      <input type="text" size="35" [(ngModel)]="new_settings.name">
+                  </td>
+                  <td>
+                      <input type="url" size="50" [(ngModel)]="new_settings.url">
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-light add-big-button" (click)="add()">
+                      <span class="glyphicon glyphicon-plus"></span>
+                      Add
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
