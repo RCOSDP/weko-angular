@@ -7,13 +7,13 @@
             <table class="table table-striped">
               <thead>
                 <tr class="success">
-                  <th class="thWidth30">
+                  <th width="">
                     Name
                   </th>
-                  <th class="thWidth50">
+                  <th width="">
                     URL
                   </th>
-                  <th class="thWidth30">
+                  <th width="390">
                     Control
                   </th>
                 </tr>
@@ -23,7 +23,7 @@
                   <tr>
                     <td>
                       <label *ngIf="control.edit_flag[i] == false">{{data.name}}</label>
-                      <input type="text" *ngIf="control.edit_flag[i] == true" size="35" value={{data.name_temp}} [(ngModel)]="data.name_temp">
+                      <input type="text" *ngIf="control.edit_flag[i] == true" size="15" value={{data.name_temp}} [(ngModel)]="data.name_temp">
                     </td>
                     <td>
                       <label *ngIf="control.edit_flag[i] == false">{{data.url}}</label>
@@ -51,7 +51,7 @@
                 </ng-container>
                 <tr>
                   <td>
-                      <input type="text" size="35" [(ngModel)]="new_settings.name">
+                      <input type="text" size="15" [(ngModel)]="new_settings.name">
                   </td>
                   <td>
                       <input type="url" size="50" [(ngModel)]="new_settings.url">
