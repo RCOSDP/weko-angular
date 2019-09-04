@@ -142,6 +142,10 @@ export class TreeList2Component implements OnInit {
     let post_error_url = document.getElementById('post_error_url').innerText;
     // let jsonStr ={"index":this.nodeIdList,"actions" :"publish"}
     // private 
+    if (this.nodeIdList.length == 0) {
+      alert('At least one index should be selected.');
+      return;
+    }
     let jsonStr ={"index":this.nodeIdList,"actions": pub_status}
     this.treeList2Service.setCheckedNode(post_url, jsonStr).then(res =>{
                                           //一旦設定
