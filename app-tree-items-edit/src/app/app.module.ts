@@ -6,13 +6,15 @@ import { HttpModule }    from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { TreeList2Component } from './tree-list2/tree-list2.component';
+import { MessageModalComponent } from './message-modal/message-modal.component';
 import { Route } from '@angular/compiler/src/core';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TreeList2Component
+    TreeList2Component,
+    MessageModalComponent
   ],
   imports: [
     BrowserModule,

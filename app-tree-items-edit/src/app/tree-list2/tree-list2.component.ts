@@ -5,6 +5,8 @@ import { isJsObject } from '@angular/core/src/change_detection/change_detection_
 import { Response } from '@angular/http/src/static_response';
 import { Tree } from '../../../ng2-tree/src/tree';
 import * as $ from 'jquery';
+import * as bootstrap from 'bootstrap';
+
 
 @Component({
   selector: 'app-tree-list2',
@@ -21,6 +23,10 @@ export class TreeList2Component implements OnInit {
   @Input()
   public templflg: string = "0";
 
+  //redirect flag
+  public redirectFlag: any = {'flag': 'F'}
+  //modalの表示用
+  public modalStatus: any = { 'status': 'none' };
   //選択したnodeIｄ
   public selNodeId: any = "";
   //settings templite
@@ -143,7 +149,8 @@ export class TreeList2Component implements OnInit {
     // let jsonStr ={"index":this.nodeIdList,"actions" :"publish"}
     // private 
     if (this.nodeIdList.length == 0) {
-      alert('At least one index should be selected.');
+      this.modalStatus.status = 'table-cell';
+      $('.modal-body').html('At least one index should be selected.');
       return;
     }
     let jsonStr ={"index":this.nodeIdList,"actions": pub_status}
@@ -160,7 +167,13 @@ export class TreeList2Component implements OnInit {
                                           }
                                            
                                          }).catch(res=>{
-                                           alert(res.statusText);
+                                          this.modalStatus.status = 'table-cell';
+                                          if (res.status == 500) {
+                                            $('.modal-body').html('Server Error. Please reload this page.');
+                                          } else {
+                                            $('.modal-body').html('Please make sure the item type mapping is correct.');
+                                          }
+                                          this.redirectFlag.flag = 'T';
                                          });
   }
   /**
@@ -184,7 +197,13 @@ export class TreeList2Component implements OnInit {
                                             window.location.href = post_error_url;
                                           }
                                          }).catch(res=>{
-                                          alert(res._body.message);
+                                          this.modalStatus.status = 'table-cell';
+                                          if (res.status == 500) {
+                                            $('.modal-body').html('Server Error. Please reload this page.');
+                                          } else {
+                                            $('.modal-body').html('Please make sure the item type mapping is correct.');
+                                          }
+                                          this.redirectFlag.flag = 'T';
                                          });
   }
   /**
