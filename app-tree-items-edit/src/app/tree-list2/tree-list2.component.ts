@@ -167,13 +167,14 @@ export class TreeList2Component implements OnInit {
                                           }
                                            
                                          }).catch(res=>{
+                                          let msg = JSON.parse(res._body);
                                           this.modalStatus.status = 'table-cell';
-                                          if (res.status == 500) {
-                                            $('.modal-body').html('Server Error. Please reload this page.');
-                                          } else {
+                                          if (msg.message == "MAPPING_ERROR") {
                                             $('.modal-body').html('Please make sure the item type mapping is correct.');
+                                            this.redirectFlag.flag = 'T';
+                                          } else {
+                                            $('.modal-body').html('Server Error. Please reload this page.');
                                           }
-                                          this.redirectFlag.flag = 'T';
                                          });
   }
   /**
@@ -184,6 +185,11 @@ export class TreeList2Component implements OnInit {
     let pub_status = document.getElementById('pub_status').innerText;
     let post_success_url = document.getElementById('post_success_url').innerText;
     let post_error_url = document.getElementById('post_error_url').innerText;
+    if (this.nodeIdList.length == 0) {
+      this.modalStatus.status = 'table-cell';
+      $('.modal-body').html('At least one index should be selected.');
+      return;
+    }
     let jsonStr ={"index":this.nodeIdList,"actions": pub_status}
     this.treeList2Service.setCheckedNode(post_url, jsonStr).then(res =>{
                                           //一旦設定
@@ -197,13 +203,14 @@ export class TreeList2Component implements OnInit {
                                             window.location.href = post_error_url;
                                           }
                                          }).catch(res=>{
+                                          let msg = JSON.parse(res._body);
                                           this.modalStatus.status = 'table-cell';
-                                          if (res.status == 500) {
-                                            $('.modal-body').html('Server Error. Please reload this page.');
-                                          } else {
+                                          if (msg.message == "MAPPING_ERROR") {
                                             $('.modal-body').html('Please make sure the item type mapping is correct.');
+                                            this.redirectFlag.flag = 'T';
+                                          } else {
+                                            $('.modal-body').html('Server Error. Please reload this page.');
                                           }
-                                          this.redirectFlag.flag = 'T';
                                          });
   }
   /**
