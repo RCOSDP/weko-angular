@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { TreeModel, NodeEvent, NodeMenuItemAction, TreeModelSettings, Ng2TreeSettings, NodeMovedEvent } from 'ng2-tree';
+import { TreeModel, NodeEvent, NodeMenuItemAction, TreeModelSettings, Ng2TreeSettings, NodeMovedEvent } from '../../../ng2-tree';
 import { TreeList2Service } from '../tree-list2.service';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Response } from '@angular/http/src/static_response';
