@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { TreeModel } from 'ng2-tree/src/tree.types';
+import { TreeModel } from '../../ng2-tree/src/tree.types';
 
 @Component({
   selector: 'app-tree-community',
