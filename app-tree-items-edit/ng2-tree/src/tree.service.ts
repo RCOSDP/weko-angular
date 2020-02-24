@@ -22,6 +22,8 @@ import { ElementRef, Inject, Injectable } from '@angular/core';
 import { NodeDraggableService } from './draggable/node-draggable.service';
 import { NodeDraggableEvent } from './draggable/draggable.events';
 import { isEmpty } from './utils/fn.utils';
+import { Http,RequestOptions, Headers} from '@angular/http';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class TreeService {
@@ -153,4 +155,26 @@ export class TreeService {
   public fireNodeIndetermined(tree: Tree): void {
     this.nodeIndetermined$.next(new NodeIndeterminedEvent(tree));
   }
+}
+
+@Injectable()
+export class TreeDefaultService {
+  //
+  private treeListUrl =  window.location.href;
+  private headers = new Headers({ 'Content-Type': 'application/json'});
+  public options = new RequestOptions({ headers: this.headers });
+
+  constructor(private http: Http,
+  ) { }
+
+  public set_tree_state(index_id: String):Promise<any[]>{
+    var urlArr = window.location.href.split('/');
+    let url= urlArr[0]+"//"+urlArr[2]+"/admin/indextree/set_expand";
+
+    console.log("url",url)
+    return this.http.post(url,  JSON.stringify({index_id}))
+    .toPromise()
+    .then(response => response.json() as any[])
+    .catch();
+  };
 }
