@@ -1,5 +1,5 @@
 import { Component,OnInit,Input,Output, ElementRef } from '@angular/core';
-import { TreeModel } from 'ng2-tree/src/tree.types';
+import { TreeModel } from '../../ng2-tree/src/tree.types';
 
 @Component({
   selector: 'app-tree-items',
@@ -14,9 +14,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.myAttribute="1"){
-      console.log("1111111111");
-    }
   }
 
 }

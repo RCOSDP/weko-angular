@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { TreeModel, NodeEvent, NodeMenuItemAction, TreeModelSettings, Ng2TreeSettings } from 'ng2-tree';
+import { TreeModel, NodeEvent, NodeMenuItemAction, TreeModelSettings, Ng2TreeSettings } from '../../../ng2-tree';
 import { TreeList2Service } from '../tree-list2.service';
 import { isJsObject } from '@angular/core/src/change_detection/change_detection_util';
 import { Response } from '@angular/http/src/static_response';
-import { Tree } from 'ng2-tree/src/tree';
+import { Tree } from '../../../ng2-tree/src/tree';
 
 @Component({
   selector: 'app-tree-list2',
