@@ -169,7 +169,7 @@ export class TreeDefaultService {
 
   public set_tree_state(index_id: String):Promise<any[]>{
     var urlArr = window.location.href.split('/');
-    let url= urlArr[0]+"//"+urlArr[2]+"/admin/indextree/set_expand";
+    let url= urlArr[0]+"//"+urlArr[2]+"/api/indextree/set_expand";
     return this.http.post(url,  JSON.stringify({index_id}))
     .toPromise()
     .then(response => response.json() as any[])
