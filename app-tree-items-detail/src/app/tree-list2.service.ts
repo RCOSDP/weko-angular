@@ -39,6 +39,7 @@ export class TreeList2Service {
     let comm_ide;
     let hrl ="";
     comm_ide = $("#community").val();
+    const currentTime = new Date().getTime();
     if(inx != -1){
       for(let i=0;i<urlArr.length;i++){
         if(urlArr[i]=='communities'){
@@ -65,10 +66,10 @@ export class TreeList2Service {
       if(moreNodes != null){
         hrl = hostUrl+"/api/tree?action=browsing&more_ids="+ moreNodes;
       }else{
-        hrl = hostUrl+"/api/tree?action=browsing";
+        hrl = hostUrl+"/api/tree?action=browsing?" + currentTime;
       }
     }
-    return this.http.get(hrl)
+    return this.http.get(hrl)app-tree-items
       .toPromise()
       .then(response => response.json() as any)
       .catch(this.handleError);
@@ -80,6 +81,7 @@ export class TreeList2Service {
   setSearchNodeId(url:any,nodeId:any){
     var urlArr = window.location.href.split('/');
     let hostUrl = urlArr[0]+"//"+urlArr[2];
+    const currentTime = new Date().getTime();
 
     // Community edit
     if(window.location.href.indexOf(hostUrl+"/communities/") != -1 &&
@@ -87,7 +89,7 @@ export class TreeList2Service {
         return;
     }
 
-    let geturl = hostUrl + "/search?search_type=2&q="+ nodeId;
+    let geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&time="+currentTime;
     if($("#community")!=undefined && $("#community").val()){
       let community = $("#community").val();
       geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&community="+ community;
