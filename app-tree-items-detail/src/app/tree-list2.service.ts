@@ -69,7 +69,7 @@ export class TreeList2Service {
         hrl = hostUrl+"/api/tree?action=browsing?" + currentTime;
       }
     }
-    return this.http.get(hrl)app-tree-items
+    return this.http.get(hrl)
       .toPromise()
       .then(response => response.json() as any)
       .catch(this.handleError);
