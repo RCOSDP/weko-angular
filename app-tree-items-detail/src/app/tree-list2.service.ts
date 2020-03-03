@@ -48,25 +48,25 @@ export class TreeList2Service {
         }
       }
       if(moreNodes != null){
-        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes;
+        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes + "&time="+ currentTime;
       }else{
-        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide;
+        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide + "&time="+ currentTime;
       }
 
     }else if($("#community")!=undefined && $("#community").val()){
       comm_ide = $("#community").val();
       console.log(comm_ide)
       if(moreNodes != null){
-        hrl = hostUrl+"/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes;
+        hrl = hostUrl+"/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes + "&time="+ currentTime;
       }else{
-        hrl = hostUrl+"/api/tree?action=browsing&community="+ comm_ide;
+        hrl = hostUrl+"/api/tree?action=browsing&community="+ comm_ide + "&time="+ currentTime;
       }
 
     }else{
       if(moreNodes != null){
-        hrl = hostUrl+"/api/tree?action=browsing&more_ids="+ moreNodes;
+        hrl = hostUrl+"/api/tree?action=browsing&more_ids="+ moreNodes + "&time=" + currentTime;
       }else{
-        hrl = hostUrl+"/api/tree?action=browsing?" + currentTime;
+        hrl = hostUrl+"/api/tree?action=browsing?time=" + currentTime;
       }
     }
     return this.http.get(hrl)
@@ -89,23 +89,23 @@ export class TreeList2Service {
         return;
     }
 
-    let geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&time="+currentTime;
+    let geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&time="+ currentTime;
     if($("#community")!=undefined && $("#community").val()){
       let community = $("#community").val();
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&community="+ community;
+      geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&community="+ community + "&time="+ currentTime;
     }
     if($("#item_management_custom_sort").length!=0){
-      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=sort&sort=custom_sort";
+      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=sort&sort=custom_sort" + "&time="+ currentTime;
     }
     if($("#item_management_bulk_update").length!=0){
-      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=update";
+      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=update" + "&time="+ currentTime;
     }
     if($("#item_management_bulk_delete").length!=0){
-        geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort";
+        geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort" + "&time="+ currentTime;
     }
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_link="+activity_id;
+      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_link="+activity_id + "&time="+ currentTime;
     }
     window.location.assign(geturl);
   }
