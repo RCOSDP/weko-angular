@@ -86,26 +86,30 @@ export class TreeList2Service {
       window.location.href.indexOf("/edit/") != -1){
         return;
     }
-
-    let geturl = hostUrl + "/search?search_type=2&q="+ nodeId;
+    let geturl = new URL(window.location.href)
+    geturl.pathname = '/search'
+    geturl.searchParams.set("search_type", "2")
+    geturl.searchParams.set("q", nodeId)
     if($("#community")!=undefined && $("#community").val()){
       let community = $("#community").val();
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId + "&community="+ community;
+      geturl.searchParams.set("community", String(community))
     }
     if($("#item_management_custom_sort").length!=0){
-      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=sort&sort=custom_sort";
+      geturl.searchParams.set("item_management", "sort")
+      geturl.searchParams.set("sort", "custom_sort")
     }
     if($("#item_management_bulk_update").length!=0){
-      geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=update";
+      geturl.searchParams.set("item_management", "update")
     }
     if($("#item_management_bulk_delete").length!=0){
-        geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort";
+      geturl.searchParams.set("item_management", "delete")
+      geturl.searchParams.set("sort", "custom_sort")
     }
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
-      geturl = hostUrl + "/search?search_type=2&q="+ nodeId+"&item_link="+activity_id;
+      geturl.searchParams.set("item_link",activity_id )
     }
-    window.location.assign(geturl);
+    window.location.assign(geturl.href);
   }
 
   /**
