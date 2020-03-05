@@ -19,7 +19,7 @@ import { NodeMenuService } from './menu/node-menu.service';
 import { NodeMenuItemAction, NodeMenuItemSelectedEvent } from './menu/menu.events';
 import { NodeEditableEvent, NodeEditableEventAction } from './editable/editable.events';
 import { NodeCheckedEvent, NodeEvent } from './tree.events';
-import { TreeService } from './tree.service';
+import { TreeService, TreeDefaultService } from './tree.service';
 import * as EventUtils from './utils/event.utils';
 import { NodeDraggableEvent } from './draggable/draggable.events';
 import { Subscription } from 'rxjs/Subscription';
@@ -104,7 +104,8 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
   public constructor(
     private nodeMenuService: NodeMenuService,
     public treeService: TreeService,
-    public nodeElementRef: ElementRef
+    public nodeElementRef: ElementRef,
+    public treeDefaultService: TreeDefaultService
   ) {}
 
   public ngAfterViewInit(): void {
@@ -282,6 +283,8 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
   public onSwitchFoldingType(): void {
     this.tree.switchFoldingType();
     this.treeService.fireNodeSwitchFoldingType(this.tree);
+    this.treeDefaultService.set_tree_state(this.tree.id.toString())
+    .then()
   }
 
   public applyNewValue(e: NodeEditableEvent): void {

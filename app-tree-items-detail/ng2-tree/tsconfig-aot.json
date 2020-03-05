@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "declaration": true,
+    "stripInternal": true,
+    "outDir": "dist",
+    "suppressImplicitAnyIndexErrors": true
+  },
+  "exclude": [
+    "src/demo",
+    "node_modules",
+    "factories",
+    "**/*-aot.ts"
+  ],
+  "files": [
+    "./index.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit" : true,
+    "skipMetadataEmit" : false,
+    "preserveWhitespaces": false
+  }
+}

@@ -20,7 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../node_modules/ng2-tree/styles.css"
+        "../ng2-tree/src/styles.css"
       ],
       "scripts": [
       ],
