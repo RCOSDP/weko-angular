@@ -1,0 +1,9 @@
+.author-id-add .clear-button {
+  width: 120px;
+  height: 40px;
+  font-size: 15px;
+}
+
+.author-id-add input[type=radio] {
+  margin-left: 10px;
+}
