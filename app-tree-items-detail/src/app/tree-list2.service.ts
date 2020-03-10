@@ -86,30 +86,47 @@ export class TreeList2Service {
       window.location.href.indexOf("/edit/") != -1){
         return;
     }
-    let geturl = new URL(window.location.href)
-    geturl.pathname = '/search'
-    geturl.searchParams.set("search_type", "2")
-    geturl.searchParams.set("q", nodeId)
+    let search = window.location.search
+    search = this.insertParam(search, "search_type", "2")
+    search = this.insertParam(search, "q", nodeId)
     if($("#community")!=undefined && $("#community").val()){
       let community = $("#community").val();
-      geturl.searchParams.set("community", String(community))
+      search = this.insertParam(search, "community", String(community))
     }
     if($("#item_management_custom_sort").length!=0){
-      geturl.searchParams.set("item_management", "sort")
-      geturl.searchParams.set("sort", "custom_sort")
+      search = this.insertParam(search, "item_management", "sort")
+      search = this.insertParam(search, "sort", "custom_sort")
     }
     if($("#item_management_bulk_update").length!=0){
-      geturl.searchParams.set("item_management", "update")
+      search = this.insertParam(search, "item_management", "update")
     }
     if($("#item_management_bulk_delete").length!=0){
-      geturl.searchParams.set("item_management", "delete")
-      geturl.searchParams.set("sort", "custom_sort")
+      search = this.insertParam(search, "item_management", "delete")
+      search = this.insertParam(search, "sort", "custom_sort")
     }
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
-      geturl.searchParams.set("item_link",activity_id )
+      search = this.insertParam(search, "item_link", activity_id)
     }
-    window.location.assign(geturl.href);
+
+    window.location.assign("/search"+ search);
+  }
+
+  insertParam(search: string, key: string, value: string)
+  {
+      key = encodeURIComponent(key); value = encodeURIComponent(value);
+
+      var s = search;
+      var kvp = key+"="+value;
+
+      var r = new RegExp("(&|\\?)"+key+"=[^\&]*");
+
+      s = s.replace(r,"$1"+kvp);
+
+      if(!RegExp.$1) {s += (s.length>0 ? '&' : '?') + kvp;};
+
+      //again, do what you will here
+      return s
   }
 
   /**
