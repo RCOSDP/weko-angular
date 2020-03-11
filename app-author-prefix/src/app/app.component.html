@@ -32,15 +32,15 @@
                     <label *ngIf="control.edit_flag[i] == false">{{data.scheme}}</label>
                     <div class="row" *ngIf="control.edit_flag[i] == true">
                       <div class="col-xs-12"
-                        [ngClass]="{'col-lg-6': otherIndex > 0 && selectedScheme_temp == controlledVocabularies[otherIndex]}">
-                        <select class="form-control" [(ngModel)]="selectedScheme_temp">
+                        [ngClass]="{'col-lg-6': otherIndex > 0 && data.scheme_temp == controlledVocabularies[otherIndex]}">
+                        <select class="form-control" [(ngModel)]="data.scheme_temp">
                           <option *ngFor="let c of controlledVocabularies" [ngValue]="c">{{c}}</option>
                         </select>
                       </div>
                       <div class="col-xs-12 other-scheme"
-                        [ngClass]="{'col-lg-6': otherIndex > 0 && selectedScheme_temp == controlledVocabularies[otherIndex]}">
-                        <input *ngIf="otherIndex > 0 && selectedScheme_temp == controlledVocabularies[otherIndex]"
-                          type="text" class="form-control" [(ngModel)]="schemeOtherValue_temp">
+                        [ngClass]="{'col-lg-6': otherIndex > 0 && data.scheme_temp == controlledVocabularies[otherIndex]}">
+                        <input *ngIf="otherIndex > 0 && data.scheme_temp == controlledVocabularies[otherIndex]"
+                          type="text" class="form-control" [(ngModel)]="data.otherScheme_temp">
                       </div>
                     </div>
                   </td>

@@ -20,7 +20,8 @@ export class AppComponent implements OnInit {
       scheme: "",
       name_temp: "",
       url_temp: "",
-      scheme_temp: ""
+      scheme_temp: "",
+      otherScheme_temp: "",
     }
   ];
   public new_settings: any = {
@@ -31,9 +32,7 @@ export class AppComponent implements OnInit {
   public controlledVocabularies = [];
   public otherIndex: number = 0;
   public schemeOtherValue: string = "";
-  public schemeOtherValue_temp: string = "";
   public selectedScheme: string = "";
-  public selectedScheme_temp: string = "";
 
   constructor(private http: Http, ) { }
 
@@ -52,11 +51,11 @@ export class AppComponent implements OnInit {
     this.displayData[index].name_temp = this.displayData[index].name;
     this.displayData[index].url_temp = this.displayData[index].url;
     if (this.controlledVocabularies.indexOf(this.displayData[index].scheme) < 0) {
-      this.selectedScheme_temp = this.controlledVocabularies[this.otherIndex];
-      this.schemeOtherValue_temp = this.displayData[index].scheme;
+      this.displayData[index].scheme_temp = this.controlledVocabularies[this.otherIndex];
+      this.displayData[index].otherScheme_temp = this.displayData[index].scheme;
     } else {
-      this.selectedScheme_temp = this.displayData[index].scheme;
-      this.schemeOtherValue_temp = "";
+      this.displayData[index].scheme_temp = this.displayData[index].scheme;
+      this.displayData[index].otherScheme_temp = "";
     }
   }
   /**
@@ -68,7 +67,8 @@ export class AppComponent implements OnInit {
     data.id = this.displayData[index].id;
     data.name = this.displayData[index].name_temp;
     data.url = this.displayData[index].url_temp;
-    data.scheme = this.selectedScheme_temp != this.controlledVocabularies[this.otherIndex] ? this.selectedScheme_temp : this.schemeOtherValue_temp;
+    data.scheme = this.displayData[index].scheme_temp != this.controlledVocabularies[this.otherIndex] ?
+      this.displayData[index].scheme_temp : this.displayData[index].otherScheme_temp;
     let validation_res = this.validation(data);
     if (validation_res != 'OK') {
       alert(validation_res);
