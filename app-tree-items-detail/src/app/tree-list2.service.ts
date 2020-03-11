@@ -88,9 +88,9 @@ export class TreeList2Service {
       window.location.href.indexOf("/edit/") != -1){
         return;
     }
-    let search = window.location.search
+    let search = window.location.search || ""
     search = this.insertParam(search, "search_type", "2")
-    search = this.insertParam(search, "q", nodeId)
+    search = this.insertParam(search, "q", String(nodeId))
     search = this.insertParam(search, "time", String(currentTime))
     if($("#community")!=undefined && $("#community").val()){
       let community = $("#community").val();
