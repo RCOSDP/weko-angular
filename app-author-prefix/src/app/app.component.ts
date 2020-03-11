@@ -174,7 +174,7 @@ export class AppComponent implements OnInit {
    */
   getListOfControlledVocabularies() {
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/list_controlledvocabularies";
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/list_vocabulary";
     return this.http
       .get(url)
       .toPromise()
