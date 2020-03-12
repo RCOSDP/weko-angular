@@ -227,11 +227,11 @@ export class AppComponent implements OnInit {
     if (data.scheme.trim().length == 0) {
       return 'Please enter the correct "Scheme"';
     }
-    if (data.scheme.trim().length > 20) {
-      return '"Scheme" is longer than 20 characters';
+    if (data.scheme.trim().length > 30) {
+      return '"Scheme" is longer than 30 characters';
     }
     if (this.displayData.find(i => i.scheme == data.scheme && i.id != data.id)) {
-      return '"Scheme" must be unique';
+      return 'Specified scheme is already exist.';
     }
     let reg = /^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
     if (data.url.length > 0  && !reg.test(data.url)) {
