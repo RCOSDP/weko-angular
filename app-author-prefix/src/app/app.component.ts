@@ -33,8 +33,8 @@ export class AppComponent implements OnInit {
   public otherIndex: number = 0;
   public schemeOtherValue: string = "";
   public selectedScheme: string = "";
-    
-  constructor(private http: Http,) { }
+
+  constructor(private http: Http, ) { }
 
   ngOnInit() {
   }
@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
     data.name = this.displayData[index].name_temp;
     data.url = this.displayData[index].url_temp;
     data.scheme = this.displayData[index].scheme_temp != this.controlledVocabularies[this.otherIndex] ?
-      this.displayData[index].scheme_temp : this.displayData[index].otherScheme_temp;
+      this.displayData[index].scheme_temp.trim() : this.displayData[index].otherScheme_temp.trim();
     let validation_res = this.validation(data);
     if (validation_res != 'OK') {
       alert(validation_res);
@@ -83,10 +83,10 @@ export class AppComponent implements OnInit {
           window.location.reload();
         }
       }).catch(
-      res => {
-        alert(res.msg);
-        window.location.reload();
-    });
+        res => {
+          alert(res.msg);
+          window.location.reload();
+        });
   }
   /**
    * delete authors prefix settings
@@ -97,9 +97,9 @@ export class AppComponent implements OnInit {
       res => {
         alert('Successfully deleted');
       }).catch(
-      res => {
-        alert(res.msg);
-    });
+        res => {
+          alert(res.msg);
+        });
     window.location.reload();
   }
   /**
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
   add() {
     console.log(this.new_settings);
     this.new_settings.scheme = this.selectedScheme != this.controlledVocabularies[this.otherIndex] ?
-      this.selectedScheme : this.schemeOtherValue;
+      this.selectedScheme.trim() : this.schemeOtherValue.trim();
     let validation_res = this.validation(this.new_settings);
     if (validation_res != 'OK') {
       alert(validation_res);
@@ -123,10 +123,10 @@ export class AppComponent implements OnInit {
           window.location.reload();
         }
       }).catch(
-      res => {
-        alert(res.msg);
-        window.location.reload();
-    });    
+        res => {
+          alert(res.msg);
+          window.location.reload();
+        });
   }
   /**
    * get authors prefix settings
@@ -137,10 +137,10 @@ export class AppComponent implements OnInit {
         this.displayData = res;
         console.log(res);
         for (let i = 0; i < res.length; i++) {
-            this.control.edit_flag[i] = false;
-            this.displayData[i].name_temp = this.displayData[i].name;
-            this.displayData[i].url_temp = this.displayData[i].url;
-            this.displayData[i].scheme_temp = this.displayData[i].scheme;
+          this.control.edit_flag[i] = false;
+          this.displayData[i].name_temp = this.displayData[i].name;
+          this.displayData[i].url_temp = this.displayData[i].url;
+          this.displayData[i].scheme_temp = this.displayData[i].scheme;
         }
       }
     ).catch();
@@ -234,7 +234,7 @@ export class AppComponent implements OnInit {
       return 'Specified scheme is already exist.';
     }
     let reg = /^(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
-    if (data.url.length > 0  && !reg.test(data.url)) {
+    if (data.url.length > 0 && !reg.test(data.url)) {
       return 'Please enter the correct "URL"';
     }
     return 'OK';
