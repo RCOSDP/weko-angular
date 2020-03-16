@@ -1,0 +1,27 @@
+.weko_authors .add-button {
+  width: 120px;
+}
+
+.weko_authors .name {
+  min-width: 200px;
+}
+
+.weko_authors .scheme {
+  min-width: 250px;
+  max-width: 250px;
+}
+
+.weko_authors .button-group {
+  text-align: right;
+}
+
+@media only screen and (max-width: 1199px) {
+  .weko_authors .other-scheme {
+    margin-top: 10px;
+  }
+
+  .weko_authors .scheme {
+    min-width: 150px;
+    max-width: 150px;
+  }
+}
