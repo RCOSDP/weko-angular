@@ -97,15 +97,17 @@ export class TreeList2Service {
       search = this.insertParam(search, "community", String(community))
     }
     if($("#item_management_custom_sort").length!=0){
-      search = this.insertParam(search, "item_management", "sort")
-      search = this.insertParam(search, "sort", "custom_sort")
+      let geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=sort&sort=custom_sort";
+      return window.location.assign(geturl);
     }
     if($("#item_management_bulk_update").length!=0){
-      search = this.insertParam(search, "item_management", "update")
+      let geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=update";
+      return window.location.assign(geturl);
+
     }
     if($("#item_management_bulk_delete").length!=0){
-      search = this.insertParam(search, "item_management", "delete")
-      search = this.insertParam(search, "sort", "custom_sort")
+      let geturl = hostUrl + "/admin/items/search?search_type=2&q="+ nodeId+"&item_management=delete&sort=custom_sort";
+      return window.location.assign(geturl);
     }
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
