@@ -204,6 +204,9 @@ export class AppComponent implements OnInit {
   setPageInfo() {
     this.pageList = [];
     let pageNo = Math.floor(this.total / this.numberOfpage);
+    if (this.total % this.numberOfpage == 0) {
+      pageNo = pageNo - 1;
+    }
     for (let i = 0; i < pageNo; i++) {
       this.pageList.push(i + 2);
     }
@@ -240,14 +243,16 @@ export class AppComponent implements OnInit {
    *ページをクリック 
    */
   clickPage(index: number) {
-    //ページリンクの選択状態を設定する
-    this.pageNumber = index;
-    let a = "#pageLink_" + index;
-    $("li").removeClass("active");
-    $(a).addClass("active");
-    //検索する
-    this.search(index);
-
+    // Check invalid index
+    if (index >= 1 && index <= this.pageList.length + 1) {
+      //ページリンクの選択状態を設定する
+      this.pageNumber = index;
+      let a = "#pageLink_" + index;
+      $("li").removeClass("active");
+      $(a).addClass("active");
+      //検索する
+      this.search(index);
+    }
   }
   /**
    * 画面で表示するデータを設定する
