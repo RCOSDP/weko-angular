@@ -18,7 +18,7 @@
         </div>
         <div class="row">
           <div class="col-sm-4 col-md-4">
-            <input type="text" class="form-control" placeholder="" [(ngModel)]="searchKey">
+            <input type="text" class="form-control" placeholder="" name="searchKey" [(ngModel)]="searchKey">
           </div>
           <div class="col-sm-1 col-md-1">
             <button type="button" class="btn btn-primary search-button" (click)="searchButton()">&nbsp;&nbsp;
@@ -33,7 +33,7 @@
               <form class="form-inline">
                   <div class="form-group">
                     <label for="exampleInputName2">Display Number</label>
-                    <select class="form-control" id="authorIdOption" [(ngModel)]="cntOfpage" (change)="setNumber(cntOfpage)">
+                    <select class="form-control" id="authorIdOption" name="cntOfpage" [(ngModel)]="cntOfpage" (change)="setNumber(cntOfpage)">
                         <option>25</option>
                         <option>50</option>
                         <option>100</option>
@@ -75,7 +75,7 @@
               <ng-container *ngFor="let data of displayData;let i=index">
                 <tr class="">
                   <td class="alignCenter">
-                    <input type="checkbox" [(ngModel)]="data.flgFrom">
+                    <input type="checkbox" name="flgFrom" [(ngModel)]="data.flgFrom">
                   </td>
                   <td class="alignCenter">
                     <input type="radio" name="authorRadio" value="data.id"  [checked]="gatherId == data.id" (click)="gatherId=data.id">
