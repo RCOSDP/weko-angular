@@ -240,11 +240,31 @@ export class AppComponent implements OnInit {
    * ページ数設定
    */
   setPageInfo() {
-    this.pageList = [];
-    let pageNo = Math.floor(this.total / this.numberOfpage);
-    for (let i = 0; i < pageNo; i++) {
-      this.pageList.push(i + 1);
-    }
+    let totalPageNo = Math.floor(this.total / this.numberOfpage);
+    let generatePageList = function (totalPageNo, displayPageNo, curPage) {
+      curPage -= 1;  // First page must be 0 (for calculations)
+      displayPageNo = Math.min(displayPageNo, totalPageNo);
+      let pageList = [];
+      let margin = Math.floor(displayPageNo / 2);
+      let minPage = curPage - margin;
+      let maxPage = curPage + margin;
+      if (minPage < 0) {
+        maxPage -= minPage;
+        minPage = 0;
+      }
+      if (maxPage >= totalPageNo) {
+        minPage -= maxPage - totalPageNo + 1;
+        if (minPage < 0) {
+          minPage = 0;
+        }
+        maxPage = totalPageNo - 1;
+      }
+      for (let i = minPage; i <= maxPage; i++) {
+        pageList.push(i + 1);
+      }
+      return pageList;
+    };
+    this.pageList = generatePageList(totalPageNo, 9, this.pageNumber);
   }
   /**
    * 表示件数情報を設定
