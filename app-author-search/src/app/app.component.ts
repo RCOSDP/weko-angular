@@ -124,7 +124,6 @@ export class AppComponent implements OnInit {
     this.setI18n();
 
     // Show first page results upon load
-    $('#pageLink_1').addClass("active");
     this.search(1);
   }
   /**
@@ -171,8 +170,6 @@ export class AppComponent implements OnInit {
    */
   searchButton() {
     this.search(1);
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
   }
   /**
    * ソート処理
@@ -192,8 +189,6 @@ export class AppComponent implements OnInit {
     }
     //1page
     this.pageNumber = 1;
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
     this.search(1);
   }
   /**
@@ -248,7 +243,7 @@ export class AppComponent implements OnInit {
     this.pageList = [];
     let pageNo = Math.floor(this.total / this.numberOfpage);
     for (let i = 0; i < pageNo; i++) {
-      this.pageList.push(i + 2);
+      this.pageList.push(i + 1);
     }
   }
   /**
@@ -276,8 +271,6 @@ export class AppComponent implements OnInit {
     this.pageNumber = 1;
     //検索する
     this.search(1);
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
   }
   /**
    *
@@ -304,9 +297,6 @@ export class AppComponent implements OnInit {
   clickPage(index: number) {
     //ページリンクの選択状態を設定する
     this.pageNumber = index;
-    let a = "#pageLink_" + index;
-    $("li").removeClass("active");
-    $(a).addClass("active");
     //検索する
     this.search(index);
 
