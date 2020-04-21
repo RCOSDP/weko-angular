@@ -315,11 +315,11 @@ export class AppComponent implements OnInit {
    *ページをクリック
    */
   clickPage(index: number) {
+    let totalPageNo = Math.floor(this.total / this.numberOfpage);
     //ページリンクの選択状態を設定する
-    this.pageNumber = index;
+    this.pageNumber = Math.max(1, Math.min(totalPageNo, index));
     //検索する
     this.search(index);
-
   }
   /**
    * 画面で表示するデータを設定する
