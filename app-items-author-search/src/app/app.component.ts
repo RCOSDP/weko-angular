@@ -9,7 +9,7 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  //i18n 
+  //i18n
   public langJson = {
     Author_Name: [],
     Author_Search: [],
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
   //選択したヘージ数
   public pageNumber: number = 1;
   //page用リスト
-  public pageList: number[] = [];
+  public pageList: number[] = [1];
   //検索結果0件
   public searchZero:boolean=false;
   //ソート氏名フラグ　asc→desc
@@ -82,6 +82,8 @@ export class AppComponent implements OnInit {
   //ソート順
   public sortOrder:string="";
   public showFlg:number = 0;
+
+  public cntOfpage:number = 25;
 
 
   constructor(private http: Http,
@@ -121,8 +123,6 @@ export class AppComponent implements OnInit {
    */
   searchButton() {
     this.search(1);
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
   }
   /**
    * ソート処理
@@ -142,8 +142,6 @@ export class AppComponent implements OnInit {
     }
     //1page
     this.pageNumber = 1;
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
     this.search(1);
   }
   /**
@@ -203,9 +201,9 @@ export class AppComponent implements OnInit {
    */
   setPageInfo() {
     this.pageList = [];
-    let pageNo = Math.floor(this.total / this.numberOfpage);
+    let pageNo = Math.max(1, Math.floor(this.total / this.numberOfpage));
     for (let i = 0; i < pageNo; i++) {
-      this.pageList.push(i + 2);
+      this.pageList.push(i + 1);
     }
   }
   /**
@@ -233,21 +231,15 @@ export class AppComponent implements OnInit {
     this.pageNumber = 1;
     //検索する
     this.search(1);
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
   }
   /**
-   *ページをクリック 
+   *ページをクリック
    */
   clickPage(index: number) {
     //ページリンクの選択状態を設定する
     this.pageNumber = index;
-    let a = "#pageLink_" + index;
-    $("li").removeClass("active");
-    $(a).addClass("active");
     //検索する
     this.search(index);
-
   }
   /**
    * 画面で表示するデータを設定する
@@ -331,7 +323,7 @@ showFlga(){
    * エラー処理
    */
   private handleError(error: any): Promise<any> {
-    console.error('Sorry, an unknown error has occurred!', error); // 
+    console.error('Sorry, an unknown error has occurred!', error); //
     return Promise.reject(error.message || error);
   }
 }
