@@ -94,15 +94,15 @@
                             <div class="col-sm-12 col-md-12 alignCenter">
                                 <ul class="pagination">
                                     <li>
-                                        <a href="#"><span aria-hidden="true">&lt;</span></a>
+                                        <a href="javascript:void(0)"><span aria-hidden="true">&lt;</span></a>
                                     </li>
                                     <ng-container *ngFor="let index of pageList">
                                         <li id="{{'pageLink_'+index}}" [class.active]="index == pageNumber">
-                                            <a href="#" (click)="clickPage(index)">{{index}}</a>
+                                            <a href="javascript:void(0)" (click)="clickPage(index)">{{index}}</a>
                                         </li>
                                     </ng-container>
                                     <li>
-                                        <a href="#"><span aria-hidden="true">&gt;</span></a>
+                                        <a href="javascript:void(0)"><span aria-hidden="true">&gt;</span></a>
                                     </li>
                                 </ul>
                             </div>
