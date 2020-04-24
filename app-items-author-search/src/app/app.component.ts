@@ -9,7 +9,7 @@ declare var $: any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  //i18n 
+  //i18n
   public langJson = {
     Author_Name: [],
     Author_Search: [],
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
   //選択したヘージ数
   public pageNumber: number = 1;
   //page用リスト
-  public pageList: number[] = [];
+  public pageList: number[] = [1];
   //検索結果0件
   public searchZero:boolean=false;
   //ソート氏名フラグ　asc→desc
@@ -82,6 +82,8 @@ export class AppComponent implements OnInit {
   //ソート順
   public sortOrder:string="";
   public showFlg:number = 0;
+
+  public cntOfpage:number = 25;
 
 
   constructor(private http: Http,
@@ -121,8 +123,6 @@ export class AppComponent implements OnInit {
    */
   searchButton() {
     this.search(1);
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
   }
   /**
    * ソート処理
@@ -142,8 +142,6 @@ export class AppComponent implements OnInit {
     }
     //1page
     this.pageNumber = 1;
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
     this.search(1);
   }
   /**
@@ -203,10 +201,31 @@ export class AppComponent implements OnInit {
    */
   setPageInfo() {
     this.pageList = [];
-    let pageNo = Math.floor(this.total / this.numberOfpage);
-    for (let i = 0; i < pageNo; i++) {
-      this.pageList.push(i + 2);
-    }
+    let totalPageNo = Math.max(1, Math.floor(this.total / this.numberOfpage));
+    let generatePageList = function (totalPageNo, displayPageNo, curPage) {
+      curPage -= 1;  // First page must be 0 (for calculations)
+      displayPageNo = Math.min(displayPageNo, totalPageNo);
+      let pageList = [];
+      let margin = Math.floor(displayPageNo / 2);
+      let minPage = curPage - margin;
+      let maxPage = curPage + margin;
+      if (minPage < 0) {
+        maxPage -= minPage;
+        minPage = 0;
+      }
+      if (maxPage >= totalPageNo) {
+        minPage -= maxPage - totalPageNo + 1;
+        if (minPage < 0) {
+          minPage = 0;
+        }
+        maxPage = totalPageNo - 1;
+      }
+      for (let i = minPage; i <= maxPage; i++) {
+        pageList.push(i + 1);
+      }
+      return pageList;
+    };
+    this.pageList = generatePageList(totalPageNo, 9, this.pageNumber);
   }
   /**
    * 表示件数情報を設定
@@ -233,21 +252,16 @@ export class AppComponent implements OnInit {
     this.pageNumber = 1;
     //検索する
     this.search(1);
-    $("li").removeClass("active");
-    $('#pageLink_1').addClass("active");
   }
   /**
-   *ページをクリック 
+   *ページをクリック
    */
   clickPage(index: number) {
+    let totalPageNo = Math.floor(this.total / this.numberOfpage);
     //ページリンクの選択状態を設定する
-    this.pageNumber = index;
-    let a = "#pageLink_" + index;
-    $("li").removeClass("active");
-    $(a).addClass("active");
+    this.pageNumber = Math.max(1, Math.min(totalPageNo, index));
     //検索する
     this.search(index);
-
   }
   /**
    * 画面で表示するデータを設定する
@@ -331,7 +345,7 @@ showFlga(){
    * エラー処理
    */
   private handleError(error: any): Promise<any> {
-    console.error('Sorry, an unknown error has occurred!', error); // 
+    console.error('Sorry, an unknown error has occurred!', error); //
     return Promise.reject(error.message || error);
   }
 }
