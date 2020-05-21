@@ -200,7 +200,7 @@ export class AppComponent implements OnInit {
     let jsonObj = { searchKey: "", pageNumber: 1, numOfPage: 25, sortKey: "", sortOrder: "" };
     this.searchKey = this.searchKey.replace("　", " ");
     jsonObj.searchKey = this.searchKey;
-    jsonObj.pageNumber = this.pageNumber;
+    jsonObj.pageNumber = pageNo;
     jsonObj.numOfPage = this.numberOfpage;
     jsonObj.sortKey = this.sortKey;
     jsonObj.sortOrder = this.sortOrder;
