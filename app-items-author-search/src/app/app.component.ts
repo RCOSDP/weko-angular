@@ -149,6 +149,7 @@ export class AppComponent implements OnInit {
    */
   search(pageNo:number) {
     //検索条件を設定する
+    this.pageNumber = pageNo;
     let jsonObj = { searchKey: "", pageNumber: 1, numOfPage: 25 ,sortKey:"",sortOrder:""};
     this.searchKey = this.searchKey.replace("　", " ");
     jsonObj.searchKey = this.searchKey;
@@ -201,7 +202,7 @@ export class AppComponent implements OnInit {
    */
   setPageInfo() {
     this.pageList = [];
-    let totalPageNo = Math.max(1, Math.floor(this.total / this.numberOfpage));
+    let totalPageNo = Math.max(1, Math.ceil(this.total / this.numberOfpage));
     let generatePageList = function (totalPageNo, displayPageNo, curPage) {
       curPage -= 1;  // First page must be 0 (for calculations)
       displayPageNo = Math.min(displayPageNo, totalPageNo);

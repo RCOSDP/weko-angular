@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
   //選択したヘージ数
   public pageNumber: number = 1;
   //page用リスト
-  public pageList: number[] = [];
+  public pageList: number[] = [1];
   //検索結果0件
   public searchZero: boolean = false;
   //ソート氏名フラグ　asc→desc
@@ -196,11 +196,12 @@ export class AppComponent implements OnInit {
    */
   search(pageNo: number) {
     this.gatherId = "";
+    this.pageNumber = pageNo;
     //検索条件を設定する
     let jsonObj = { searchKey: "", pageNumber: 1, numOfPage: 25, sortKey: "", sortOrder: "" };
     this.searchKey = this.searchKey.replace("　", " ");
     jsonObj.searchKey = this.searchKey;
-    jsonObj.pageNumber = pageNo;
+    jsonObj.pageNumber = this.pageNumber;
     jsonObj.numOfPage = this.numberOfpage;
     jsonObj.sortKey = this.sortKey;
     jsonObj.sortOrder = this.sortOrder;
@@ -240,7 +241,7 @@ export class AppComponent implements OnInit {
    * ページ数設定
    */
   setPageInfo() {
-    let totalPageNo = Math.floor(this.total / this.numberOfpage);
+    let totalPageNo = Math.max(1, Math.ceil(this.total / this.numberOfpage));
     let generatePageList = function (totalPageNo, displayPageNo, curPage) {
       curPage -= 1;  // First page must be 0 (for calculations)
       displayPageNo = Math.min(displayPageNo, totalPageNo);
