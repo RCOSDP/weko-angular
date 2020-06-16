@@ -69,7 +69,7 @@ export class AddAuthorComponent implements OnInit {
     // { id: "fullNm", value: this.langJson.Author_familyNmAndNm[1] }
   ];
   // set data of group list
-  public authorIdOptions: any[] = []
+  public authorIdOptions: any[] = [];
   //氏名が姓・名で入力する場合
   // set input guide
   public placeholderArry: any = [
@@ -99,13 +99,13 @@ export class AddAuthorComponent implements OnInit {
       res => {
         this.authorIdOptions = res;
       }
-    ).catch()
+    ).catch();
   }
     /**
    * call api (get author prefix prefix)
    */
   getDataOfAuthorsPrefixSettings() {
-    const url = window.location.origin + "/api/authors/search_prefix"
+    const url = window.location.origin + "/api/authors/search_prefix";
     return this.http
       .get(url)
       .toPromise()
@@ -288,8 +288,6 @@ export class AddAuthorComponent implements OnInit {
       let subEmailInfo = this.returnSubEmailInfo();
       this.authorJsonObj.emailInfo.push(subEmailInfo);
     }
-    //入力案内内容を初期化に変更する
-    //this.showFlg.emit(0);
   }
   /**
    * 氏名情報を返す
