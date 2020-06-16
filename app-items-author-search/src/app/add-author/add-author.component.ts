@@ -11,7 +11,7 @@ declare var $: any;
 export class AddAuthorComponent implements OnInit {
   //画面データを設定
   @Output()showFlg: EventEmitter<any> = new EventEmitter<any>();
-  //i18n 
+  //i18n
   public langJson = {
     Author_Add_New_Author: [],
     Author_Name: [],
@@ -46,7 +46,7 @@ export class AddAuthorComponent implements OnInit {
     ],
     authorIdInfo: [
       {
-        idType: "cinii",
+        idType: "1",
         authorId: "",
         authorIdShowFlg: "true"
       }
@@ -69,12 +69,7 @@ export class AddAuthorComponent implements OnInit {
     // { id: "fullNm", value: this.langJson.Author_familyNmAndNm[1] }
   ];
   // set data of group list
-  public authorIdOptions: any[] = [
-    { id: "cinii", value: "CiNii" },
-    { id: "kaken", value: "KAKEN" },
-    { id: "orcid", value: "ORCID" },
-    { id: "weko3", value: "WEKO3" }
-  ]
+  public authorIdOptions: any[] = []
   //氏名が姓・名で入力する場合
   // set input guide
   public placeholderArry: any = [
@@ -91,12 +86,34 @@ export class AddAuthorComponent implements OnInit {
 
   ngOnInit() {
     this.setI18n();
+    this.getAuthorsPrefixSettings();
   }
   ngAfterViewInit() {
     this.getAuthorData();
   }
   /**
-   * 
+   * get authors prefix settings
+   */
+  getAuthorsPrefixSettings() {
+    this.getDataOfAuthorsPrefixSettings().then(
+      res => {
+        this.authorIdOptions = res;
+      }
+    ).catch()
+  }
+    /**
+   * call api (get author prefix prefix)
+   */
+  getDataOfAuthorsPrefixSettings() {
+    const url = window.location.origin + "/api/authors/search_prefix"
+    return this.http
+      .get(url)
+      .toPromise()
+      .then(response => response.json() as any)
+      .catch(this.handleError);
+  }
+  /**
+   *
    */
   getAuthorData() {
     let urlStr = window.location.href;
@@ -115,7 +132,7 @@ export class AddAuthorComponent implements OnInit {
     }
   }
   /**
-   * 
+   *
    */
   setPageData(dataJson: any) {
     let info = dataJson.hits.hits[0]._source;
@@ -154,7 +171,6 @@ export class AddAuthorComponent implements OnInit {
     let jsUrl = js[js.length - 1].src;
     let strUrl = jsUrl.substring(0, jsUrl.lastIndexOf('static'));
     let jsonUrl = strUrl + "static/json/weko_authors/translations/" + lang + "/messages.json";
-    console.log(lang);
     this.getLnagJson(jsonUrl).then(res => {
       this.langJson = res;
       this.nameOptions = [
@@ -168,7 +184,7 @@ export class AddAuthorComponent implements OnInit {
   /**
    * 氏名情報を削除する
    * delete name info
-   * ＠@param index 削除する位置情報(position) 
+   * ＠@param index 削除する位置情報(position)
    */
   delAuthorNameData(index: any) {
     //全部削除する場合
@@ -192,7 +208,7 @@ export class AddAuthorComponent implements OnInit {
    */
   delAuthorIdData(index: any) {
     //全部削除する場合
-    // all authorId info  
+    // all authorId info
     if (this.authorJsonObj.authorIdInfo.length == 1) {
       let authorIdInfoObj = this.returnAuthorIdInfoObj();
       this.authorJsonObj.authorIdInfo.splice(index, 1, authorIdInfoObj);
@@ -273,7 +289,7 @@ export class AddAuthorComponent implements OnInit {
       this.authorJsonObj.emailInfo.push(subEmailInfo);
     }
     //入力案内内容を初期化に変更する
-    this.showFlg.emit(0);
+    //this.showFlg.emit(0);
   }
   /**
    * 氏名情報を返す
@@ -296,7 +312,7 @@ export class AddAuthorComponent implements OnInit {
   returnAuthorIdInfoObj(): any {
     //著者ID情報
     let authorIdInfoObj = {
-      idType: "cinii",
+      idType: "1",
       authorId: "",
       authorIdShowFlg: "true"
     }
@@ -313,7 +329,7 @@ export class AddAuthorComponent implements OnInit {
     return subEmailInfo;
   }
   /**
-   *placeholder案内内容を返す 
+   *placeholder案内内容を返す
    */
   returnPlaceholderInfo(): any {
     let placeholderInfo = {
@@ -331,7 +347,7 @@ export class AddAuthorComponent implements OnInit {
     let a = JSON.stringify(this.authorJsonObj);
     let dbJson = this.changeJson();
     let urlStr = window.location.href;
-    
+
       let timestamp = new Date().getTime().toString();
       dbJson.pk_id = timestamp;
       this.postPageDataJson(dbJson).then(res => {
@@ -377,7 +393,7 @@ export class AddAuthorComponent implements OnInit {
     }
   }
   /**
-   *名前入力形式を変更する場合 
+   *名前入力形式を変更する場合
    */
   nameFormatChange(index: any) {
     //名前入力形式を変更する場合、入力した情報を再設定する
@@ -470,7 +486,7 @@ deleteById(esIdJsonObj: any): Promise<any> {
       .catch(this.handleError);
   }
   /**
-   * 
+   *
    */
   getDataOfAuthor(esid: any) {
     var urlArr = window.location.href.split('/');
@@ -486,7 +502,7 @@ deleteById(esIdJsonObj: any): Promise<any> {
    * エラー処理
    */
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // 
+    console.error('An error occurred', error); //
     return Promise.reject(error.message || error);
   }
 }

@@ -1,59 +1,44 @@
 <p>
   <!-- <div class="container"> -->
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-md-12">
+        <div class="col-sm-12 col-md-12 col-md-12 panel-padding">
           <div class="panel panel-default">
-            <div class="panel-heading">
-              <h5>
-                <p class="">
-                  <!-- 著者新規追加 -->
-                  <!-- Add New Author -->
-                  {{langJson.Author_Add_New_Author[1]}}
-                </p>
-              </h5>
-            </div>
+            <!-- Custom header of panel by table head -->
+            <table class="table table-striped">
+              <thead>
+                  <tr class="success">
+                      <th>{{langJson.Author_Add_New_Author[1]}}</th>
+                  </tr>
+              </thead>
+            </table>
             <div class="panel-body">
               <!-- 氏名　start -->
               <div class="row">
-                <div class="col-sm-12 col-md-12">
-                  <div class="col-sm-1 col-md-1 textRight">
+                <div class="col-sm-12 col-md-12 remove-padding-right">
+                  <div class="col-sm-1 col-md-1 textRight remove-padding-right">
                     <!-- 氏名 -->
                     <!-- Name -->
                     {{langJson.Author_Name[1]}}
                   </div>
-                  <div class="col-sm-11 col-md-11">
+                  <div class="col-sm-11 col-md-11 remove-padding-right remove-padding-left">
                     <ng-container *ngFor="let authorNameData of authorJsonObj.authorNameInfo;let i=index">
                       <!-- for start -->
                       <div class="">
-                        <div class="col-sm-12 col-md-12 divBottom">
-                          <div *ngIf="authorNameData.nameFormat != 'fullNm'" class="col-sm-3 col-md-3">
-                            <input type="text" class="form-control" placeholder="{{placeholderArry[i].familyName}}" [(ngModel)]="authorNameData.familyName" name="author_name_{{i}}">
+                        <div class="col-sm-12 col-md-12 divBottom remove-padding-right">
+                          <div class="col-sm-9 col-md-9 remove-padding-right">
+                            <input *ngIf="authorNameData.nameFormat != 'fullNm'" type="text" class="form-control add-author-surname" placeholder="{{placeholderArry[i].familyName}}" [(ngModel)]="authorNameData.familyName" name="author_name_{{i}}">
+                            <input *ngIf="authorNameData.nameFormat != 'fullNm'" type="text" class="form-control add-author-name" placeholder="{{placeholderArry[i].name}}" [(ngModel)]="authorNameData.firstName" name="author_name_{{i}}">
+                            <input *ngIf="authorNameData.nameFormat == 'fullNm'" type="text" class="form-control" placeholder="{{placeholderArry[i].fullName}}" [(ngModel)]="authorNameData.fullName" name="author_name_{{i}}">
+                            <select class="form-control add-author-lang-option" id="langOption" [(ngModel)]="authorNameData.language" (change)="inputChange(i,authorNameData.language)" >
+                              <option *ngFor="let langOption of langOptions" [value]="langOption.id">{{langOption.value}}</option>
+                            </select>
+                            <select class="form-control add-author-name-option" id="nameOption" [(ngModel)]="authorNameData.nameFormat" (change)="nameFormatChange(i)">
+                              <option *ngFor="let nameOption of nameOptions" [value]="nameOption.id">{{nameOption.value}}</option>
+                            </select>
                           </div>
-                          <div *ngIf="authorNameData.nameFormat != 'fullNm'" class="col-sm-3 col-md-3">
-                            <input type="text" class="form-control" placeholder="{{placeholderArry[i].name}}" [(ngModel)]="authorNameData.firstName" name="author_name_{{i}}">
-                          </div>
-                          <div *ngIf="authorNameData.nameFormat == 'fullNm'" class="col-sm-6 col-md-6">
-                            <input type="text" class="form-control" placeholder="{{placeholderArry[i].fullName}}" [(ngModel)]="authorNameData.fullName" name="author_name_{{i}}">
-                          </div>
-                          <div class="col-sm-3 col-md-3">
+                          <div class="col-sm-2 col-md-2 remove-padding-right">
                             <div class="">
-                              <div class="col-sm-12 col-md-12">
-                                <div class="col-sm-6 col-md-6">
-                                  <select class="form-control" id="langOption" [(ngModel)]="authorNameData.language" (change)="inputChange(i,authorNameData.language)" >
-                                    <option *ngFor="let langOption of langOptions" [value]="langOption.id">{{langOption.value}}</option>
-                                  </select>
-                                </div>
-                                <div class="col-sm-6 col-md-6">
-                                  <select class="form-control" id="nameOption" [(ngModel)]="authorNameData.nameFormat" (change)="nameFormatChange(i)">
-                                    <option *ngFor="let nameOption of nameOptions" [value]="nameOption.id">{{nameOption.value}}</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-sm-2 col-md-2">
-                            <div class="">
-                              <div class="col-sm-12 col-md-12 alignCenter">
+                              <div class="col-sm-12 col-md-12 alignCenter remove-padding-right">
                                 <input type="radio" [ngModel]="authorNameData.nameShowFlg" [checked]="authorNameData.nameShowFlg == 'true'" (click)="authorNameData.nameShowFlg = 'true'"
                                   name="{{'authorNameRadio_'+i}}" value="true">&nbsp;
                                   <!-- 表示 -->
@@ -79,7 +64,7 @@
                     <!-- for end -->
                     <!-- 第二行目　 start-->
                     <div class="row ">
-                      <div class="col-sm-11 col-md-11 textRight">
+                      <div class="col-sm-11 col-md-11 textRight remove-padding-right">
                         <button type="button" class="btn btn-link" (click)="addAuthorNameData()">+&nbsp;
                           <!-- 著者項目を追加 -->
                           <!-- Add author item -->
@@ -95,28 +80,28 @@
               <br>
               <!-- 著者Id　start -->
               <div class="row">
-                <div class="col-sm-12 col-md-12">
-                  <div class="col-sm-1 col-md-1 textRight">
+                <div class="col-sm-12 col-md-12 remove-padding-right">
+                  <div class="col-sm-1 col-md-1 textRight remove-padding-right">
                     <!-- 著者ID -->
                     <!-- Author ID -->
                     {{langJson.Author_ID[1]}}
                   </div>
-                  <div class="col-sm-11 col-md-11">
+                  <div class="col-sm-11 col-md-11 remove-padding-right remove-padding-left">
                     <!-- for start -->
                     <ng-container *ngFor="let authorIdData of authorJsonObj.authorIdInfo;let i=index">
                       <div class="">
-                        <div class="col-sm-12 col-md-12 divBottom">
-                          <div class="col-sm-2 col-md-2">
+                        <div class="col-sm-12 col-md-12 divBottom remove-padding-right">
+                          <div class="col-sm-2 col-md-2 remove-padding-right">
                             <select class="form-control" id="authorIdOption" [(ngModel)]="authorIdData.idType">
-                              <option *ngFor="let authorIdOption of authorIdOptions" [value]="authorIdOption.id">{{authorIdOption.value}}</option>
+                              <option *ngFor="let authorIdOption of authorIdOptions" [value]="authorIdOption.id">{{authorIdOption.name}}</option>
                             </select>
                           </div>
-                          <div class="col-sm-6 col-md-6">
+                          <div class="col-sm-6 col-md-6 remove-padding-right">
                             <input type="text" class="form-control" placeholder="" [(ngModel)]="authorIdData.authorId" name="author_id_{{i}}">
                           </div>
-                          <div class="col-sm-1 col-md-1">
+                          <div class="col-sm-1 col-md-1 remove-padding-right">
                             <div class="">
-                              <div class="col-sm-12 col-md-12 textRight">
+                              <div class="col-sm-12 col-md-12 textRight remove-padding-right remove-padding-left">
                                 <button type="button" class="btn btn-info">
                                   <!-- 確認 -->
                                   <!-- Confirm -->
@@ -125,9 +110,9 @@
                               </div>
                             </div>
                           </div>
-                          <div class="col-sm-2 col-md-2">
+                          <div class="col-sm-2 col-md-2 remove-padding-right">
                             <div class="">
-                              <div class="col-sm-12 col-md-12 alignCenter">
+                              <div class="col-sm-12 col-md-12 alignCenter remove-padding-right">
                                 <input type="radio" [ngModel]="authorIdData.authorIdShowFlg" [checked]="authorIdData.authorIdShowFlg =='true'" (click)="authorIdData.authorIdShowFlg = 'true'"
                                   name="{{'authorIdRadio_'+i}}" value="true">&nbsp;
                                   <!-- 表示 -->
@@ -152,7 +137,7 @@
                     </ng-container>
                     <!-- 第二行目　 end-->
                     <div class="row ">
-                      <div class="col-sm-11 col-md-11 textRight">
+                      <div class="col-sm-11 col-md-11 textRight remove-padding-right">
                         <button type="button" class="btn btn-link" (click)="addAuthorIdInfo()">+&nbsp;
                           <!-- 著者IDを追加 -->
                           <!-- Add Author ID -->
@@ -168,17 +153,17 @@
               <!-- email start -->
               <!-- for start -->
               <div class="row">
-                <div class="col-sm-12 col-md-12">
-                  <div class="col-sm-1 col-md-1 textRight">
+                <div class="col-sm-12 col-md-12 remove-padding-right">
+                  <div class="col-sm-1 col-md-1 textRight remove-padding-right">
                     <!-- E-Mail -->
                     {{langJson.Author_EMail[1]}}
                   </div>
-                  <div class="col-sm-11 col-md-11">
+                  <div class="col-sm-11 col-md-11 remove-padding-right remove-padding-left">
                     <!-- 第一行目 -->
                     <ng-container *ngFor="let emailInfoData of authorJsonObj.emailInfo;let i=index">
                       <div class="">
-                        <div class="col-sm-12 col-md-12 divBottom">
-                          <div class="col-sm-11 col-md-11">
+                        <div class="col-sm-12 col-md-12 divBottom remove-padding-right">
+                          <div class="col-sm-11 col-md-11 remove-padding-right">
                             <input type="text" class="form-control" placeholder="" [(ngModel)]="emailInfoData.email" name="autho_email_{{i}}">
                           </div>
                           <div class="col-sm-1 col-md-1">
@@ -192,7 +177,7 @@
                     </ng-container>
                     <!-- 第一行目 -->
                     <div class="row ">
-                      <div class="col-sm-11 col-md-11 textRight">
+                      <div class="col-sm-11 col-md-11 textRight remove-padding-right">
                         <button type="button" class="btn btn-link" (click)="addEmailInfo()">+&nbsp;
                           <!-- e-mailを追加 -->
                           <!-- Add E-mail -->
@@ -210,12 +195,12 @@
               <br>
               <!-- ボタン start-->
               <div class="row alignCenter">
-                <div class="col-sm-1 col-md-1">
+                <div class="col-sm-1 col-md-1 remove-padding-right">
                     <button *ngIf="deleteBtn" type="button" class="btn btn-info" (click)="deleteAuthor()">
                         <!-- 削除 -->delete
                       </button>
                 </div>
-                <div class="col-sm-9 col-md-9">
+                <div class="col-sm-9 col-md-9 remove-padding-right remove-padding-left">
                     <button type="button" class="btn btn-info" (click)="clearInputInfo()">
                         <!-- 取消 -->
                         <!-- Clear -->

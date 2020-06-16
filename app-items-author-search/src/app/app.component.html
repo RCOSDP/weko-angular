@@ -1,11 +1,11 @@
 <p>
-    <div class="container col-sm-12 col-md-12 col-md-12">
+    <div class="container col-sm-12 col-md-12 col-md-12 panel-padding">
         <div class="row" *ngIf="showFlg==0">
             <div class="col-sm-12 col-md-12 col-md-12">
                 <div class="row">
                     <div class="row">
-                        <div class="col-sm-11 col-md-11 textRight">
-                                <button type="button" class="btn btn-info" (click)="showAddAuthor()">Add Author</button>
+                        <div class="col-sm-12 col-md-12 textRight">
+                                <button type="button" class="btn btn-info" (click)="showAddAuthor()">{{langJson.Author_Add_Author[1]}}</button>
                         </div>
                     </div>
                     <div class="row">
@@ -17,7 +17,7 @@
                                 {{langJson.Author_Search[1]}}
                                 &nbsp;&nbsp;</button>
                         </div>
-                        <div class="col-sm-2 col-md-2"></div>
+                        <div class="col-sm-3 col-md-3"></div>
                         <div class="col-sm-4 col-md-4 textRight">
                             <form class="form-inline">
                                 <div class="form-group">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-sm-11 col-md-11">
+                    <div class="col-sm-12 col-md-12">
                         <table class="table table-striped">
                             <caption></caption>
                             <thead>
@@ -88,7 +88,7 @@
                         </table>
                     </div>
                 </div>
-                    <div *ngIf="searchZero" class="alert alert-danger col-sm-11 col-md-11">{{langJson.Author_Search_No_Result[1]}}</div>
+                    <div *ngIf="searchZero" class="alert alert-danger col-sm-12 col-md-12">{{langJson.Author_Search_No_Result[1]}}</div>
                     <div class="">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 alignCenter">
@@ -119,4 +119,4 @@
             <app-add-author (showFlg)="showFlga()"></app-add-author>
         </div>
     </div>
-    
+

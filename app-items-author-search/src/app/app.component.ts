@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 declare var $: any;
@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   public langJson = {
     Author_Name: [],
     Author_Search: [],
+    Author_Add_Author: [],
     Author_Mail_Address: [],
     Author_Search_No_Result: [],
     Author_Page_Previous: [],
@@ -86,11 +87,14 @@ export class AppComponent implements OnInit {
   public cntOfpage:number = 25;
 
 
-  constructor(private http: Http,
-  ) { }
+  constructor(private http: Http, private ngZone: NgZone) { }
 
   ngOnInit() {
     this.setI18n();
+    window.appAuthorSearch = window.appAuthorSearch || {};
+    window.appAuthorSearch.namespace = window.appAuthorSearch.namespace || {};
+    window.appAuthorSearch.namespace.resetSearchData = this.resetSearchData.bind(this);
+    window.appAuthorSearch.namespace.isCloseAuthorModal = this.isCloseAuthorModal.bind(this);
   }
   /**
    * i18n
@@ -101,7 +105,6 @@ export class AppComponent implements OnInit {
     let jsUrl = js[js.length - 1].src;
     let strUrl = jsUrl.substring(0, jsUrl.lastIndexOf('static'));
     let jsonUrl = strUrl + "static/json/weko_items_ui/translations/" + lang + "/messages.json";
-    console.log(lang);
     this.getLnagJson(jsonUrl).then(res => {
       this.langJson = res;
     }).catch(
@@ -349,4 +352,36 @@ showFlga(){
     console.error('Sorry, an unknown error has occurred!', error); //
     return Promise.reject(error.message || error);
   }
+
+  /**
+   * Clear data on 'Import Author' modal when show modal.
+   * Controls: key search, result search, display number.
+   */
+  resetSearchData(){
+    this.ngZone.run(() => {
+      this.displayData = [];
+      this.searchKey = "";
+      this.cntOfpage = 25;
+      this.pageNumber = 1;
+      this.searchZero = false;
+      this.showFlga();
+    });
+  }
+
+  /**
+   * 1. Press 'Close' button on 'Add Author' modal
+   *    => Close 'Add Author' modal and show 'Import Author' modal .
+   * 2. Press 'Close' button on 'Import Author' modal
+   *    => Close 'Import Author' modal.
+   */
+  isCloseAuthorModal(){
+    this.ngZone.run(() => {
+      if (this.showFlg == 1) {
+        this.showFlga();
+      } else {
+        $('#myModal').modal('toggle');
+      }
+    });
+  }
+
 }
