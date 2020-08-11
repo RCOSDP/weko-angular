@@ -30,13 +30,13 @@
             </div>
           </div>
           <div class="panel-footer">
-           <button type="button" class="btn btn-primary save-button" (click)="save()">
+           <button type="button" class="btn btn-primary save-button" [disabled]="isDisabledSave" (click)="save()">
               <span class="glyphicon glyphicon-saved"></span>
               <!-- Save -->
               {{langJson.Save[1]}}
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="btn btn-info next-button" (click)="sending()">
+            <button class="btn btn-info next-button" [disabled]="isDisabledSend" (click)="sending()">
               <!-- Send -->
               {{langJson.Send[1]}}
               <span class="glyphicon glyphicon-chevron-right"></span>

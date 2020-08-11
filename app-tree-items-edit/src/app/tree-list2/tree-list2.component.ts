@@ -51,7 +51,7 @@ export class TreeList2Component implements OnInit {
     },
     "status":0
   };
-  //i18n 
+  //i18n
   public langJson = {
     Index_Tree:[],
     Designate_Index: [],
@@ -59,12 +59,14 @@ export class TreeList2Component implements OnInit {
     Save: [],
     Quit: []
   };
+  public isDisabledSave = false;
+  public isDisabledSend = false;
 
   constructor(private treeList2Service: TreeList2Service) {
   }
 
   ngOnInit() {
-    
+
     this.setI18n();
     //チェックボックスあるかを設定する
     if (this.templflg == '0') {
@@ -142,12 +144,13 @@ export class TreeList2Component implements OnInit {
    * サービスitems詳細画面の送信ボタン
    */
   sending() {
+    this.isDisabledSend = true;
     let post_url = document.getElementById('post_url').innerText;
     let pub_status = document.getElementById('pub_status').innerText;
     let post_success_url = document.getElementById('post_success_url').innerText;
     let post_error_url = document.getElementById('post_error_url').innerText;
     // let jsonStr ={"index":this.nodeIdList,"actions" :"publish"}
-    // private 
+    // private
     if (this.nodeIdList.length == 0) {
       this.modalStatus.status = 'table-cell';
       $('.modal-body').html('At least one index should be selected.');
@@ -165,8 +168,9 @@ export class TreeList2Component implements OnInit {
                                           }else{
                                             window.location.href = post_error_url;
                                           }
-                                           
+
                                          }).catch(res=>{
+                                          this.isDisabledSend = false;
                                           let msg = JSON.parse(res._body);
                                           this.modalStatus.status = 'table-cell';
                                           if (msg.message == "MAPPING_ERROR") {
@@ -181,6 +185,7 @@ export class TreeList2Component implements OnInit {
    * save button process
    */
   save(){
+    this.isDisabledSave = true;
     let post_url = document.getElementById('post_url').innerText;
     let pub_status = document.getElementById('pub_status').innerText;
     let post_success_url = document.getElementById('post_success_url').innerText;
@@ -203,6 +208,7 @@ export class TreeList2Component implements OnInit {
                                             window.location.href = post_error_url;
                                           }
                                          }).catch(res=>{
+                                          this.isDisabledSave = false;
                                           let msg = JSON.parse(res._body);
                                           this.modalStatus.status = 'table-cell';
                                           if (msg.message == "MAPPING_ERROR") {
