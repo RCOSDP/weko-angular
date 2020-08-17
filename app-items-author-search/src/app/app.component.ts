@@ -186,6 +186,7 @@ export class AppComponent implements OnInit {
    * 入力処理
    */
   input(index:number) {
+    $("#input_button_"+index).prop('disabled', true);
     //todo
     // let author_info = this.displayData[index]
     // let author_info = this.searchJson.hits.hits[index]._source;

@@ -145,6 +145,7 @@ export class TreeList2Component implements OnInit {
    */
   sending() {
     this.isDisabledSend = true;
+    $(".lds-ring-background").removeClass("hidden");
     let post_url = document.getElementById('post_url').innerText;
     let pub_status = document.getElementById('pub_status').innerText;
     let post_success_url = document.getElementById('post_success_url').innerText;
@@ -152,6 +153,8 @@ export class TreeList2Component implements OnInit {
     // let jsonStr ={"index":this.nodeIdList,"actions" :"publish"}
     // private
     if (this.nodeIdList.length == 0) {
+      this.isDisabledSend = false;
+      $(".lds-ring-background").addClass("hidden");
       this.modalStatus.status = 'table-cell';
       $('.modal-body').html('At least one index should be selected.');
       return;
@@ -171,6 +174,7 @@ export class TreeList2Component implements OnInit {
 
                                          }).catch(res=>{
                                           this.isDisabledSend = false;
+                                          $(".lds-ring-background").addClass("hidden");
                                           let msg = JSON.parse(res._body);
                                           this.modalStatus.status = 'table-cell';
                                           if (msg.message == "MAPPING_ERROR") {
@@ -186,11 +190,14 @@ export class TreeList2Component implements OnInit {
    */
   save(){
     this.isDisabledSave = true;
+    $(".lds-ring-background").removeClass("hidden");
     let post_url = document.getElementById('post_url').innerText;
     let pub_status = document.getElementById('pub_status').innerText;
     let post_success_url = document.getElementById('post_success_url').innerText;
     let post_error_url = document.getElementById('post_error_url').innerText;
     if (this.nodeIdList.length == 0) {
+      this.isDisabledSave = false;
+      $(".lds-ring-background").addClass("hidden");
       this.modalStatus.status = 'table-cell';
       $('.modal-body').html('At least one index should be selected.');
       return;
@@ -209,6 +216,7 @@ export class TreeList2Component implements OnInit {
                                           }
                                          }).catch(res=>{
                                           this.isDisabledSave = false;
+                                          $(".lds-ring-background").addClass("hidden");
                                           let msg = JSON.parse(res._body);
                                           this.modalStatus.status = 'table-cell';
                                           if (msg.message == "MAPPING_ERROR") {
