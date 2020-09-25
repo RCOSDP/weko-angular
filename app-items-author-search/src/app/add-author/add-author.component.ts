@@ -58,7 +58,7 @@ export class AddAuthorComponent implements OnInit {
   //氏名の入力方
   // set data of name List
   public langOptions: any[] = [
-    { id: "ja-Kana", value: "ja-kana" },
+    { id: "ja-Kana", value: "ja-Kana" },
     { id: "ja", value: "ja" },
     { id: "en", value: "en" }
   ];
