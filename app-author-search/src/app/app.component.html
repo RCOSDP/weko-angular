@@ -5,7 +5,7 @@
       <div class="row">
         <div class="row">
           <div class="col-sm-12 col-md-12 textRight">
-              <button type="button" class="btn btn-primary action-button" data-toggle="modal" data-target="#exampleModal">
+              <button type="button" class="btn btn-primary action-button" [disabled]="mergeDisabled" data-toggle="modal" data-target="#exampleModal">
                 <i class="fa fa-hand-o-right"></i>
                 Merge
               </button>
@@ -75,10 +75,10 @@
               <ng-container *ngFor="let data of displayData;let i=index">
                 <tr class="">
                   <td class="alignCenter">
-                    <input type="checkbox" name="flgFrom" [(ngModel)]="data.flgFrom">
+                    <input type="checkbox" name="flgFrom" [(ngModel)]="data.flgFrom" (ngModelChange)="selectAuthor()">
                   </td>
                   <td class="alignCenter">
-                    <input type="radio" name="authorRadio" value="data.id"  [checked]="gatherId == data.id" (click)="gatherId=data.id">
+                    <input type="radio" name="authorRadio" value="data.id"  [checked]="gatherId == data.id" (click)="gatherId=data.id; selectAuthor()">
                   </td>
                   <td [innerHTML]="data.authorNameInfo.authorName">
                   </td>

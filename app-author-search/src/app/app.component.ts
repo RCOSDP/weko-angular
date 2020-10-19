@@ -116,6 +116,8 @@ export class AppComponent implements OnInit {
 
   public cntOfpage:number = 25;
 
+  public mergeDisabled:boolean = true;
+
 
   constructor(private http: Http,
   ) { }
@@ -156,6 +158,21 @@ export class AppComponent implements OnInit {
    */
   groupAdd() {
     // todo
+  }
+
+  selectAuthor() {
+    let originAuthors = [];
+    if (this.gatherId.length === 0) {
+      this.mergeDisabled = true;
+      return;
+    }
+    // Get list of "origin" authors
+    for (let data of this.displayData) {
+      if (data.flgFrom && data.id !== this.gatherId) {
+        originAuthors.push(data.id);
+      }
+    }
+    this.mergeDisabled = originAuthors.length === 0;
   }
   /**
    *著者追加
