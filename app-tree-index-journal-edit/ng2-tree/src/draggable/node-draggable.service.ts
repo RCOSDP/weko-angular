@@ -9,12 +9,12 @@ export class NodeDraggableService {
 
   private capturedNode: CapturedNode;
 
-  public fireNodeDragged(captured: CapturedNode, target: ElementRef): void {
+  public fireNodeDragged(captured: CapturedNode, target: ElementRef, isMovedInto = false): void {
     if (!captured.tree || captured.tree.isStatic()) {
       return;
     }
 
-    this.draggableNodeEvents$.next(new NodeDraggableEvent(captured, target));
+    this.draggableNodeEvents$.next(new NodeDraggableEvent(captured, target, isMovedInto));
   }
 
   public captureNode(node: CapturedNode): void {

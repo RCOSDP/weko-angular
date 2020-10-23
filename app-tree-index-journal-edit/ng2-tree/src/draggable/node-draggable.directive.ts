@@ -72,14 +72,28 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
 
   private handleDragEnter(e: DragEvent): any {
     e.preventDefault();
+    console.log("Offset moved: X:" + e.offsetX + ", Y:" + e.offsetY);
+    console.log("Offset target: " + this.nodeNativeElement.offsetWidth + ", " + this.nodeNativeElement.offsetHeight);
+    console.log("Client target: " + this.nodeNativeElement.clientWidth + ", " + this.nodeNativeElement.clientHeight);
+
     if (this.containsElementAt(e)) {
-      this.addClass('over-drop-target');
+      if (this.nodeDraggableService.getCapturedNode().element !== this.nodeDraggable) {
+        // let pointX = e.pageX - this.nodeNativeElement.offsetLeft;
+        if (e.offsetY < this.nodeNativeElement.offsetHeight / 2) {
+          this.removeClass('over-drop-target');
+          this.addClass('over-drop-target-sibling');
+        } else {
+          this.removeClass('over-drop-target-sibling');
+          this.addClass('over-drop-target');
+        }
+      }
     }
   }
 
   private handleDragLeave(e: DragEvent): any {
     if (!this.containsElementAt(e)) {
       this.removeClass('over-drop-target');
+      this.removeClass('over-drop-target-sibling');
     }
   }
 
@@ -89,14 +103,19 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
       e.stopPropagation();
     }
 
-    this.removeClass('over-drop-target');
+    const isDropPossible = this.isDropPossible(e);
 
-    if (!this.isDropPossible(e)) {
+    this.removeClass('over-drop-target');
+    this.removeClass('over-drop-target-sibling');
+
+    if (!isDropPossible) {
       return false;
     }
 
     if (this.nodeDraggableService.getCapturedNode()) {
-      return this.notifyThatNodeWasDropped();
+      const isMovedInto = e.offsetY >= this.nodeNativeElement.offsetHeight / 2;
+
+      return this.notifyThatNodeWasDropped(isMovedInto);
     }
   }
 
@@ -125,7 +144,7 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
     classList.remove(className);
   }
 
-  private notifyThatNodeWasDropped(): void {
-    this.nodeDraggableService.fireNodeDragged(this.nodeDraggableService.getCapturedNode(), this.nodeDraggable);
+  private notifyThatNodeWasDropped(isMovedInto = false): void {
+    this.nodeDraggableService.fireNodeDragged(this.nodeDraggableService.getCapturedNode(), this.nodeDraggable, isMovedInto);
   }
 }
