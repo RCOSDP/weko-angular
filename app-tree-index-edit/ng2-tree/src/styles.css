@@ -64,11 +64,13 @@ tree-internal li {
 }
 
 tree-internal .over-drop-target-sibling::before {
-  content: "";
+  content: "Drop here..." !important;
+  color: white !important;
   display: block;
   border: 4px solid #757575;
-  margin-top: 0px;
+  transition: padding 0.2s ease-out;
   padding: 5px;
+  border-radius: 5px;
 }
 
 tree-internal .over-drop-target-sibling {

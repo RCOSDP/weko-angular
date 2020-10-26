@@ -37,7 +37,10 @@ export class TreeList2Component implements OnInit {
   public treeH: TreeModel = {
     value: "",
     id: "",
-    children: []
+    children: [],
+    settings: {
+      'static': true
+    }
   };
 
   //s選択したnodeの情報（サービス用）
@@ -85,7 +88,10 @@ export class TreeList2Component implements OnInit {
       this.treeH = {
         value: "RootNode",
         id: "0",
-        children: arr
+        children: arr,
+        settings: {
+          'static': true
+        }
       }
       //編集する場合
       this.getCkedNodeListInit();
