@@ -32,12 +32,14 @@ export class TreeController {
   }
 
   public expand(): void {
+    console.log("expand this.tree.id",this.tree.id)
     if (this.isCollapsed()) {
       this.component.onSwitchFoldingType();
     }
   }
 
   public expandToParent(tree: any = this.tree): void {
+    console.log("expandToParent this.tree.id",this.tree.id)
     if (tree) {
       const controller = this.treeService.getController(tree.id);
       if (controller) {
@@ -54,6 +56,7 @@ export class TreeController {
   }
 
   public collapse(): void {
+    console.log("collapse this.tree.id",this.tree.id)
     if (this.isExpanded()) {
       this.component.onSwitchFoldingType();
     }

@@ -337,6 +337,32 @@ export class Tree {
   }
 
   /**
+   * Insert sibling into target node, don't swap, the tree nodes need to be orderred.
+   * @param sibling the dragged node
+   */
+  public insertWithSibling(sibling: Tree): void {
+    if (!this.hasSibling(sibling)) {
+      return;
+    }
+
+    const siblingIndex = sibling.positionInParent;
+    const thisTreeIndex = this.positionInParent;
+    let i = siblingIndex;
+
+    if (siblingIndex > thisTreeIndex) {
+      for ( ; i > thisTreeIndex; i--) {
+        this.parent._children[i] = this.parent._children[i - 1];
+      }
+    } else {
+      for ( ; i < thisTreeIndex - 1; i++) {
+        this.parent._children[i] = this.parent._children[i + 1];
+      }
+    }
+
+    this.parent._children[i] = sibling;
+  }
+
+  /**
    * Get a node's position in its parent.
    * @returns {number} The position inside a parent.
    */

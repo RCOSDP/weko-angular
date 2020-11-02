@@ -104,8 +104,8 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
   public constructor(
     private nodeMenuService: NodeMenuService,
     public treeService: TreeService,
-    public treeDefaultService: TreeDefaultService,
-    public nodeElementRef: ElementRef
+    public nodeElementRef: ElementRef,
+    public treeDefaultService: TreeDefaultService
   ) {}
 
   public ngAfterViewInit(): void {
@@ -141,9 +141,17 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.subscriptions.push(
       this.treeService.draggedStream(this.tree, this.nodeElementRef).subscribe((e: NodeDraggableEvent) => {
         if (this.tree.hasSibling(e.captured.tree)) {
-          this.swapWithSibling(e.captured.tree, this.tree);
+          if (e.isMovedInto) {
+            this.moveNodeToThisTreeAndRemoveFromPreviousOne(e, this.tree);
+          } else {
+            this.insertWithSibling(e.captured.tree, this.tree);
+          }
         } else if (this.tree.isBranch()) {
-          this.moveNodeToThisTreeAndRemoveFromPreviousOne(e, this.tree);
+          if (e.isMovedInto) {
+            this.moveNodeToThisTreeAndRemoveFromPreviousOne(e, this.tree);
+          } else {
+            this.moveNodeToParentTreeAndRemoveFromPreviousOne(e, this.tree);
+          }
         } else {
           this.moveNodeToParentTreeAndRemoveFromPreviousOne(e, this.tree);
         }
@@ -172,6 +180,11 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   private swapWithSibling(sibling: Tree, tree: Tree): void {
     tree.swapWithSibling(sibling);
+    this.treeService.fireNodeMoved(sibling, sibling.parent);
+  }
+
+  private insertWithSibling(sibling: Tree, tree: Tree) {
+    tree.insertWithSibling(sibling);
     this.treeService.fireNodeMoved(sibling, sibling.parent);
   }
 
@@ -283,8 +296,10 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
   public onSwitchFoldingType(): void {
     this.tree.switchFoldingType();
     this.treeService.fireNodeSwitchFoldingType(this.tree);
-    this.treeDefaultService.set_tree_state(this.tree.id.toString())
-    .then(res => {})
+    if (this.tree.id) {
+      this.treeDefaultService.set_tree_state(this.tree.id.toString())
+      .then()
+    }
   }
 
   public applyNewValue(e: NodeEditableEvent): void {
@@ -330,10 +345,8 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (!this.checkboxElementRef) {
       return;
     }
-
     this.checkboxElementRef.nativeElement.indeterminate = false;
     this.treeService.fireNodeChecked(this.tree);
-    this.executeOnChildController(controller => controller.check());
     this.tree.checked = true;
   }
 
@@ -341,10 +354,8 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
     if (!this.checkboxElementRef) {
       return;
     }
-
     this.checkboxElementRef.nativeElement.indeterminate = false;
     this.treeService.fireNodeUnchecked(this.tree);
-    this.executeOnChildController(controller => controller.uncheck());
     this.tree.checked = false;
   }
 
@@ -361,7 +372,7 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   updateCheckboxState(): void {
     // Calling setTimeout so the value of isChecked will be updated and after that I'll check the children status.
-    setTimeout(() => {
+      /*    setTimeout(() => {
       const checkedChildrenAmount = this.tree.checkedChildrenAmount();
       if (checkedChildrenAmount === 0) {
         this.checkboxElementRef.nativeElement.indeterminate = false;
@@ -376,7 +387,7 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
         this.checkboxElementRef.nativeElement.indeterminate = true;
         this.treeService.fireNodeIndetermined(this.tree);
       }
-    });
+    });*/
   }
 
   private eventContainsId(event: NodeEvent): boolean {

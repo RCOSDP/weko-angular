@@ -41,7 +41,7 @@ export class TreeList2Component implements OnInit {
       'cssClasses': {
         'leaf': 'weko-node-leaf',
         'empty': 'weko-node-empty'
-      }     
+      }
     }
   };
   //ツリー詳細
@@ -50,7 +50,7 @@ export class TreeList2Component implements OnInit {
     public_state: false, public_date: null, recursive_public_state: false,
     more_check: false, display_no: null, have_children: false,
     coverpage_state: false, recursive_coverpage_check: false,
-    rss_status: false, 
+    rss_status: false,
     browsing_role: {
       deny: [{ id: "", name: ""}],
       allow: [{ id: "", name: ""}]
@@ -71,7 +71,7 @@ export class TreeList2Component implements OnInit {
     recursive_contribute_role: false,
     recursive_browsing_group: false,
     recursive_contribute_group: false,
-    
+
     harvest_public_state:true,
     display_format:"1",
     image_name:""
@@ -97,7 +97,7 @@ export class TreeList2Component implements OnInit {
   private res = { code: 400, msg: "", data: { count: 0 } };
   //parentNode を判断する
   public parentIsRoot: boolean = false;
-  //i18n 
+  //i18n
   public langJson = {
     Add: [],
     Delete: [],
@@ -145,7 +145,7 @@ export class TreeList2Component implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.setI18n();
     //チェックボックスあるかを設定する
     if (this.templflg == '0') {
@@ -182,7 +182,7 @@ export class TreeList2Component implements OnInit {
   ngAfterViewInit(): void {}
 
   /**
-   * 
+   *
    * setIndexTree
    */
   setIndexTree() {
@@ -285,7 +285,7 @@ export class TreeList2Component implements OnInit {
         'cssClasses': {
           'leaf': 'weko-node-leaf',
           'empty': 'weko-node-empty'
-        }     
+        }
       }
     };
     oopNodeController.addChild(newNode);
@@ -317,7 +317,7 @@ export class TreeList2Component implements OnInit {
         }else{
           this.privousUploadFlg = false;
         }
-        
+
       });
     } else {
       this.setRootDetailInit();
@@ -357,12 +357,12 @@ export class TreeList2Component implements OnInit {
     if(!this.detailData.coverpage_state){
       this.detailData.recursive_coverpage_check = false;
     }
-    
+
     this.detailData.index_name = this.detailData.index_name.replace(/(^\s*)|(\s*$)/g, "");
     if (this.detailData.index_name == ""){
       this.detailData.index_name = null;
     }
-    
+
     if(this.uploadFlg){
       this.treeList2Service.upload(this.formData,this.selNodeId).then(res=>{
         this.detailData.image_name = res.data.path;
@@ -399,7 +399,7 @@ export class TreeList2Component implements OnInit {
   }
   /**
    * modal画面を表示する
-   * @param event 
+   * @param event
    */
   openModule(event) {
     this.modalStatus.status = 'table-cell';
@@ -535,27 +535,31 @@ export class TreeList2Component implements OnInit {
   }
   // 20180925 add end
   /**
-   * node 
+   * node
    */
   handleMoved(e: NodeMovedEvent){
     // moved Node id
-    let nodeId = e.node.id;
-    // moved parent Node id
-    let parentId = e.node.parent.id;
-    let pre_parentId = e.previousParent.id;
-    // new position
-    let position = e.node.positionInParent;
-    // moved info
-    let infoJson = {
-      pre_parent:pre_parentId,
-      parent:parentId,
-      position:position
-    };
-    this.treeList2Service.setNodeMoved(nodeId,infoJson).then(res =>{
-      this.setIndexTree();
-    }).catch(res =>{
+    const nodeId = e.node.id;
 
-    })
+    // moved parent Node id
+    const parentId = e.node.parent.id;
+    const pre_parentId = e.previousParent.id;
+
+    // new position
+    const position = e.node.positionInParent;
+
+    // moved info
+    const infoJson = {
+      pre_parent: pre_parentId,
+      parent: parentId,
+      position: position
+    };
+
+    this.treeList2Service.setNodeMoved(nodeId, infoJson).then(res => {
+      this.setIndexTree();
+    }).catch(res => {
+
+    });
   }
 
   fileChange(event) {
@@ -592,8 +596,8 @@ export class TreeList2Component implements OnInit {
    */
   moreCheck():boolean{
     if(this.detailData.more_check) {
-      if(this.detailData.display_no == null || 
-        isNaN(this.detailData.display_no) || 
+      if(this.detailData.display_no == null ||
+        isNaN(this.detailData.display_no) ||
         this.detailData.display_no <= 0){
         return false;
       }

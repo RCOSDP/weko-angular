@@ -26,7 +26,7 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
 
   public ngOnInit(): void {
     if (!this.tree.isStatic()) {
-      this.renderer.setAttribute(this.nodeNativeElement, 'draggable', 'true');
+      this.renderer.setAttribute(this.nodeNativeElement, 'draggable', this.tree.isRoot() ? 'false' : 'true');
       this.disposersForDragListeners.push(
         this.renderer.listen(this.nodeNativeElement, 'dragenter', this.handleDragEnter.bind(this))
       );
@@ -73,13 +73,27 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
   private handleDragEnter(e: DragEvent): any {
     e.preventDefault();
     if (this.containsElementAt(e)) {
-      this.addClass('over-drop-target');
+      if (this.nodeDraggableService.getCapturedNode().element !== this.nodeDraggable) {
+        if (e.offsetY < this.nodeNativeElement.offsetHeight / 2) {
+          this.removeClass('over-drop-target');
+          if (!this.tree.isRoot()) {
+            this.nodeNativeElement.setAttribute('style', 'width:' + (this.nodeNativeElement.parentElement.offsetWidth - 25) + 'px');
+            this.addClass('over-drop-target-sibling');
+          }
+        } else {
+          this.removeClass('over-drop-target-sibling');
+          this.addClass('over-drop-target');
+          this.nodeNativeElement.removeAttribute('style');
+        }
+      }
     }
   }
 
   private handleDragLeave(e: DragEvent): any {
     if (!this.containsElementAt(e)) {
       this.removeClass('over-drop-target');
+      this.removeClass('over-drop-target-sibling');
+      this.nodeNativeElement.removeAttribute('style');
     }
   }
 
@@ -89,14 +103,18 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
       e.stopPropagation();
     }
 
+    const isDropPossible = this.isDropPossible(e);
+    const isMovedInto = this.containsClass('over-drop-target');
     this.removeClass('over-drop-target');
+    this.removeClass('over-drop-target-sibling');
+    this.nodeNativeElement.removeAttribute('style');
 
-    if (!this.isDropPossible(e)) {
+    if (!isDropPossible) {
       return false;
     }
 
     if (this.nodeDraggableService.getCapturedNode()) {
-      return this.notifyThatNodeWasDropped();
+      return this.notifyThatNodeWasDropped(isMovedInto);
     }
   }
 
@@ -115,6 +133,11 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
     return this.nodeNativeElement.contains(document.elementFromPoint(x, y));
   }
 
+  private containsClass(className: string): boolean {
+    const classList: DOMTokenList = this.nodeNativeElement.classList;
+    return classList.contains(className);
+  }
+
   private addClass(className: string): void {
     const classList: DOMTokenList = this.nodeNativeElement.classList;
     classList.add(className);
@@ -125,7 +148,7 @@ export class NodeDraggableDirective implements OnDestroy, OnInit {
     classList.remove(className);
   }
 
-  private notifyThatNodeWasDropped(): void {
-    this.nodeDraggableService.fireNodeDragged(this.nodeDraggableService.getCapturedNode(), this.nodeDraggable);
+  private notifyThatNodeWasDropped(isMovedInto = false): void {
+    this.nodeDraggableService.fireNodeDragged(this.nodeDraggableService.getCapturedNode(), this.nodeDraggable, isMovedInto);
   }
 }

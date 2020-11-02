@@ -141,9 +141,17 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
     this.subscriptions.push(
       this.treeService.draggedStream(this.tree, this.nodeElementRef).subscribe((e: NodeDraggableEvent) => {
         if (this.tree.hasSibling(e.captured.tree)) {
-          this.swapWithSibling(e.captured.tree, this.tree);
+          if (e.isMovedInto) {
+            this.moveNodeToThisTreeAndRemoveFromPreviousOne(e, this.tree);
+          } else {
+            this.insertWithSibling(e.captured.tree, this.tree);
+          }
         } else if (this.tree.isBranch()) {
-          this.moveNodeToThisTreeAndRemoveFromPreviousOne(e, this.tree);
+          if (e.isMovedInto) {
+            this.moveNodeToThisTreeAndRemoveFromPreviousOne(e, this.tree);
+          } else {
+            this.moveNodeToParentTreeAndRemoveFromPreviousOne(e, this.tree);
+          }
         } else {
           this.moveNodeToParentTreeAndRemoveFromPreviousOne(e, this.tree);
         }
@@ -172,6 +180,11 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
 
   private swapWithSibling(sibling: Tree, tree: Tree): void {
     tree.swapWithSibling(sibling);
+    this.treeService.fireNodeMoved(sibling, sibling.parent);
+  }
+
+  private insertWithSibling(sibling: Tree, tree: Tree) {
+    tree.insertWithSibling(sibling);
     this.treeService.fireNodeMoved(sibling, sibling.parent);
   }
 
@@ -283,8 +296,10 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
   public onSwitchFoldingType(): void {
     this.tree.switchFoldingType();
     this.treeService.fireNodeSwitchFoldingType(this.tree);
-    this.treeDefaultService.set_tree_state(this.tree.id.toString())
-    .then()
+    if (this.tree.id) {
+      this.treeDefaultService.set_tree_state(this.tree.id.toString())
+      .then()
+    }
   }
 
   public applyNewValue(e: NodeEditableEvent): void {
