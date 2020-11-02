@@ -58,9 +58,22 @@ export class AddAuthorComponent implements OnInit {
   //氏名の入力方
   // set data of name List
   public langOptions: any[] = [
-    { id: "ja-Kana", value: "ja-kana" },
-    { id: "ja", value: "ja" },
-    { id: "en", value: "en" }
+    { id: 'ja', value: 'ja' },
+    { id: 'ja-Kana', value: 'ja-Kana' },
+    { id: 'en', value: 'en' },
+    { id: 'fr', value: 'fr' },
+    { id: 'it', value: 'it' },
+    { id: 'de', value: 'de' },
+    { id: 'es', value: 'es' },
+    { id: 'zh-cn', value: 'zh-cn' },
+    { id: 'zh-tw', value: 'zh-tw' },
+    { id: 'ru', value: 'ru' },
+    { id: 'la', value: 'la' },
+    { id: 'ms', value: 'ms' },
+    { id: 'eo', value: 'eo' },
+    { id: 'ar', value: 'ar' },
+    { id: 'el', value: 'el' },
+    { id: 'ko', value: 'ko' }
   ];
   //氏名の形式
   // set data of name List
