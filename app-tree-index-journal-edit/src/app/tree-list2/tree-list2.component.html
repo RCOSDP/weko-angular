@@ -460,11 +460,12 @@
 <div *ngIf="journalFlg=='1'" class="col-sm-7 col-md-7 col-lg-4 col-xl-3">
   <p style="display: inline-block;">
     <button id="add" value="New" class="btn btn-light add-button button-create
-        pull-left" (click)="addNode()">
+        pull-left" style="display:none;"  (click)="addNode()">
       <span class="glyphicon glyphicon-plus"></span>
       {{langJson.Add[1]}}
     </button>
-    <button id="del" value="Delete" class="btn btn-danger delete-button button-delete" (click)="deleNode()">
+    <button id="del" value="Delete" class="btn btn-danger delete-button
+      button-delete" style="display:none;" (click)="deleNode()">
       <span class="glyphicon glyphicon-trash"></span>
       {{langJson.Delete[1]}}
     </button>
