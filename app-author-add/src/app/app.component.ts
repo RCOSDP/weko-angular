@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
     Author_Button_Save: [],
     Author_familyNmAndNm: [],
     Author_fullNm: [],
-    Author_placeholder_authorId: []
+    Author_placeholder_authorId: [],
+    Author_Confirm_Msg: []
   };
   public deleteBtn :boolean = false;
   //set data of page by json
@@ -535,5 +536,21 @@ deleteById(esIdJsonObj: any): Promise<any> {
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); //
     return Promise.reject(error.message || error);
+  }
+  /**
+   * author confirm identifier url
+   */
+  authorConfirm(idType: any, authorId: any) {
+    let url_identifier = "";
+    for (let i = 0; i < this.authorIdOptions.length; i++) {
+      if (idType == this.authorIdOptions[i].id){
+        url_identifier = this.authorIdOptions[i].url;
+      }
+    }
+    if (url_identifier != ""){
+      window.open(url_identifier.replace(/#+$/, authorId), "_blank");
+    }else{
+      alert(this.langJson.Author_Confirm_Msg[1]);
+    }
   }
 }
