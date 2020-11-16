@@ -323,7 +323,7 @@ export class AppComponent implements OnInit {
   returnAuthorIdInfoObj(): any {
     //著者ID情報
     let authorIdInfoObj = {
-      idType: "cinii",
+      idType: "1",
       authorId: "",
       authorIdShowFlg: "true"
     }
@@ -531,29 +531,29 @@ deleteById(esIdJsonObj: any): Promise<any> {
       .catch(this.handleError);
   }
   /**
-   * エラー処理
-   */
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); //
-    return Promise.reject(error.message || error);
-  }
-  /**
    * author confirm identifier url
    */
   authorConfirm(idType: any, authorId: any) {
     let url_identifier = "";
     for (let i = 0; i < this.authorIdOptions.length; i++) {
-      if (idType == this.authorIdOptions[i].id){
+      if (idType == this.authorIdOptions[i].id) {
         url_identifier = this.authorIdOptions[i].url;
       }
     }
-    if (url_identifier != ""){
+    if (url_identifier != "") {
       window.open(url_identifier.replace(/#+$/, authorId), "_blank");
-    }else{
+    } else {
       $('#alerts').append(
         '<div class="alert alert-danger" id="">' +
         '<button type="button" class="close" data-dismiss="alert">' +
         '&times;</button>' + this.langJson.Author_Confirm_Msg[1] + '</div>');
     }
+  }
+  /**
+   * エラー処理
+   */
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); //
+    return Promise.reject(error.message || error);
   }
 }
