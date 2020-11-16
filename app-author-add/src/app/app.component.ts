@@ -550,7 +550,10 @@ deleteById(esIdJsonObj: any): Promise<any> {
     if (url_identifier != ""){
       window.open(url_identifier.replace(/#+$/, authorId), "_blank");
     }else{
-      alert(this.langJson.Author_Confirm_Msg[1]);
+      $('#alerts').append(
+        '<div class="alert alert-danger" id="">' +
+        '<button type="button" class="close" data-dismiss="alert">' +
+        '&times;</button>' + this.langJson.Author_Confirm_Msg[1] + '</div>');
     }
   }
 }
