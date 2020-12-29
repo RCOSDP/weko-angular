@@ -198,7 +198,12 @@ export class TreeList2Component implements OnInit {
       }
     });
     // Pull up recursive coverpage check
+    this.detailData.recursive_public_state = false;
     this.detailData.recursive_coverpage_check = false;
+    this.detailData.recursive_browsing_role = false;
+    this.detailData.recursive_browsing_group = false;
+    this.detailData.recursive_contribute_role = false;
+    this.detailData.recursive_contribute_group = false;
   }
   /**
    * i18n
