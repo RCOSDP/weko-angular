@@ -194,13 +194,11 @@ export class TreeList2Component implements OnInit {
   /**
    * save button process
    */
-  save(){
+  save() {
     this.isDisabledSave = true;
     $(".lds-ring-background").removeClass("hidden");
     let post_url = document.getElementById('post_url').innerText;
     let pub_status = document.getElementById('pub_status').innerText;
-    let post_success_url = document.getElementById('post_success_url').innerText;
-    let post_error_url = document.getElementById('post_error_url').innerText;
     if (this.nodeIdList.length == 0) {
       this.isDisabledSave = false;
       $(".lds-ring-background").addClass("hidden");
@@ -208,30 +206,26 @@ export class TreeList2Component implements OnInit {
       $('.modal-body').html('At least one index should be selected.');
       return;
     }
-    let jsonStr ={"index":this.nodeIdList,"actions": pub_status}
-    this.treeList2Service.setCheckedNode(post_url, jsonStr).then(res =>{
-                                          //一旦設定
-                                          if(post_success_url==""&&post_error_url==""){
-                                            let urlArr = window.location.href.split('/');
-                                            let url = urlArr[0]+"//"+urlArr[2]+"/items";
-                                            window.location.href = url;
-                                          }else if(post_success_url!=""){
-                                            window.location.href = post_success_url;
-                                          }else{
-                                            window.location.href = post_error_url;
-                                          }
-                                         }).catch(res=>{
-                                          this.isDisabledSave = false;
-                                          $(".lds-ring-background").addClass("hidden");
-                                          let msg = JSON.parse(res._body);
-                                          this.modalStatus.status = 'table-cell';
-                                          if (msg.message == "MAPPING_ERROR") {
-                                            $('.modal-body').html('Please make sure the item type mapping is correct.');
-                                            this.redirectFlag.flag = 'T';
-                                          } else {
-                                            $('.modal-body').html('Server Error. Please reload this page.');
-                                          }
-                                         });
+    let jsonStr = { "index": this.nodeIdList, "actions": pub_status, "is_save_path": true }
+    this.treeList2Service.setCheckedNode(post_url, jsonStr).then(res => {
+      this.isDisabledSave = false;
+      $(".lds-ring-background").addClass("hidden");
+      $('#alerts').append(
+        '<div id="alert-style" class="alert alert-light">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">' +
+        '&times;</button>' + 'Model save success' + '</div>');
+    }).catch(res => {
+      this.isDisabledSave = false;
+      $(".lds-ring-background").addClass("hidden");
+      let msg = JSON.parse(res._body);
+      this.modalStatus.status = 'table-cell';
+      if (msg.message == "MAPPING_ERROR") {
+        $('.modal-body').html('Please make sure the item type mapping is correct.');
+        this.redirectFlag.flag = 'T';
+      } else {
+        $('.modal-body').html('Server Error. Please reload this page.');
+      }
+    });
   }
   /**
    * サービスインデックス編集画面の送信ボタン
