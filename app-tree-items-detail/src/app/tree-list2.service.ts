@@ -128,7 +128,7 @@ export class TreeList2Service {
 
       s = s.replace(r,"$1"+kvp);
 
-      if(!RegExp.$1) {s += (s.length>0 ? '&' : '?') + kvp;};
+      if((!s.includes(kvp))) {s += (s.length>0 ? '&' : '?') + kvp;};
 
       //again, do what you will here
       return s
