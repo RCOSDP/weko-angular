@@ -246,13 +246,13 @@
                           Enable
                         </label>
                       </div>
-                      <div *ngIf="detailData.coverpage_state && adminCoverpageSetting">
+                      <div *ngIf="adminCoverpageSetting">
                         <div class="checkbox">
                           <div class="col-sm-10 col-md-10">
                             <label>
                               <input *ngIf="adminCoverpageSetting; else is_disable_cv" type="checkbox" id="recursive_coverpage_check" [(ngModel)]="detailData.recursive_coverpage_check">
                               <ng-template #is_disable_cv>
-                                <input type="checkbox" id="recursive_coverpage_check" [(ngModel)]="detailData.recursive_coverpage_check" disabled='disabled'>
+                                <input type="checkbox" id="recursive_coverpage_check" [(ngModel)]="detailData.recursive_coverpage_check">
                               </ng-template>
                               {{langJson.Set_CoverPage_Recursively[1]}}
                             </label>
