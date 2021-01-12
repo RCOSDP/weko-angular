@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TreeModel } from '../../ng2-tree/src/tree.types';
-import { Http,RequestOptions, Headers} from '@angular/http';
+import { Http,RequestOptions,Response, Headers} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import * as $ from 'jquery';
 
@@ -78,7 +78,14 @@ export class TreeList2Service {
   /**
    * nodeを選択した
    */
-  setSearchNodeId(url:any,nodeId:any){
+  getDefaultSettingSearch(url) {
+    return this.http.get(url + "/get_search_setting")
+      .toPromise()
+      .then(response => response.json() as any)
+      .catch(this.handleError);
+  }
+
+  async setSearchNodeId(url:any,nodeId:any){
     var urlArr = window.location.href.split('/');
     let hostUrl = urlArr[0]+"//"+urlArr[2];
     const currentTime = new Date().getTime();
@@ -89,6 +96,28 @@ export class TreeList2Service {
         return;
     }
     let search = window.location.search || ""
+    let reponse = this.getDefaultSettingSearch(hostUrl);
+    let data = {
+      "dlt_dis_num_selected": "",
+      "dlt_index_sort_selected": "",
+      "dlt_keyword_sort_selected": "" };
+    await reponse.then(reponse => {
+      if (reponse.status === 1) {
+        data = { 
+          "dlt_dis_num_selected": reponse.data.dlt_dis_num_selected,
+          "dlt_index_sort_selected": reponse.data.dlt_index_sort_selected,
+          "dlt_keyword_sort_selected": reponse.data.dlt_keyword_sort_selected, };
+      }});
+    search = this.insertParam(search, "size", data.dlt_dis_num_selected);
+    let index_search = data.dlt_index_sort_selected;
+    if (index_search.indexOf("_asc") !== -1) {
+      index_search=index_search.replace("_asc", "");
+    }
+    if (index_search.indexOf("_desc") !== -1) {
+      index_search=index_search.replace("_desc", "");
+      index_search="-" + index_search;
+    }
+    search = this.insertParam(search, "sort", index_search);
     search = this.insertParam(search, "search_type", "2")
     search = this.insertParam(search, "q", String(nodeId))
     search = this.insertParam(search, "time", String(currentTime))
