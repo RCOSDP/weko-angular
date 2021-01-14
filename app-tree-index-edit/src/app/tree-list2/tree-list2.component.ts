@@ -367,7 +367,14 @@ export class TreeList2Component implements OnInit {
       alert("Invalid display number of index.");
       return;
     }
-    if(!this.detailData.coverpage_state){
+
+    let unCheckAll = false;
+    if(!this.detailData.coverpage_state && this.detailData.recursive_coverpage_check){
+      unCheckAll = true;
+      this.detailData.recursive_coverpage_check = true;
+    }
+
+    if(!this.detailData.coverpage_state && !unCheckAll){
       this.detailData.recursive_coverpage_check = false;
     }
 
