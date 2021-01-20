@@ -23,11 +23,6 @@ set -o errexit
 
 CURRENT_DIR=$(cd $(dirname $0); pwd)
 
-# npm-install-begin
-npm install -g @angular/cli
-npm install typescript@">=3.1.1 <3.3"
-# npm-install-end
-
 # build-begin
 while read dir
 do
