@@ -21,11 +21,14 @@
 # quit on errors and unbound symbols:
 set -o errexit
 
-# args-check-begin
 CURRENT_DIR=$(cd $(dirname $0); pwd)
-# args-check-end
 
-# delete-old-backup-begin
+# npm-install-begin
+npm install -g @angular/cli
+npm install typescript@">=3.1.1 <3.3"
+# npm-install-end
+
+# build-begin
 while read dir
 do
     ( cd "${CURRENT_DIR}/$dir"; npm install )
@@ -41,4 +44,4 @@ app-tree-items-detail
 app-tree-items-edit
 app-tree-community
 END
-# delete-old-backup-end
+# build-end
