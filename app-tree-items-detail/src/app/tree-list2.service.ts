@@ -96,6 +96,10 @@ export class TreeList2Service {
     }
     let search = window.location.search || ""
     let reponse = this.getDefaultSettingSearch(hostUrl);
+    search = this.insertParam(search, "search_type", "2")
+    search = this.insertParam(search, "q", String(nodeId))
+    search = this.insertParam(search, "time", String(currentTime))
+    
     let data = {
       "dlt_dis_num_selected": "",
       "dlt_index_sort_selected": "",
@@ -125,9 +129,7 @@ export class TreeList2Service {
     } else {
       search = this.insertParam(search + "&sort=null", "sort", index_search);
     }
-    search = this.insertParam(search, "search_type", "2")
-    search = this.insertParam(search, "q", String(nodeId))
-    search = this.insertParam(search, "time", String(currentTime))
+
     if($("#community")!=undefined && $("#community").val()){
       let community = $("#community").val();
       search = this.insertParam(search, "community", String(community))
