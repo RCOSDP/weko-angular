@@ -41,7 +41,7 @@ export class TreeList2Component implements OnInit {
       'cssClasses': {
         'leaf': 'weko-node-leaf',
         'empty': 'weko-node-empty'
-      }     
+      }
     }
   };
   //ツリー詳細
@@ -69,7 +69,7 @@ export class TreeList2Component implements OnInit {
     recursive_contribute_role: false,
     recursive_browsing_group: false,
     recursive_contribute_group: false,
-    
+
     harvest_public_state:true,
     display_format:"1",
     image_name:""
@@ -95,7 +95,7 @@ export class TreeList2Component implements OnInit {
   private res = { code: 400, msg: "", data: { count: 0 } };
   //parentNode を判断する
   public parentIsRoot: boolean = false;
-  //i18n 
+  //i18n
   public langJson = {
     Add: [],
     Delete: [],
@@ -114,6 +114,9 @@ export class TreeList2Component implements OnInit {
     Set_Publish_Date_Recursively: [],
     Harvest_Publish: [],
     Harvest_Message: [],
+    Online_Issn: [],
+    Biblio_Flag_Text: [],
+    Biblio_Flag_Warning: [],
     Browsing_Privilege: [],
     Role: [],
     Set_Role_Recursively: [],
@@ -141,7 +144,7 @@ export class TreeList2Component implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.setI18n();
     //チェックボックスあるかを設定する
     if (this.templflg == '0') {
@@ -163,7 +166,7 @@ export class TreeList2Component implements OnInit {
   ngAfterViewInit(): void {}
 
   /**
-   * 
+   *
    * setIndexTree
    */
   setIndexTree() {
@@ -263,7 +266,7 @@ export class TreeList2Component implements OnInit {
         'cssClasses': {
           'leaf': 'weko-node-leaf',
           'empty': 'weko-node-empty'
-        }     
+        }
       }
     };
     oopNodeController.addChild(newNode);
@@ -296,7 +299,7 @@ export class TreeList2Component implements OnInit {
         }else{
           this.privousUploadFlg = false;
         }
-        
+
       });
     } else {
       this.setRootDetailInit();
@@ -339,7 +342,7 @@ export class TreeList2Component implements OnInit {
       alert("Invalid display number of index.");
       return;
     }
-    
+
     this.detailData.index_name = this.detailData.index_name.replace(/(^\s*)|(\s*$)/g, "");
     if (this.detailData.index_name == ""){
       this.detailData.index_name = null;
@@ -380,7 +383,7 @@ export class TreeList2Component implements OnInit {
   }
   /**
    * modal画面を表示する
-   * @param event 
+   * @param event
    */
   openModule(event) {
     this.modalStatus.status = 'table-cell';
@@ -516,7 +519,7 @@ export class TreeList2Component implements OnInit {
   }
   // 20180925 add end
   /**
-   * node 
+   * node
    */
   handleMoved(e: NodeMovedEvent){
     // moved Node id
@@ -573,8 +576,8 @@ export class TreeList2Component implements OnInit {
    */
   moreCheck():boolean{
     if(this.detailData.more_check) {
-      if(this.detailData.display_no == null || 
-        isNaN(this.detailData.display_no) || 
+      if(this.detailData.display_no == null ||
+        isNaN(this.detailData.display_no) ||
         this.detailData.display_no <= 0){
         return false;
       }

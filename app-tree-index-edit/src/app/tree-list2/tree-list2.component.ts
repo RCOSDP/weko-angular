@@ -46,10 +46,18 @@ export class TreeList2Component implements OnInit {
   };
   //ツリー詳細
   public detailData = {
-    id: "", index_name: null, index_name_english: null, comment: "",
-    public_state: false, public_date: null, recursive_public_state: false,
-    more_check: false, display_no: null, have_children: false,
-    coverpage_state: false, recursive_coverpage_check: false,
+    id: "",
+    index_name: null,
+    index_name_english: null,
+    comment: "",
+    public_state: false,
+    public_date: null,
+    recursive_public_state: false,
+    more_check: false,
+    display_no: null,
+    have_children: false,
+    coverpage_state: false,
+    recursive_coverpage_check: false,
     rss_status: false,
     browsing_role: {
       deny: [{ id: "", name: ""}],
@@ -71,10 +79,11 @@ export class TreeList2Component implements OnInit {
     recursive_contribute_role: false,
     recursive_browsing_group: false,
     recursive_contribute_group: false,
-
-    harvest_public_state:true,
-    display_format:"1",
-    image_name:""
+    harvest_public_state: true,
+    online_issn: "",
+    biblio_flag: false,
+    display_format: "1",
+    image_name: ""
   };
   public roleModel = {
     browsing_role_able: [],
@@ -116,6 +125,9 @@ export class TreeList2Component implements OnInit {
     Set_Publish_Date_Recursively: [],
     Harvest_Publish: [],
     Harvest_Message: [],
+    Online_Issn: [],
+    Biblio_Flag_Text: [],
+    Biblio_Flag_Warning: [],
     Browsing_Privilege: [],
     Role: [],
     Set_Role_Recursively: [],
