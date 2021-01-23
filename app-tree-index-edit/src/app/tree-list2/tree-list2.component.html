@@ -283,6 +283,31 @@
                   </div>
                 </div>
               </div>
+              <!-- Online ISSN -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      {{langJson.Online_Issn[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="online_issn" placeholder="" [(ngModel)]="detailData.online_issn">
+                      </div>
+                      <div class="row-line-space"></div>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="biblio_flag" [(ngModel)]="detailData.biblio_flag">
+                          {{langJson.Biblio_Flag_Text[1]}}
+                        </label>
+                        <div>
+                          <span class="text-danger">{{langJson.Biblio_Flag_Warning[1]}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <!-- 閲覧権限設定 -->
               <div class="panel panel-default">
                 <div class="panel-body">

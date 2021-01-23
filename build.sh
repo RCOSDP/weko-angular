@@ -26,10 +26,8 @@ CURRENT_DIR=$(cd $(dirname $0); pwd)
 # build-begin
 while read dir
 do
-    # ( cd "${CURRENT_DIR}/$dir"; npm install )
-    # ( cd "${CURRENT_DIR}/$dir"; ng build --prod )
-    ( cd app-tree-index-edit; npm install )
-    ( cd app-tree-index-edit; ng build --prod )
+    ( cd "${CURRENT_DIR}/$dir"; npm install )
+    ( cd "${CURRENT_DIR}/$dir"; ng build --prod )
 done <<END
 app-author-add
 app-author-search
