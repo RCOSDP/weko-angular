@@ -145,9 +145,7 @@ export class TreeList2Component implements OnInit {
     File_Type: [],
     Send: [],
     RSS_Icon: [],
-    Display: [],
-    Msg_Save_DOI: [],
-    Msg_Delete_DOI: []
+    Display: []
   };
   public formData:FormData = new FormData();
   private imgSrc = "";
@@ -263,8 +261,10 @@ export class TreeList2Component implements OnInit {
     } else {
       if (String(e) == "delAndMove") {
         this.treeList2Service.delOrMoveNodeInfo(this.selNodeId, "move").then(res => {
-          if (res.message === '0') {
-            this.addAlert(this.langJson.Msg_Delete_DOI[1])
+          if (res.errors && res.errors.length > 0) {
+            res.errors.forEach(err => {
+              this.addAlert(err);
+            });
           }
           this.setIndexTree();
           this.setRootDetailInit();
@@ -272,8 +272,10 @@ export class TreeList2Component implements OnInit {
       } else {
         //削除サービスを呼び出し
         this.treeList2Service.delOrMoveNodeInfo(this.selNodeId, "all").then(res => {
-          if (res.message === '0') {
-            this.addAlert(this.langJson.Msg_Delete_DOI[1])
+          if (res.errors && res.errors.length > 0) {
+            res.errors.forEach(err => {
+              this.addAlert(err);
+            });
           }
           this.setIndexTree();
           this.setRootDetailInit();
@@ -402,11 +404,11 @@ export class TreeList2Component implements OnInit {
         this.imgSrc = urlArr[0] + "//" + urlArr[2]+res.data.path;
         this.privousUploadFlg = true;
         this.treeList2Service.setNodeInfo(this.selNodeId, this.detailData).then(res => {
-          console.log(JSON.stringify(res))
-          if (res.message === '0') {
-            this.addAlert(this.langJson.Msg_Save_DOI[1])
-          }
-          else {
+          if (res.errors && res.errors.length > 0) {
+            res.errors.forEach(err => {
+              this.addAlert(err);
+            });
+          } else {
             alert(res.message);
           }
           this.setIndexTree();
@@ -414,11 +416,11 @@ export class TreeList2Component implements OnInit {
       }).catch()
     }else{
       this.treeList2Service.setNodeInfo(this.selNodeId, this.detailData).then(res => {
-        console.log(JSON.stringify(res))
-        if (res.message === '0') {
-          this.addAlert(this.langJson.Msg_Save_DOI[1])
-        }
-        else {
+        if (res.errors && res.errors.length > 0) {
+          res.errors.forEach(err => {
+            this.addAlert(err);
+          });
+        } else {
           alert(res.message);
         }
         this.setIndexTree();
