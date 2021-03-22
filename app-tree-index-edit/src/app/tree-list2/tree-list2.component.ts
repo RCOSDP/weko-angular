@@ -145,7 +145,9 @@ export class TreeList2Component implements OnInit {
     File_Type: [],
     Send: [],
     RSS_Icon: [],
-    Display: []
+    Display: [],
+    Del_Success:[],
+    Add_Update_Success:[]
   };
   public formData:FormData = new FormData();
   private imgSrc = "";
@@ -276,6 +278,8 @@ export class TreeList2Component implements OnInit {
             res.errors.forEach(err => {
               this.addAlert(err);
             });
+          } else {
+            alert(this.langJson.Del_Success[1]);
           }
           this.setIndexTree();
           this.setRootDetailInit();
@@ -409,7 +413,7 @@ export class TreeList2Component implements OnInit {
               this.addAlert(err);
             });
           } else {
-            alert(res.message);
+            alert(this.langJson.Add_Update_Success[1]);
           }
           this.setIndexTree();
         });
@@ -421,7 +425,7 @@ export class TreeList2Component implements OnInit {
             this.addAlert(err);
           });
         } else {
-          alert(res.message);
+          alert(this.langJson.Add_Update_Success[1]);
         }
         this.setIndexTree();
       });
