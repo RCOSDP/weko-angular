@@ -504,23 +504,28 @@
               <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                      <div class="col-sm-10 col-md-10">
-                        {{langJson.File_Size[1]}} : 2MB<br>
-                        {{langJson.Image_Size[1]}} : 1024px × 1280px <br>
-                        {{langJson.File_Type[1]}} : gif, jpg, jpe, jpeg, png, bmp, tiff, tif
-                      </div>
-                    </div>
-                    <p>
-                    <div class="row">
+                        <div class="col-sm-2 col-md-2">
+                            {{langJson.Thumbnails[1]}}
+                            </div>
                         <div class="col-sm-10 col-md-10">
-                            <input type="file" (change)="fileChange($event)" placeholder="Upload file" name="uploadFile" accept=".gif,.jpg,.jpe,.jpeg,.png,.bmp,.tiff,.tif">
+                            {{langJson.File_Size[1]}} : 2MB<br>
+                            {{langJson.Image_Size[1]}} : 1024px × 1280px <br>
+                            {{langJson.File_Type[1]}} : gif, jpg, jpe, jpeg, png, bmp
+                            <input type="file" (change)="fileChange($event)" placeholder="Upload file" name="uploadFile" accept=".gif,.jpg,.jpe,.jpeg,.png,.bmp,.tiff,.tif" style="margin-top: 15px">
                         </div>
                     </div>
+                    <p>
                     <div class="row">
                         <p>
                         <div *ngIf="privousUploadFlg">
                             <img [src]="imgSrc" class="img-thumbnail">
                         </div>
+                    </div>
+                    <div *ngIf="this.detailData.image_name && !this.detailData.thumbnail_delete_flag" style="margin-top: 10px;">
+                        <button id="index-detail-submit-deleted" class="btn btn-danger delete-button button-delete pull-right" (click)="deleteImage()" >
+                            <span class="glyphicon glyphicon-trash"></span>
+                            {{langJson.Delete[1]}}
+                        </button>
                     </div>
                 </div>
               </div>

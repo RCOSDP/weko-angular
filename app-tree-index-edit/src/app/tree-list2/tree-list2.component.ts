@@ -83,6 +83,7 @@ export class TreeList2Component implements OnInit {
     online_issn: "",
     biblio_flag: false,
     display_format: "1",
+    thumbnail_delete_flag: false,
     image_name: ""
   };
   public roleModel = {
@@ -286,11 +287,13 @@ export class TreeList2Component implements OnInit {
         });
       }
     }
+    $('input[name=uploadFile]').val('');
   }
   /**
    * nodeを追加する
    */
   addNode() {
+    $('input[name=uploadFile]').val('');
     let treeMdlel = this.treeList.tree.toTreeModel().children;
 
     // Remove hidden node of the root
@@ -333,6 +336,7 @@ export class TreeList2Component implements OnInit {
  */
   seleNode(e: NodeEvent) {
     //選択したNodeIdを格納する
+    $('input[name=uploadFile]').val('');
     this.selNodeId = e.node.id;
     this.uploadFlg = false;
     this.checkFlg = false;
@@ -427,10 +431,25 @@ export class TreeList2Component implements OnInit {
         } else {
           alert(this.langJson.Add_Update_Success[1]);
         }
+        if(res.delete_flag){
+            $( ".img-thumbnail" ).remove();
+            this.detailData.image_name = "";
+        }
         this.setIndexTree();
       });
     }
   }
+
+  /**
+   * Remove index thumbnail.
+   */
+  deleteImage() {
+    this.detailData.thumbnail_delete_flag = true;
+    $('input[name=uploadFile]').val('');
+    this.uploadFlg = false;
+    this.privousUploadFlg = false;
+  }
+
   /**
    *最新なのindexTreeをAPIへ送る
    @param val:更新フラグ　0:追加 1:削除
@@ -625,6 +644,7 @@ export class TreeList2Component implements OnInit {
       this.detailData.image_name ="";
       this.uploadFlg = false;
     }
+    this.detailData.thumbnail_delete_flag = false;
   }
   /**
    * 入力チェック
