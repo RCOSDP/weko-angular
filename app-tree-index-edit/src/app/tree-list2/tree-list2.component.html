@@ -511,7 +511,12 @@
                             {{langJson.File_Size[1]}} : 2MB<br>
                             {{langJson.Image_Size[1]}} : 1024px × 1280px <br>
                             {{langJson.File_Type[1]}} : gif, jpg, jpe, jpeg, png, bmp
-                            <input type="file" (change)="fileChange($event)" placeholder="Upload file" name="uploadFile" accept=".gif,.jpg,.jpe,.jpeg,.png,.bmp,.tiff,.tif" style="margin-top: 15px">
+                            <div style="margin-top: 10px;">
+                              <input type="file" (change)="fileChange($event)" placeholder="Upload file" name="uploadFile" accept=".gif,.jpg,.jpe,.jpeg,.png,.bmp" style="display: none;">
+                              <button (click)="chooseFile()" style="margin-right: 4px;">{{langJson.Choose_File[1]}}</button>
+                              <span *ngIf="!detailData.image_name || detailData.thumbnail_delete_flag">{{langJson.No_File_Chosen[1]}}</span>
+                              <span *ngIf="detailData.image_name && !detailData.thumbnail_delete_flag">{{getThumbnailName()}}</span>
+                            </div>
                         </div>
                     </div>
                     <p>
@@ -521,7 +526,7 @@
                             <img [src]="imgSrc" class="img-thumbnail">
                         </div>
                     </div>
-                    <div *ngIf="this.detailData.image_name && !this.detailData.thumbnail_delete_flag" style="margin-top: 10px;">
+                    <div *ngIf="detailData.image_name && !detailData.thumbnail_delete_flag" style="margin-top: 10px;">
                         <button id="index-detail-submit-deleted" class="btn btn-danger delete-button button-delete pull-right" (click)="deleteImage()" >
                             <span class="glyphicon glyphicon-trash"></span>
                             {{langJson.Delete[1]}}

@@ -148,7 +148,8 @@ export class TreeList2Component implements OnInit {
     RSS_Icon: [],
     Display: [],
     Del_Success:[],
-    Add_Update_Success:[]
+    Add_Update_Success:[],
+    Err_File_Ext:[]
   };
   public formData:FormData = new FormData();
   private imgSrc = "";
@@ -451,6 +452,21 @@ export class TreeList2Component implements OnInit {
   }
 
   /**
+   * Choose thumbnail.
+   */
+   chooseFile() {
+    $('input[name=uploadFile]').trigger('click');
+  }
+
+  /**
+   * Get file thumbnail name.
+   */
+   getThumbnailName() {
+    const paths = this.detailData.image_name.split('/');
+    return paths.pop().replace(this.detailData.id, '');
+  }
+
+  /**
    *最新なのindexTreeをAPIへ送る
    @param val:更新フラグ　0:追加 1:削除
    */
@@ -634,12 +650,18 @@ export class TreeList2Component implements OnInit {
     let fileList: FileList = event.target.files;
     if(fileList.length > 0) {
       let file: File = fileList[0];
-      this.formData = new FormData();
-      this.detailData.image_name = file.name;
-      let str = this.selNodeId + file.name
-      this.formData.append('uploadFile', file, str);
-      this.uploadFlg = true;
-      this.privousUploadFlg = false
+      const exts = ['gif', 'jpg', 'jpe', 'jpeg', 'png', 'bmp'];
+      const ext = file.name.substring(file.name.lastIndexOf('.') + 1);
+      if (!exts.includes(ext)) {
+        alert(this.langJson.Err_File_Ext[1] + '\n' + file.name);
+      } else {
+        this.formData = new FormData();
+        this.detailData.image_name = file.name;
+        let str = this.selNodeId + file.name;
+        this.formData.append('uploadFile', file, str);
+        this.uploadFlg = true;
+        this.privousUploadFlg = false;
+      }
     }else{
       this.detailData.image_name ="";
       this.uploadFlg = false;
