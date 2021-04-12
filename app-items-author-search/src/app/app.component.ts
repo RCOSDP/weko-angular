@@ -380,7 +380,7 @@ showFlga(){
       if (this.showFlg == 1) {
         this.showFlga();
       } else {
-        $('#myModal').modal('toggle');
+        $('#app-author-search').modal('toggle');
       }
     });
   }
