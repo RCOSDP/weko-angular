@@ -11,7 +11,7 @@ export class CofirmModalComponent implements OnInit {
   //
   @Output() buttonClickEvent: EventEmitter<any> = new EventEmitter<any>();
   @Input() modalAberto: any;
-  @Input() parentIsRoot: boolean = false;
+  @Input() parentIsRoot = false;
   public langJsonM = {
     Choose_Processing: [],
     Delete_all: [],
@@ -25,17 +25,17 @@ export class CofirmModalComponent implements OnInit {
     this.setI18n();
   }
   ngAfterViewInit(): void {
-    this.modalAberto.status = "none";
+    this.modalAberto.status = 'none';
   }
   /**
    * i18n
    */
   setI18n() {
-    let lang = $("#lang-code").val();
-    let js = document.scripts;
-    let jsUrl = js[js.length - 1].src;
-    let strUrl = jsUrl.substring(0, jsUrl.lastIndexOf('static'));
-    let jsonUrl = strUrl + "static/json/weko_index_tree/translations/" + lang + "/messages.json";
+    const lang = $('#lang-code').val();
+    const js = document.scripts;
+    const jsUrl = js[js.length - 1].src;
+    const strUrl = jsUrl.substring(0, jsUrl.lastIndexOf('static'));
+    const jsonUrl = strUrl + 'static/json/weko_index_tree/translations/' + lang + '/messages.json';
     this.treeList2Service.getLnagJson(jsonUrl).then(res => {
       this.langJsonM = res;
     }).catch(
@@ -44,28 +44,28 @@ export class CofirmModalComponent implements OnInit {
   }
 
   closeModal() {
-    this.modalAberto.status = "none";
+    this.modalAberto.status = 'none';
   }
   /**
    * キャンセルボタン
    */
-  delCancle(){
-    this.buttonClickEvent.emit("delCancle");
-    //modal close
+  delCancle() {
+    this.buttonClickEvent.emit('delCancle');
+    // modal close
     this.closeModal();
   }
   /**
    * すべて削除
    */
-  delAll(){
-    this.buttonClickEvent.emit("delAll");
+  delAll() {
+    this.buttonClickEvent.emit('delAll');
     this.closeModal();
   }
   /**
-   * 
+   *
    */
-  delAndMove(){
-    this.buttonClickEvent.emit("delAndMove");
+  delAndMove() {
+    this.buttonClickEvent.emit('delAndMove');
     this.closeModal();
   }
 
