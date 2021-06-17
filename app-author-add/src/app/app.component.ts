@@ -366,9 +366,6 @@ export class AppComponent implements OnInit {
         alert(res.msg);
       })
     }else{
-      let timestamp = new Date().getTime().toString();
-      dbJson.authorIdInfo.unshift({idType: "1", authorId: timestamp, authorIdShowFlg: "true"});
-      dbJson.pk_id = timestamp;
       this.postPageDataJson(dbJson).then(res => {
         // alert(res.msg);  // Flash message one admin page instead
         var urlArr = window.location.href.split('/');
