@@ -388,7 +388,7 @@ export class AppComponent implements OnInit {
       var urlArr = window.location.href.split('/');
       window.location.href = urlArr[0] + "//" + urlArr[2] + "/admin/authors/";
     }).catch(res => {
-      alert(res.msg);
+      alert(res._body);
     })
   }
 
