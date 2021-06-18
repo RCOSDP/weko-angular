@@ -42,7 +42,7 @@ export class TreeList2Service {
     return this.http
       .post(url, treeModel, this.options)
       .toPromise()
-      .then(response => null)
+      .then(response => response.json() as any)
       .catch(this.handleError);
   }
 

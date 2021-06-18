@@ -5,13 +5,13 @@
     <div class="col-sm-7 col-md-7 col-lg-4 col-xl-3">
         <p style="display: inline-block;">
         <button id="add" value="New" class="btn btn-light add-button
-            button-create pull-left" (click)="addNode()">
+            button-create pull-left" (click)="addNode()" [disabled]="deleteFlg">
           <!-- 新規 -->
           <!-- Add -->
           <span class="glyphicon glyphicon-plus"></span>
           {{langJson.Add[1]}}
         </button>
-        <button id="del" value="Delete" class="btn btn-danger delete-button button-delete" (click)="deleNode()">
+        <button id="del" value="Delete" class="btn btn-danger delete-button button-delete" (click)="deleNode()" [disabled]="deleteFlg">
           <!-- 削除 -->
           <!-- Delete -->
           <span class="glyphicon glyphicon-trash"></span>
@@ -82,7 +82,7 @@
             </div>
           </div>
           <div class="panel-footer">
-            <button id="index-detail-submit" class="btn btn-light send-button" (click)="sendingdetail()">
+            <button id="index-detail-submit" class="btn btn-light send-button" (click)="sendingdetail()" [disabled]="deleteFlg">
               <!-- 送信 -->
               <!-- Send -->
               <span class="glyphicon glyphicon-send"></span>
@@ -538,7 +538,8 @@
             </div>
           </div>
           <div class="panel-footer">
-            <button id="index-detail-submit" class="btn btn-light send-button" (click)="sendingdetail()">
+            <button id="index-detail-submit" class="btn btn-light send-button" (click)="sendingdetail()"
+                    [disabled]="deleteFlg">
                 <span class="glyphicon glyphicon-send"></span>
                 {{langJson.Send[1]}}
             </button>

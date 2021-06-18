@@ -156,6 +156,7 @@ export class TreeList2Component implements OnInit {
   private uploadFlg = false;
   private privousUploadFlg = false;
   private checkFlg = false;
+  public deleteFlg = false;
 
   constructor(private treeList2Service: TreeList2Service) {
   }
@@ -267,6 +268,7 @@ export class TreeList2Component implements OnInit {
       return;
       // 削除を確定する場合
     } else {
+      this.deleteFlg = true;
       if (String(e) == 'delAndMove') {
         this.treeList2Service.delOrMoveNodeInfo(this.selNodeId, 'move').then(res => {
           if (res.errors && res.errors.length > 0) {
@@ -276,7 +278,8 @@ export class TreeList2Component implements OnInit {
           }
           this.setIndexTree();
           this.setRootDetailInit();
-        });
+        }).then(() => this.deleteFlg = false)
+          .catch(() => this.deleteFlg = false);
       } else {
         // 削除サービスを呼び出し
         this.treeList2Service.delOrMoveNodeInfo(this.selNodeId, 'all').then(res => {
@@ -289,7 +292,9 @@ export class TreeList2Component implements OnInit {
           }
           this.setIndexTree();
           this.setRootDetailInit();
-        });
+        })
+          .then(() => this.deleteFlg = false)
+          .catch(() => this.deleteFlg = false);
       }
     }
     $('input[name=uploadFile]').val('');
@@ -299,6 +304,9 @@ export class TreeList2Component implements OnInit {
    * nodeを追加する
    */
   addNode() {
+    if (this.deleteFlg) {
+      return;
+    }
     $('input[name=uploadFile]').val('');
     const treeMdlel = this.treeList.tree.toTreeModel().children;
 
@@ -482,6 +490,11 @@ export class TreeList2Component implements OnInit {
   updateTreeToApi(parentId: any, treeJson: any) {
     // サービスを呼び出し
     this.treeList2Service.setTreeInfo(parentId, treeJson).then(res => {
+      if (res.errors && res.errors.length > 0) {
+        res.errors.forEach(err => {
+          this.addAlert(err);
+        });
+      }
       this.setIndexTree();
     }).catch(
       res => {
