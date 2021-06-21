@@ -93,7 +93,11 @@
                         <div class="col-sm-12 col-md-12 divBottom remove-padding-right">
                           <div class="col-sm-2 col-md-2 remove-padding-right">
                             <select class="form-control" id="authorIdOption" [(ngModel)]="authorIdData.idType">
-                              <option *ngFor="let authorIdOption of authorIdOptions" [value]="authorIdOption.id">{{authorIdOption.name}}</option>
+                              <ng-container *ngFor="let authorIdOption of authorIdOptions">
+                                <ng-container *ngIf="authorIdOption.id != 1">
+                                  <option [value]="authorIdOption.id">{{authorIdOption.name}}</option>
+                                </ng-container>
+                              </ng-container>
                             </select>
                           </div>
                           <div class="col-sm-6 col-md-6 remove-padding-right">

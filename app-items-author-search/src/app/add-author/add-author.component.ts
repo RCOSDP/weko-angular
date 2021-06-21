@@ -359,14 +359,12 @@ export class AddAuthorComponent implements OnInit {
     let dbJson = this.changeJson();
     let urlStr = window.location.href;
 
-      let timestamp = new Date().getTime().toString();
-      dbJson.pk_id = timestamp;
-      this.postPageDataJson(dbJson).then(res => {
-        alert(res.msg);
-        this.showFlg.emit(0);
-      }).catch(res => {
-        alert(res.msg);
-      })
+    this.postPageDataJson(dbJson).then(res => {
+      alert(res.msg);
+      this.showFlg.emit(0);
+    }).catch(res => {
+      alert(res.msg);
+    })
   }
   /**
    * 削除
