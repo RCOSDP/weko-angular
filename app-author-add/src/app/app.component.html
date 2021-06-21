@@ -107,16 +107,20 @@
                       <div class="">
                         <div class="col-sm-12 col-md-12 divBottom">
                           <div class="col-sm-2 col-md-2">
-                            <select class="form-control" id="authorIdOption" [(ngModel)]="authorIdData.idType">
-                              <option *ngFor="let authorIdOption of authorIdOptions" [value]="authorIdOption.id">{{authorIdOption.name}}</option>
+                            <select [disabled]="authorIdData.idType == 1" class="form-control" id="authorIdOption" [(ngModel)]="authorIdData.idType">
+                              <ng-container *ngFor="let authorIdOption of authorIdOptions">
+                                <ng-container *ngIf="authorIdData.idType == 1 || authorIdOption.id != 1">
+                                  <option [value]="authorIdOption.id">{{authorIdOption.name}}</option>
+                                </ng-container>
+                              </ng-container>
                             </select>
                           </div>
                           <div class="col-sm-5 col-md-5">
-                            <input type="text" class="form-control" placeholder="" [(ngModel)]="authorIdData.authorId">
+                            <input [disabled]="authorIdData.idType == 1" type="text" class="form-control" placeholder="" [(ngModel)]="authorIdData.authorId">
                           </div>
                           <div class="col-sm-2 col-md-2">
                             <div class="">
-                              <div class="col-sm-12 col-md-12">
+                              <div class="col-sm-12 col-md-12" *ngIf="authorIdData.idType != 1">
                                 <button type="button" class="btn btn-primary">
                                   <!-- 確認 -->
                                   <!-- Confirm -->
@@ -127,7 +131,7 @@
                             </div>
                           </div>
                           <div class="col-sm-2 col-md-2">
-                            <div class="">
+                            <div class="" *ngIf="authorIdData.idType != 1">
                               <div class="col-sm-12 col-md-12 alignCenter">
                                 <input type="radio" [ngModel]="authorIdData.authorIdShowFlg" [checked]="authorIdData.authorIdShowFlg =='true'" (click)="authorIdData.authorIdShowFlg = 'true'"
                                   name="{{'authorIdRadio_'+i}}" value="true">&nbsp;
@@ -143,9 +147,11 @@
                             </div>
                           </div>
                           <div class="col-sm-1 col-md-1">
-                            <button type="button" class="close delButton" (click)="delAuthorIdData(i)">
-                              <span class="glyphicon glyphicon-remove"></span>
-                            </button>
+                            <div *ngIf="authorIdData.idType != 1">
+                              <button type="button" class="close delButton" (click)="delAuthorIdData(i)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>

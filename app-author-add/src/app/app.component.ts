@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     ],
     authorIdInfo: [
       {
-        idType: "1",
+        idType: "2",
         authorId: "",
         authorIdShowFlg: "true"
       }
@@ -366,8 +366,6 @@ export class AppComponent implements OnInit {
         alert(res.msg);
       })
     }else{
-      let timestamp = new Date().getTime().toString();
-      dbJson.pk_id = timestamp;
       this.postPageDataJson(dbJson).then(res => {
         // alert(res.msg);  // Flash message one admin page instead
         var urlArr = window.location.href.split('/');
@@ -390,7 +388,7 @@ export class AppComponent implements OnInit {
       var urlArr = window.location.href.split('/');
       window.location.href = urlArr[0] + "//" + urlArr[2] + "/admin/authors/";
     }).catch(res => {
-      alert(res.msg);
+      alert(res._body);
     })
   }
 

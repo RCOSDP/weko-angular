@@ -51,7 +51,7 @@
                         [(ngModel)]="data.url_temp">
                     </td>
                     <td>
-                      <button [disabled]="control.edit_flag[i] == true" type="button" class="btn btn-primary edit-button" (click)="edit(i)">
+                      <button *ngIf="data.scheme != 'WEKO'" [disabled]="control.edit_flag[i] == true" type="button" class="btn btn-primary edit-button" (click)="edit(i)">
                         <span class="glyphicon glyphicon-edit"></span>
                         Edit
                       </button>
