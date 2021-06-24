@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
     Author_Button_Save: [],
     Author_familyNmAndNm: [],
     Author_fullNm: [],
-    Author_placeholder_authorId: []
+    Author_placeholder_authorId: [],
+    Author_Confirm_Msg: []
   };
   public deleteBtn :boolean = false;
   //set data of page by json
@@ -322,7 +323,7 @@ export class AppComponent implements OnInit {
   returnAuthorIdInfoObj(): any {
     //著者ID情報
     let authorIdInfoObj = {
-      idType: "cinii",
+      idType: "1",
       authorId: "",
       authorIdShowFlg: "true"
     }
@@ -526,6 +527,25 @@ deleteById(esIdJsonObj: any): Promise<any> {
       .toPromise()
       .then(response => response.json() as any)
       .catch(this.handleError);
+  }
+  /**
+   * author confirm identifier url
+   */
+  authorConfirm(idType: any, authorId: any) {
+    let url_identifier = "";
+    for (let i = 0; i < this.authorIdOptions.length; i++) {
+      if (idType == this.authorIdOptions[i].id) {
+        url_identifier = this.authorIdOptions[i].url;
+      }
+    }
+    if (url_identifier != "") {
+      window.open(url_identifier.replace(/#+$/, authorId), "_blank");
+    } else {
+      $('#alerts').append(
+        '<div class="alert alert-danger" id="">' +
+        '<button type="button" class="close" data-dismiss="alert">' +
+        '&times;</button>' + this.langJson.Author_Confirm_Msg[1] + '</div>');
+    }
   }
   /**
    * エラー処理

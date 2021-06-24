@@ -1,4 +1,5 @@
 <p>
+  <div id="alerts_search_author"></div>
   <!-- <div class="container"> -->
     <div class="row">
         <div class="col-sm-12 col-md-12 col-md-12 panel-padding">
@@ -106,7 +107,7 @@
                           <div class="col-sm-1 col-md-1 remove-padding-right">
                             <div class="">
                               <div class="col-sm-12 col-md-12 textRight remove-padding-right remove-padding-left">
-                                <button type="button" class="btn btn-info">
+                                <button [disabled]="(!authorIdData.authorId)" (click)="authorConfirm(authorIdData.idType, authorIdData.authorId)" type="button" class="btn btn-info">
                                   <!-- 確認 -->
                                   <!-- Confirm -->
                                   {{langJson.Author_Confirm[1]}}
