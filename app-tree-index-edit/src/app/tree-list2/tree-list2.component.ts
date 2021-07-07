@@ -672,8 +672,11 @@ export class TreeList2Component implements OnInit {
 
     this.treeList2Service.setNodeMoved(nodeId, infoJson).then(res => {
       this.setIndexTree();
+      if (res.status == 202) {
+        this.addAlert(res.message);
+      }
     }).catch(res => {
-
+      this.setIndexTree();
     });
   }
 
