@@ -285,7 +285,8 @@ export class AppComponent implements OnInit {
           let nameInfo = "";
           for (let d of data._source.authorNameInfo) {
             if (d.nameFormat == "familyNmAndNm") {
-              nameInfo = nameInfo + d.familyName + "　" + d.firstName + "<br>";
+              const name = [d.familyName,  d.firstName].join(' ').trim();
+              nameInfo = nameInfo + name + "<br>";
             } else {
               nameInfo = nameInfo + d.fullName + "<br>";
             }
