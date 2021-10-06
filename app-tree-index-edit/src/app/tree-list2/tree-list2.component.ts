@@ -49,6 +49,9 @@ export class TreeList2Component implements OnInit {
     id: '',
     index_name: null,
     index_name_english: null,
+    index_link_name: null,
+    index_link_name_english: null,
+    index_link_enabled: false,
     comment: '',
     public_state: false,
     public_date: null,
@@ -149,14 +152,17 @@ export class TreeList2Component implements OnInit {
     Display: [],
     Del_Success: [],
     Add_Update_Success: [],
-    Err_File_Ext: []
+    Err_File_Ext: [],
+    Enter_Required_Fields: [],
+    Required_Input: []
   };
   public formData: FormData = new FormData();
   private imgSrc = '';
   private uploadFlg = false;
   private privousUploadFlg = false;
-  private checkFlg = false;
   public deleteFlg = false;
+  private checkIndexNameFlg= false;
+  private checkIndexLinkFlg= false;
 
   constructor(private treeList2Service: TreeList2Service) {
   }
@@ -354,7 +360,8 @@ export class TreeList2Component implements OnInit {
     $('input[name=uploadFile]').val('');
     this.selNodeId = e.node.id;
     this.uploadFlg = false;
-    this.checkFlg = false;
+    this.checkIndexNameFlg = false;
+    this.checkIndexLinkFlg = false;
     if (this.selNodeId != '0') {
       this.inputFlg = true;
       const modTreeDetailUrl = document.getElementById('mod_tree_detail').innerText + this.selNodeId;
@@ -397,9 +404,8 @@ export class TreeList2Component implements OnInit {
    */
   sendingdetail() {
     // ツリー詳細を編集＞サービスを呼び出す
-    this.checkFlg = this.inputCheck();
-    if (this.checkFlg) {
-      alert('必須入力項目を入力してください');
+    if (this.inputCheck()) {
+      alert(this.langJson.Enter_Required_Fields[1]);
       return;
     }
     if (!this.moreCheck()) {
@@ -708,13 +714,9 @@ export class TreeList2Component implements OnInit {
    * 入力チェック
    */
   inputCheck(): boolean {
-    let str = this.detailData.index_name_english;
-    str = str.replace(/(^\s*)|(\s*$)/g, '');
-    if (str == '') {
-      return true;
-    } else {
-      return false;
-    }
+    this.checkIndexNameFlg = this.detailData.index_name_english.trim() == '';
+    this.checkIndexLinkFlg = this.detailData.index_link_name_english.trim() == '';
+    return this.checkIndexNameFlg || this.checkIndexLinkFlg;
   }
 
   /**
