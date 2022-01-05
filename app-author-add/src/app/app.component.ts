@@ -323,7 +323,7 @@ export class AppComponent implements OnInit {
   returnAuthorIdInfoObj(): any {
     //著者ID情報
     let authorIdInfoObj = {
-      idType: "1",
+      idType: "2",
       authorId: "",
       authorIdShowFlg: "true"
     }
