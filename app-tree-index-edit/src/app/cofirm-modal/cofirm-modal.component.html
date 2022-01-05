@@ -23,7 +23,8 @@
         <span class="glyphicon glyphicon-trash"></span>
         {{langJsonM.Delete_all[1]}}
       </button>
-      <button *ngIf="!parentIsRoot" type="button" class="btn btn-primary" (click)="delAndMove();"> 
+      <button *ngIf="!parentIsRoot && false" type="button" class="btn btn-primary" (click)="delAndMove();"> 
+        <!-- There is a problem here, so hide the button for a while. -->
         <!-- 親インデックスへ移動 -->
         <!-- Move items to parent Index -->
         {{langJsonM.Move_items_to_parent_Index[1]}}
