@@ -4,7 +4,7 @@ import 'rxjs/add/operator/toPromise';
 declare var $: any;
 
 @Component({
-  selector: 'app-prefix-search',
+  selector: 'app-affiliation-search',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -12,9 +12,9 @@ export class AppComponent implements OnInit {
   //画面データを設定
   //i18n
   public langJson = {
-    Prefix_Name: [],
-    Prefix_Scheme: [],
-    Prefix_URL: [],
+    Affiliation_Name: [],
+    Affiliation_Scheme: [],
+    Affiliation_URL: [],
     Author_Control: [],
     Author_Button_Edit: [],
     Author_Button_Save: [],
@@ -55,14 +55,14 @@ export class AppComponent implements OnInit {
     this.setI18n();
   }
   ngAfterViewInit() {
-    this.getAuthorsPrefixSettings();
-    this.getControlledVocabularies();
+    this.getAuthorsAffiliationSettings();
+    this.getAffiliationScheme();
   }
 
   /**
    * i18n
    */
-   setI18n() {
+  setI18n() {
     let lang = $("#lang-code").val();
     let js = document.scripts;
     let jsUrl = js[js.length - 1].src;
@@ -87,7 +87,7 @@ export class AppComponent implements OnInit {
   }
   
   /**
-   * edit authors prefix settings
+   * edit authors affiliation settings
    */
   edit(index: any) {
     this.control.edit_flag[index] = true
@@ -103,7 +103,7 @@ export class AppComponent implements OnInit {
     }
   }
   /**
-   * update authors prefix settings
+   * update authors affiliation settings
    */
   update(index: any) {
     console.log(this.displayData[index]);
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit {
         });
   }
   /**
-   * delete authors prefix settings
+   * delete authors affiliation settings
    */
   delete(id: any) {
     console.log(id);
@@ -147,7 +147,7 @@ export class AppComponent implements OnInit {
     window.location.reload();
   }
   /**
-   * add authors prefix settings
+   * add authors affiliation settings
    */
   add() {
     console.log(this.new_settings);
@@ -173,10 +173,10 @@ export class AppComponent implements OnInit {
         });
   }
   /**
-   * get authors prefix settings
+   * get authors affiliation settings
    */
-  getAuthorsPrefixSettings() {
-    this.getDataOfAuthorsPrefixSettings().then(
+  getAuthorsAffiliationSettings() {
+    this.getDataOfAuthorsAffiliationSettings().then(
       res => {
         this.displayData = res;
         console.log(res);
@@ -192,8 +192,8 @@ export class AppComponent implements OnInit {
   /**
    * get list of controlled vocabularies
    */
-  getControlledVocabularies() {
-    this.getListOfControlledVocabularies().then(
+  getAffiliationScheme() {
+    this.getListOfAffiliationScheme().then(
       res => {
         this.controlledVocabularies = res.list;
         this.otherIndex = res.index;
@@ -202,11 +202,11 @@ export class AppComponent implements OnInit {
     ).catch();
   }
   /**
-   * call web api (get author prefix settings)
+   * call web api (get author affiliation settings)
    */
-  getDataOfAuthorsPrefixSettings() {
+  getDataOfAuthorsAffiliationSettings() {
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/search_prefix";
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/search_affiliation";
     return this.http
       .get(url)
       .toPromise()
@@ -214,11 +214,11 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
   /**
-   * call web api (get list of controlled vocabularies)
+   * call web api (get list of affiliation identifier scheme)
    */
-  getListOfControlledVocabularies() {
+  getListOfAffiliationScheme() {
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/list_vocabulary";
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/list_affiliation_scheme";
     return this.http
       .get(url)
       .toPromise()
@@ -226,11 +226,11 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
   /**
-   * call web api (update author prefix settings)
+   * call web api (update author affiliation settings)
    */
   updateSettings(data: any) {
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/edit_prefix";
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/edit_affiliation";
     return this.http
       .post(url, data)
       .toPromise()
@@ -238,11 +238,11 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
   /**
-   * call web api (delete author prefix settings)
+   * call web api (delete author affiliation settings)
    */
   deleteSettings(id: any) {
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/delete_prefix/" + id;
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/delete_affiliation/" + id;
     return this.http
       .delete(url)
       .toPromise()
@@ -250,11 +250,11 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
   /**
-   * call web api (add an author prefix settings)
+   * call web api (add an author affiliation settings)
    */
   putSettings(data: any) {
     var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/add_prefix";
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/add_affiliation";
     return this.http
       .put(url, data)
       .toPromise()
@@ -291,3 +291,5 @@ export class AppComponent implements OnInit {
     return Promise.reject(error.message || error);
   }
 }
+
+

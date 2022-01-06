@@ -1,0 +1,62 @@
+.alignCenter{
+    text-align: center
+}
+.textRight{
+    text-align: right
+}
+
+.col-sm-1{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-2{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-3{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-4{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-5{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-6{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-7{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.col-sm-8{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.col-sm-9{
+  padding-left: 2px;;
+  padding-right: 2px;
+}
+.col-sm-10{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-11{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.col-sm-12{
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.delButton{
+    float: left;
+}
+.divBottom{
+    margin-bottom: 10px;
+}

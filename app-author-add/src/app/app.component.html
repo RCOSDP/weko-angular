@@ -157,7 +157,7 @@
                       </div>
                       <p></p>
                     </ng-container>
-                    <!-- 第二行目　 end-->
+                    <!-- 第一行目　 end-->
                     <div class="row ">
                       <div class="col-sm-11 col-md-11 textRight">
                         <button type="button" class="btn btn-link" (click)="addAuthorIdInfo()">+&nbsp;
@@ -167,6 +167,7 @@
                         </button>
                       </div>
                     </div>
+                    <!-- 第二行目　 end-->
                   </div>
                 </div>
               </div>
@@ -213,19 +214,201 @@
               </div>
               <!--email end  -->
               <br>
+              <!-- 所属情報　start -->
+              <!-- for start -->
+              <div class="row">
+                <div class="col-sm-12 col-md-12">
+                  <!-- 第一行目 -->
+                  <ng-container *ngFor="let affiliationData of authorJsonObj.affiliationInfo;let affiliationIndex=index">
+                    <div class="panel panel-default affiliation-panel">
+                      <div class="col-sm-12 col-md-12">
+                        <div class="col-sm-1 col-md-1"></div>
+                        <div class="col-sm-11 col-md-11">
+                          <div class="col-sm-12 col-md-12 divBottom">
+                            <div class="col-sm-11 col-md-11"></div>
+                            <div class="col-sm-1 col-md-1">
+                              <button type="button" class="close delButton" (click)="delAffiliationData(affiliationIndex)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="col-sm-12 col-md-12">
+                          <br>
+                          <!-- 所属機関識別子　start -->
+                          <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                              <div class="col-sm-1 col-md-1 textRight">
+                                <!-- 所属機関識別子 -->
+                                <!-- Identifier -->
+                                {{langJson.Author_Identifier[1]}}
+                              </div>
+                              <div class="col-sm-11 col-md-11">
+                                <!-- for start -->
+                                <ng-container *ngFor="let identifierData of affiliationData.identifierInfo;let identifierIndex=index">
+                                  <div class="">
+                                    <div class="col-sm-12 col-md-12 divBottom">
+                                      <div class="col-sm-2 col-md-2">
+                                        <select class="form-control" id="identifierOption" [(ngModel)]="identifierData.affiliationNameIdentifier">
+                                          <ng-container *ngFor="let identifierOption of identifierOptions">
+                                            <option [value]="identifierOption.id">{{identifierOption.name}}</option>
+                                          </ng-container>
+                                        </select>
+                                      </div>
+                                      <div class="col-sm-5 col-md-5">
+                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="identifierData.affiliationNameIdentifierScheme">
+                                      </div>
+                                      <div class="col-sm-2 col-md-2">
+                                        <div class="">
+                                          <div class="col-sm-12 col-md-12">
+                                            <button [disabled]="(!identifierData.affiliationNameIdentifierScheme)" (click)="affiliationConfirm(identifierData.affiliationNameIdentifier, identifierData.affiliationNameIdentifierScheme)" type="button" class="btn btn-primary">
+                                              <!-- 確認 -->
+                                              <!-- Confirm -->
+                                              <span class="glyphicon glyphicon-hand-right"></span>
+                                              {{langJson.Author_Confirm[1]}}
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-2 col-md-2">
+                                        <div class="">
+                                          <div class="col-sm-12 col-md-12 alignCenter">
+                                            <input type="radio" [ngModel]="identifierData.identifierShowFlg" [checked]="identifierData.identifierShowFlg =='true'" (click)="identifierData.identifierShowFlg = 'true'"
+                                              name="{{'identifierRadio_'+identifierIndex}}" value="true">&nbsp;
+                                              <!-- 表示 -->
+                                              <!-- Display -->
+                                              {{langJson.Author_Display[1]}}
+                                            <input type="radio" [ngModel]="identifierData.identifierShowFlg" [checked]="identifierData.identifierShowFlg == 'false'" (click)="identifierData.identifierShowFlg = 'false'"
+                                              name="{{'identifierRadio_'+identifierIndex}}" value="false">&nbsp;
+                                              <!-- 非表示 -->
+                                              <!-- Hide -->
+                                              {{langJson.Author_Hide[1]}}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-1 col-md-1">
+                                        <div>
+                                          <button type="button" class="close delButton" (click)="delIdentifierData(affiliationIndex, identifierIndex)">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <p></p>
+                                </ng-container>
+                                <!-- 第二行目 -->
+                                <div class="row ">
+                                  <div class="col-sm-11 col-md-11 textRight">
+                                    <button type="button" class="btn btn-link" (click)="addIdentifierInfo(affiliationIndex)">+&nbsp;
+                                      <!-- 所属機関識別子を追加 -->
+                                      <!-- Add Identifier -->
+                                      {{langJson.Author_Add_Identifier[1]}}
+                                    </button>
+                                  </div>
+                                </div>
+                                <!-- 第二行目 end-->                                    
+                              </div>
+                            </div>
+                          </div>
+                          <!-- 所属機関識別子 end  -->
+                          <br>
+                          <!-- 所属機関名　start -->
+                          <div class="row">
+                            <div class="col-sm-12 col-md-12">
+                              <div class="col-sm-1 col-md-1 textRight">
+                              <!-- Affiliation Name -->
+                              </div>
+                              <div class="col-sm-11 col-md-11">
+                                <!-- for start -->
+                                <ng-container *ngFor="let affiliationNameData of affiliationData.affiliationNameInfo;let affiliationNameIndex=index">
+                                  <div class="">
+                                    <div class="col-sm-12 col-md-12 divBottom">
+                                      <div class="col-sm-2 col-md-2">
+                                      </div>
+                                      <div class="col-sm-5 col-md-5">
+                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="affiliationNameData.affiliationName">
+                                      </div>
+                                      <div class="col-sm-2 col-md-2">
+                                        <select class="form-control" id="langOption" [(ngModel)]="affiliationNameData.affiliationNameLang" (change)="inputChange(affiliationNameIndex, affiliationNameData.affiliationNameLang)" >
+                                          <option *ngFor="let langOption of langOptions" [value]="langOption.id">{{langOption.value}}</option>
+                                        </select>
+                                      </div>                          
+                                      <div class="col-sm-2 col-md-2">
+                                        <div class="">
+                                          <div class="col-sm-12 col-md-12 alignCenter">
+                                            <input type="radio" [ngModel]="affiliationNameData.affiliationNameShowFlg" [checked]="affiliationNameData.affiliationNameShowFlg =='true'" (click)="affiliationNameData.affiliationNameShowFlg = 'true'"
+                                              name="{{'affiliationNameRadio_'+affiliationNameIndex}}" value="true">&nbsp;
+                                              <!-- 表示 -->
+                                              <!-- Display -->
+                                              {{langJson.Author_Display[1]}}
+                                            <input type="radio" [ngModel]="affiliationNameData.affiliationNameShowFlg" [checked]="affiliationNameData.affiliationNameShowFlg == 'false'" (click)="affiliationNameData.affiliationNameShowFlg = 'false'"
+                                              name="{{'affiliationNameRadio_'+affiliationNameIndex}}" value="false">&nbsp;
+                                              <!-- 非表示 -->
+                                              <!-- Hide -->
+                                              {{langJson.Author_Hide[1]}}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-1 col-md-1">
+                                        <div>
+                                          <button type="button" class="close delButton" (click)="delAffiliationNameData(affiliationIndex, affiliationNameIndex)">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <p></p>
+                                </ng-container>
+                                <!-- 第二行目 -->
+                                <div class="row ">
+                                  <div class="col-sm-11 col-md-11 textRight">
+                                    <button type="button" class="btn btn-link" (click)="addAffiliationNameInfo(affiliationIndex)">+&nbsp;
+                                      <!-- 所属機関名を追加 -->
+                                      <!-- Add AffiliationName -->
+                                      {{langJson.Author_Add_Affiliation_Name[1]}}
+                                    </button>
+                                  </div>
+                                </div>
+                                <!-- 第二行目 end-->                             
+                              </div>
+                            </div>
+                          </div>
+                          <!-- 所属機関名 end  -->                       
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <!-- 第二行目 -->
+                  <div class="row ">
+                    <div class="col-sm-11 col-md-11 textRight">
+                      <button type="button" class="btn btn-link" (click)="addAffiliationInfo()">+&nbsp;
+                        <!-- 所属情報を追加 -->
+                        <!-- Add Affiliation -->
+                        {{langJson.Author_Add_Affiliation[1]}}
+                      </button>
+                    </div>
+                  </div>                 
+                  <!-- 第二行目　 end-->
+                </div>
+              </div>
+              <!-- 所属情報 end  -->
               <br>
               <br>
               <!-- ボタン start-->
               <div class="row alignCenter">
                 <div class="col-sm-1 col-md-1">
-                    <button *ngIf="deleteBtn" type="button" class="btn btn-danger delete-button" (click)="deleteAuthor()">
+                     <button *ngIf="deleteBtn" type="button" class="btn btn-danger delete-button" (click)="deleteAuthor()">
                         <!-- 削除 -->
                         <span class="glyphicon glyphicon-trash"></span>
-                        Delete
+                        {{langJson.Author_Button_Delete[1]}}
                       </button>
                 </div>
                 <div class="col-sm-9 col-md-9">
-                    <button type="button" class="btn btn-info clear-button" (click)="clearInputInfo()">
+                     <button type="button" class="btn btn-info clear-button" (click)="clearInputInfo()">
                         <!-- 取消 -->
                         <!-- Clear -->
                         <span class="glyphicon glyphicon-remove"></span>
