@@ -112,7 +112,7 @@
                         <span class="input-group-addon">{{langJson.English[1]}}<span class="text-danger">＊</span></span>
                         <input type="text" class="form-control" id="inputTitle_en" placeholder="" [(ngModel)]="detailData.index_name_english">
                       </div>
-                      <span *ngIf="checkFlg" class="text-danger">英語で入力は必要です。</span>
+                      <span *ngIf="checkIndexNameFlg" class="text-danger">{{langJson.Required_Input[1]}}</span>
                     </div>
                   </div>
                 </div>
@@ -177,7 +177,7 @@
                           <span class="input-group-addon">{{langJson.English[1]}}<span class="text-danger">＊</span></span>
                           <input type="text" class="form-control" id="indexLink_en" placeholder="" [(ngModel)]="detailData.index_link_name_english">
                         </div>
-                        <span *ngIf="checkFlg" class="text-danger">英語で入力は必要です。</span>
+                        <span *ngIf="checkIndexLinkFlg" class="text-danger">{{langJson.Required_Input[1]}}</span>
                       </div>
                   </div>
                 </div>
