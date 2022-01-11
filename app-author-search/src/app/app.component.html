@@ -7,7 +7,7 @@
           <div class="col-sm-12 col-md-12 textRight">
               <button type="button" class="btn btn-primary action-button" [disabled]="mergeDisabled" data-toggle="modal" data-target="#exampleModal">
                 <i class="fa fa-hand-o-right"></i>
-                Merge
+                {{langJson.Author_Button_Merge[1]}}
               </button>
               &nbsp;&nbsp;
               <button type="button" class="btn btn-light add-big-button" (click)="authorAdd()">
@@ -32,7 +32,7 @@
           <div class="col-sm-4 col-md-4 textRight">
               <form class="form-inline">
                   <div class="form-group">
-                    <label for="exampleInputName2">Display Number</label>
+                    <label for="exampleInputName2">{{langJson.Author_Display_Number[1]}}</label>
                     <select class="form-control" id="authorIdOption" name="cntOfpage" [(ngModel)]="cntOfpage" (change)="setNumber(cntOfpage)">
                         <option>25</option>
                         <option>50</option>
@@ -49,22 +49,22 @@
               <tr class="success">
                 <th class="thWidth10">
                   <!-- 名寄せ元 -->
-                  Origin
+                  {{langJson.Author_Origin[1]}}
                 </th>
                 <th class="thWidth10">
                   <!-- 名寄せ先 -->
-                  Target
+                  {{langJson.Author_Target[1]}}
                 </th>
                 <th class="thWidth30">
                   {{langJson.Author_Name[1]}}
                 </th>
                 <th class="thWidth30">
                   <!-- メールアドレス -->
-                  Mail Address
+                  {{langJson.Author_Mail_Address[1]}}
                 </th>
                 <th class="thWidth10">
                   <!-- アイテム数 -->
-                  Item Count
+                  {{langJson.Author_Item_Count[1]}}
                 </th>
                 <th class="thWidth10">
                 </th>
@@ -131,7 +131,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <b>Origin</b>
+              <b>{{langJson.Author_Origin[1]}}</b>
                 <div>
                   <table class="table table-striped">
                     <caption></caption>
@@ -143,10 +143,10 @@
                         </th>
                         <th class="thWidth30">
                           <!-- メールアドレス -->
-                          Mail Address
+                          {{langJson.Author_Mail_Address[1]}}
                         </th>
                         <th class="thWidth20">
-                          Item Count
+                          {{langJson.Author_Item_Count[1]}}
                         </th>
                         <!-- 20180827 author search edit end-->
                       </tr>
@@ -166,7 +166,7 @@
                     </tbody>
                   </table>
                 </div>
-                  <b>Target</b>
+                  <b>{{langJson.Author_Target[1]}}</b>
                     <div>
                       <table class="table table-striped">
                         <caption></caption>
@@ -178,11 +178,11 @@
                             </th>
                             <th class="thWidth30">
                               <!-- メールアドレス -->
-                              Mail Address
+                              {{langJson.Author_Mail_Address[1]}}
                             </th>
                             <th class="thWidth20">
                               <!-- アイテム数 -->
-                              Item Count
+                              {{langJson.Author_Item_Count[1]}}
                             </th>
                             <!-- 20180827 author search edit end-->
                           </tr>
@@ -208,11 +208,11 @@
               <button type="button" class="btn btn-info" (click)="gather()">名寄せ実行</button> -->
               <button type="button" id="back_modal" class="btn btn-info back-button" data-dismiss="modal">
                   <span class="glyphicon glyphicon-chevron-left"></span>
-                  Back
+                  {{langJson.Author_Button_Back[1]}}
               </button>
               <button type="button" class="btn btn-primary action-button" (click)="gather()">
                   <span class="glyphicon glyphicon-hand-right"></span>
-                  Execute
+                  {{langJson.Author_Button_Execute[1]}}
               </button>
             </div>
           </div>
