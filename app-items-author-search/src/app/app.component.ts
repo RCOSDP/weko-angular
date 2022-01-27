@@ -42,6 +42,24 @@ export class AppComponent implements OnInit {
     ],
     emailInfo: [
       { email: "" }
+    ],
+    affiliationInfo: [
+      {
+        identifierInfo: [
+          {
+            affiliationNameIdentifier: "1",
+            affiliationNameIdentifierScheme: "",
+            identifierShowFlg: "true"
+          }
+        ],
+        affiliationNameInfo: [
+          {
+            affiliationName: "",
+            affiliationNameLang: "ja",
+            affiliationNameShowFlg: "true"
+          }
+        ]
+      }
     ]
   }
   //検索すると、サービスから戻ったデータ

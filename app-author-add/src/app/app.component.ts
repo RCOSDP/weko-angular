@@ -364,7 +364,7 @@ export class AppComponent implements OnInit {
    * 所属機関識別子情報を追加する
    * ＠@param 追加する位置情報
    */
-   addIdentifierInfo(affiliationIndex: any) {
+  addIdentifierInfo(affiliationIndex: any) {
     //子対象を取得する
     let subIdentifierInfoObj = this.returnSubIdentifierInfoObj();
     //行目を追加
@@ -388,7 +388,6 @@ export class AppComponent implements OnInit {
     let subAffiliationInfoObj = this.returnSubAffiliationInfoObj();
     //行目を追加
     this.authorJsonObj.affiliationInfo.push(subAffiliationInfoObj);
-
   }
   /**
    *画面情報をクリアする
@@ -705,7 +704,7 @@ deleteById(esIdJsonObj: any): Promise<any> {
   /**
    * call api (get author Affiliation)
    */
-   getDataOfAuthorsAffiliationSettings() {
+  getDataOfAuthorsAffiliationSettings() {
     var urlArr = window.location.href.split('/');
     const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/search_affiliation"
     return this.http
