@@ -245,7 +245,7 @@ export class AddAuthorComponent implements OnInit {
     let lang = $("#lang-code",parent.document).val();
     let js = document.scripts;
     let jsUrl = js[js.length - 1].src;
-    let strUrl = jsUrl.substring(0, jsUrl.lastIndexOf('_debug_toolbar'));
+    let strUrl = jsUrl.substring(0, jsUrl.lastIndexOf('static'));
     let jsonUrl = strUrl + "static/json/weko_authors/translations/" + lang + "/messages.json";
     this.getLnagJson(jsonUrl).then(res => {
       this.langJson = res;
