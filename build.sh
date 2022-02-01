@@ -32,6 +32,7 @@ done <<END
 app-author-add
 app-author-search
 app-author-prefix
+app-author-affiliation
 app-items-author-search
 app-tree-index-edit
 app-tree-index-journal-edit
