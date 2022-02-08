@@ -47,8 +47,8 @@ export class AppComponent implements OnInit {
       {
         identifierInfo: [
           {
-            affiliationNameIdentifier: "1",
-            affiliationNameIdentifierScheme: "",
+            affiliationIdType: "1",
+            affiliationId: "",
             identifierShowFlg: "true"
           }
         ],

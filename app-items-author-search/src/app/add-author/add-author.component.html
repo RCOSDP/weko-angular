@@ -233,19 +233,19 @@
                                   <div class="">
                                     <div class="col-sm-12 col-md-12 divBottom remove-padding-right">
                                       <div class="col-sm-2 col-md-2 remove-padding-right">
-                                        <select class="form-control" id="identifierOption" [(ngModel)]="identifierData.affiliationNameIdentifier">
+                                        <select class="form-control" id="identifierOption" [(ngModel)]="identifierData.affiliationIdType">
                                           <ng-container *ngFor="let identifierOption of identifierOptions">
                                             <option [value]="identifierOption.id">{{identifierOption.name}}</option>
                                           </ng-container>
                                         </select>
                                       </div>
                                       <div class="col-sm-6 col-md-6 remove-padding-right">
-                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="identifierData.affiliationNameIdentifierScheme">
+                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="identifierData.affiliationId">
                                       </div>
                                       <div class="col-sm-1 col-md-1 remove-padding-right">
                                         <div class="">
                                           <div class="col-sm-12 col-md-12 remove-padding-right remove-padding-left">
-                                            <button [disabled]="(!identifierData.affiliationNameIdentifierScheme)" (click)="affiliationConfirm(identifierData.affiliationNameIdentifier, identifierData.affiliationNameIdentifierScheme)" type="button" class="btn btn-info">
+                                            <button [disabled]="(!identifierData.affiliationId)" (click)="affiliationConfirm(identifierData.affiliationIdType, identifierData.affiliationId)" type="button" class="btn btn-info">
                                               <!-- 確認 -->
                                               <!-- Confirm -->
                                               <!--<span class="glyphicon glyphicon-hand-right"></span>-->

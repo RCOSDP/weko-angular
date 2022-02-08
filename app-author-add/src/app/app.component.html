@@ -251,19 +251,19 @@
                                   <div class="">
                                     <div class="col-sm-12 col-md-12 divBottom">
                                       <div class="col-sm-2 col-md-2">
-                                        <select class="form-control" id="identifierOption" [(ngModel)]="identifierData.affiliationNameIdentifier">
+                                        <select class="form-control" id="identifierOption" [(ngModel)]="identifierData.affiliationIdType">
                                           <ng-container *ngFor="let identifierOption of identifierOptions">
                                             <option [value]="identifierOption.id">{{identifierOption.name}}</option>
                                           </ng-container>
                                         </select>
                                       </div>
                                       <div class="col-sm-5 col-md-5">
-                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="identifierData.affiliationNameIdentifierScheme">
+                                        <input type="text" class="form-control" placeholder="" [(ngModel)]="identifierData.affiliationId">
                                       </div>
                                       <div class="col-sm-2 col-md-2">
                                         <div class="">
                                           <div class="col-sm-12 col-md-12">
-                                            <button [disabled]="(!identifierData.affiliationNameIdentifierScheme)" (click)="affiliationConfirm(identifierData.affiliationNameIdentifier, identifierData.affiliationNameIdentifierScheme)" type="button" class="btn btn-primary">
+                                            <button [disabled]="(!identifierData.affiliationId)" (click)="affiliationConfirm(identifierData.affiliationIdType, identifierData.affiliationId)" type="button" class="btn btn-primary">
                                               <!-- 確認 -->
                                               <!-- Confirm -->
                                               <span class="glyphicon glyphicon-hand-right"></span>

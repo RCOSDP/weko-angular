@@ -65,8 +65,8 @@ export class AppComponent implements OnInit {
       {
         identifierInfo: [
           {
-            affiliationNameIdentifier: "1",
-            affiliationNameIdentifierScheme: "",
+            affiliationIdType: "1",
+            affiliationId: "",
             identifierShowFlg: "true"
           }
         ],
@@ -471,8 +471,8 @@ export class AppComponent implements OnInit {
   returnSubIdentifierInfoObj(): any {
   //所属機関識別子情報
   let subIdentifierInfoObj = {
-    affiliationNameIdentifier: "1",
-    affiliationNameIdentifierScheme: "",
+    affiliationIdType: "1",
+    affiliationId: "",
     identifierShowFlg: "true"
   }
   return subIdentifierInfoObj;
@@ -735,15 +735,15 @@ deleteById(esIdJsonObj: any): Promise<any> {
   /**
    * affiliation confirm identifier url
    */
-  affiliationConfirm(affiliationNameIdentifier: any, affiliationNameIdentifierScheme: any) {
+  affiliationConfirm(affiliationIdType: any, affiliationId: any) {
     let url_identifier = "";
     for (let i = 0; i < this.identifierOptions.length; i++) {
-      if (affiliationNameIdentifier == this.identifierOptions[i].id) {
+      if (affiliationIdType == this.identifierOptions[i].id) {
         url_identifier = this.identifierOptions[i].url;
       }
     }
     if (url_identifier != "") {
-      window.open(url_identifier.replace(/#+$/, affiliationNameIdentifierScheme), "_blank");
+      window.open(url_identifier.replace(/#+$/, affiliationId));
     } else {
       $('#alerts').append(
         '<div class="alert alert-danger" id="">' +
