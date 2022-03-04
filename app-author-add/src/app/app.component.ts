@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 declare var $: any;
@@ -294,7 +294,7 @@ export class AppComponent implements OnInit {
    * identifierを削除する
    * ＠@param 削除する位置情報
    */
-   delIdentifierData(affiliationIndex: string | number, identifierIndex: any) {
+  delIdentifierData(affiliationIndex: string | number, identifierIndex: any) {
     //全部削除する場合
     if (this.authorJsonObj.affiliationInfo[affiliationIndex].identifierInfo.length == 1) {
       let subIdentifierInfoObj = this.returnSubIdentifierInfoObj();
@@ -307,7 +307,7 @@ export class AppComponent implements OnInit {
    * affiliationNameを削除する
    * ＠@param 削除する位置情報
    */
-   delAffiliationNameData(affiliationIndex: string | number, affiliationNameIndex: any) {
+  delAffiliationNameData(affiliationIndex: string | number, affiliationNameIndex: any) {
     //全部削除する場合
     if (this.authorJsonObj.affiliationInfo[affiliationIndex].affiliationNameInfo.length == 1) {
       let subAffiliationNameInfoObj = this.returnSubAffiliationNameInfoObj();
@@ -320,7 +320,7 @@ export class AppComponent implements OnInit {
    * affiliationを削除する
    * ＠@param 削除する位置情報
    */
-   delAffiliationData(index: any) {
+  delAffiliationData(index: any) {
     //全部削除する場合
     if (this.authorJsonObj.affiliationInfo.length == 1) {
       let subAffiliationInfoObj = this.returnSubAffiliationInfoObj();
@@ -523,6 +523,21 @@ export class AppComponent implements OnInit {
    * 保存処理
    */
   save() {
+    // validation of affiliationNameIdentifier
+    let affiliationInfoLength = this.authorJsonObj.affiliationInfo.length;
+    for (let i = 0; i < affiliationInfoLength; i++){
+      let identifierInfoLength = this.authorJsonObj.affiliationInfo[i].identifierInfo.length;
+      for (let j = 0; j < identifierInfoLength; j++){
+        let affiliationIdType = this.authorJsonObj.affiliationInfo[i].identifierInfo[j].affiliationIdType;
+        let affiliationId = this.authorJsonObj.affiliationInfo[i].identifierInfo[j].affiliationId;
+        let validation_res = this.validationId(affiliationIdType, affiliationId);
+        if (validation_res != 'OK' && validation_res != 'No vaildation') {
+          alert(validation_res);
+          return;
+        }
+      }
+    }
+    
     let a = JSON.stringify(this.authorJsonObj);
     let dbJson = this.changeJson();
     let urlStr = window.location.href;
@@ -642,8 +657,8 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
   /**
- *編集場合、保存処理
- */
+   *編集場合、保存処理
+   */
   editPageDataJson(authorJsonObj: any): Promise<any> {
     var urlArr = window.location.href.split('/');
     const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/edit"
@@ -654,22 +669,22 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
 
-   /**
- *編集場合、保存処理
- */
-deleteById(esIdJsonObj: any): Promise<any> {
-  var urlArr = window.location.href.split('/');
-  const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/delete"
-  return this.http
-    .post(url, esIdJsonObj)
-    .toPromise()
-    .then(response => response.json() as any)
-    .catch(this.handleError);
-}
+  /**
+   *編集場合、保存処理
+   */
+  deleteById(esIdJsonObj: any): Promise<any> {
+    var urlArr = window.location.href.split('/');
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/delete"
+    return this.http
+      .post(url, esIdJsonObj)
+      .toPromise()
+      .then(response => response.json() as any)
+      .catch(this.handleError);
+  }
 
   /**
- * 多言語対応
- */
+   * 多言語対応
+   */
   getLnagJson(url: any): Promise<any> {
     return this.http
       .get(url)
@@ -752,6 +767,45 @@ deleteById(esIdJsonObj: any): Promise<any> {
     }
   }
 
+  /**
+   * Verify Identifier
+   */
+  validationId(idType: any, id: any) {
+    let identifierReg = JSON.parse($("#identifier_reg").val());
+    let minLength = 0;
+    let maxLength = 30;
+    let reg = new RegExp('');
+    for (let i = 0; i < this.identifierOptions.length; i++) {
+      if (idType == this.identifierOptions[i].id) {
+        let identifierName = this.identifierOptions[i].name;
+        if (identifierName in identifierReg){
+          if ('minLength' in identifierReg[identifierName]){
+          minLength = identifierReg[identifierName]['minLength']; 
+          }else{
+            continue;
+          }
+          if ('maxLength' in identifierReg[identifierName]){
+            maxLength = identifierReg[identifierName]['maxLength']; 
+          }else{
+              continue;
+          }
+          if ('reg' in identifierReg[identifierName]){
+            reg = RegExp(identifierReg[identifierName]['reg']); 
+          }else{
+              continue;
+          }
+        }else{
+          return 'No vaildation';
+        }
+      }
+    }
+    let l = id.trim().length;
+    if (l < minLength || l > maxLength || !reg.test(id)) {
+      return 'Please enter the correct Identifier';
+    }
+    return 'OK';
+  }
+  
   /**
    * エラー処理
    */
