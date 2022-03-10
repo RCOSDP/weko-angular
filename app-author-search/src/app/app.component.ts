@@ -12,16 +12,23 @@ export class AppComponent implements OnInit {
   //画面データを設定
   //i18n
   public langJson = {
-    Author_Name: [],
     Author_Add_Organization: [],
-    Author_Add_Author:[],
-    Author_Search: [],
+    Author_Button_Merge: [],
+    Author_Add_Author: [],
+    Author_Button_Search: [],
+    Author_Display_Number: [],
+    Author_Origin: [],
+    Author_Target: [],
+    Author_Name: [],
     Author_Mail_Address: [],
-    Author_Edit: [],
+    Author_Item_Count: [],
+    Author_Button_Edit: [],
     Author_Search_No_Result: [],
     Author_Page_Previous: [],
     Author_Page_Next: [],
-    Author_On_1_Page: []
+    Author_On_1_Page: [],
+    Author_Button_Back: [],
+    Author_Button_Execute: []
   };
   // JPCORE 対応start 20180402
   public authorJsonObj: any = {

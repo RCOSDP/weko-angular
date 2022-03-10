@@ -23,6 +23,13 @@ export class AddAuthorComponent implements OnInit {
     Author_Add_Author_ID: [],
     Author_EMail: [],
     Author_Add_EMail: [],
+    Author_Identifier: [],
+    Author_Add_Identifier: [],
+    Author_Affiliation_Name: [],
+    Author_Add_Affiliation_Name: [],
+    Author_Affiliation: [],
+    Author_Add_Affiliation: [],
+    Author_Button_Delete: [],
     Author_Button_Clear: [],
     Author_Button_Save: [],
     Author_familyNmAndNm: [],
@@ -47,16 +54,34 @@ export class AddAuthorComponent implements OnInit {
     ],
     authorIdInfo: [
       {
-        idType: "1",
+        idType: "2",
         authorId: "",
         authorIdShowFlg: "true"
       }
     ],
     emailInfo: [
       { email: "" }
+    ],
+    affiliationInfo: [
+      {
+        identifierInfo: [
+          {
+            affiliationIdType: "1",
+            affiliationId: "",
+            identifierShowFlg: "true"
+          }
+        ],
+        affiliationNameInfo: [
+          {
+            affiliationName: "",
+            affiliationNameLang: "ja",
+            affiliationNameShowFlg: "true"
+          }
+        ]
+      }
     ]
   }
-  //氏名の入力方
+  //氏名の入力方法
   // set data of name List
   public langOptions: any[] = [
     { id: 'ja', value: 'ja' },
@@ -84,6 +109,14 @@ export class AddAuthorComponent implements OnInit {
   ];
   // set data of group list
   public authorIdOptions: any[] = [];
+  // set data of group list
+  public identifierOptions: [
+    {
+      id: -1,
+      name: "",
+      url: ""
+    }
+  ]; 
   //氏名が姓・名で入力する場合
   // set input guide
   public placeholderArry: any = [
@@ -101,6 +134,7 @@ export class AddAuthorComponent implements OnInit {
   ngOnInit() {
     this.setI18n();
     this.getAuthorsPrefixSettings();
+    this.getAuthorsAffiliationSettings();
   }
   ngAfterViewInit() {
     this.getAuthorData();
@@ -115,11 +149,33 @@ export class AddAuthorComponent implements OnInit {
       }
     ).catch();
   }
+  /**
+   * get authors affiliation settings
+   */
+   getAuthorsAffiliationSettings() {
+    this.getDataOfAuthorsAffiliationSettings().then(
+      res => {
+        this.identifierOptions = res;
+      }
+    ).catch()
+  }  
     /**
    * call api (get author prefix prefix)
    */
   getDataOfAuthorsPrefixSettings() {
     const url = window.location.origin + "/api/authors/search_prefix";
+    return this.http
+      .get(url)
+      .toPromise()
+      .then(response => response.json() as any)
+      .catch(this.handleError);
+  }
+  /**
+   * call api (get author Affiliation)
+   */
+  getDataOfAuthorsAffiliationSettings() {
+    var urlArr = window.location.href.split('/');
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/search_affiliation"
     return this.http
       .get(url)
       .toPromise()
@@ -174,6 +230,12 @@ export class AddAuthorComponent implements OnInit {
         this.authorJsonObj.emailInfo.push(data);
       }
     }
+    if (info.hasOwnProperty("affiliationInfo")) {
+      this.authorJsonObj.affiliationInfo = [];
+      for (let data of info.affiliationInfo) {
+        this.authorJsonObj.affiliationInfo.push(data);
+      }
+    }
     console.log(JSON.stringify(this.authorJsonObj))
   }
   /**
@@ -184,6 +246,10 @@ export class AddAuthorComponent implements OnInit {
     let js = document.scripts;
     let jsUrl = js[js.length - 1].src;
     let strUrl = jsUrl.substring(0, jsUrl.lastIndexOf('static'));
+    if(strUrl.lastIndexOf('_debug_toolbar') > -1){
+      // For debug mode  
+      strUrl = strUrl.substring(0, strUrl.lastIndexOf('_debug_toolbar'));
+    }
     let jsonUrl = strUrl + "static/json/weko_authors/translations/" + lang + "/messages.json";
     this.getLnagJson(jsonUrl).then(res => {
       this.langJson = res;
@@ -244,6 +310,45 @@ export class AddAuthorComponent implements OnInit {
     }
   }
   /**
+   * identifierを削除する
+   * ＠@param 削除する位置情報
+   */
+   delIdentifierData(affiliationIndex: string | number, identifierIndex: any) {
+    //全部削除する場合
+    if (this.authorJsonObj.affiliationInfo[affiliationIndex].identifierInfo.length == 1) {
+      let subIdentifierInfoObj = this.returnSubIdentifierInfoObj();
+      this.authorJsonObj.affiliationInfo[affiliationIndex].identifierInfo.splice(identifierIndex, 1, subIdentifierInfoObj);
+    } else {
+      this.authorJsonObj.affiliationInfo[affiliationIndex].identifierInfo.splice(identifierIndex, 1)
+    }
+  }
+  /**
+   * affiliationNameを削除する
+   * ＠@param 削除する位置情報
+   */
+  delAffiliationNameData(affiliationIndex: string | number, affiliationNameIndex: any) {
+    //全部削除する場合
+    if (this.authorJsonObj.affiliationInfo[affiliationIndex].affiliationNameInfo.length == 1) {
+      let subAffiliationNameInfoObj = this.returnSubAffiliationNameInfoObj();
+      this.authorJsonObj.affiliationInfo[affiliationIndex].affiliationNameInfo.splice(affiliationNameIndex, 1, subAffiliationNameInfoObj);
+    } else {
+      this.authorJsonObj.affiliationInfo[affiliationIndex].affiliationNameInfo.splice(affiliationNameIndex, 1)
+    }
+  }
+  /**
+   * affiliationを削除する
+   * ＠@param 削除する位置情報
+   */
+  delAffiliationData(index: any) {
+    //全部削除する場合
+    if (this.authorJsonObj.affiliationInfo.length == 1) {
+      let subAffiliationInfoObj = this.returnSubAffiliationInfoObj();
+      this.authorJsonObj.affiliationInfo.splice(index, 1, subAffiliationInfoObj);
+    } else {
+      this.authorJsonObj.affiliationInfo.splice(index, 1)
+    }
+  }
+  /**
    * 氏名情報を追加する
    */
   addAuthorNameData() {
@@ -260,13 +365,13 @@ export class AddAuthorComponent implements OnInit {
    * 著者情報を追加する
    */
   addAuthorIdInfo() {
-    //子対象を取得す
+    //子対象を取得する
     let authorIdInfoObj = this.returnAuthorIdInfoObj();
     //行目を追加
     this.authorJsonObj.authorIdInfo.push(authorIdInfoObj);
   }
   /**
-   * メール情報を削除する
+   * メール情報を追加する
    */
   addEmailInfo() {
     //子対象を取得する
@@ -275,6 +380,36 @@ export class AddAuthorComponent implements OnInit {
     this.authorJsonObj.emailInfo.push(subEmailInfo);
   }
   /**
+   * 所属機関識別子情報を追加する
+   * ＠@param 追加する位置情報
+   */
+  addIdentifierInfo(affiliationIndex: any) {
+    //子対象を取得する
+    let subIdentifierInfoObj = this.returnSubIdentifierInfoObj();
+    //行目を追加
+    this.authorJsonObj.affiliationInfo[affiliationIndex].identifierInfo.push(subIdentifierInfoObj);
+  }
+  /**
+   * 所属機関名情報を追加する
+   * ＠@param 追加する位置情報
+   */
+  addAffiliationNameInfo(affiliationIndex: any) {
+    //子対象を取得する
+    let subAffiliationNameInfoObj = this.returnSubAffiliationNameInfoObj();
+    //行目を追加
+    this.authorJsonObj.affiliationInfo[affiliationIndex].affiliationNameInfo.push(subAffiliationNameInfoObj);
+  }
+  /**
+   * 所属情報を追加する
+   */
+  addAffiliationInfo() {
+    //子対象を取得する
+    let subAffiliationInfoObj = this.returnSubAffiliationInfoObj();
+    //行目を追加
+    this.authorJsonObj.affiliationInfo.push(subAffiliationInfoObj);
+  }
+
+  /**
    *画面情報をクリアする
    */
   clearInputInfo() {
@@ -282,10 +417,12 @@ export class AddAuthorComponent implements OnInit {
     let authorNameInfoLength = this.authorJsonObj.authorNameInfo.length;
     let authorIdInfoLength = this.authorJsonObj.authorIdInfo.length;
     let emailInfoLength = this.authorJsonObj.emailInfo.length;
+    let affiliationInfoLength = this.authorJsonObj.affiliationInfo.length;
     //画面情報を初期化
     this.authorJsonObj.authorNameInfo = [];
     this.authorJsonObj.authorIdInfo = [];
     this.authorJsonObj.emailInfo = [];
+    this.authorJsonObj.affiliationInfo = [];
     //予定行を追加
     for (let i = 0; i < authorNameInfoLength; i++) {
       let authorNameInfoObj = this.returnAuthorNameInfoObj();
@@ -302,6 +439,11 @@ export class AddAuthorComponent implements OnInit {
       let subEmailInfo = this.returnSubEmailInfo();
       this.authorJsonObj.emailInfo.push(subEmailInfo);
     }
+    for (let i = 0; i < affiliationInfoLength; i++) {
+      let subAffiliationInfoObj = this.returnSubAffiliationInfoObj();
+      this.authorJsonObj.affiliationInfo.push(subAffiliationInfoObj);
+    }
+    //入力案内内容を初期化に変更する
   }
   /**
    * 氏名情報を返す
@@ -340,6 +482,47 @@ export class AddAuthorComponent implements OnInit {
     }
     return subEmailInfo;
   }
+  /**
+   * identifier情報を返す
+   */
+   returnSubIdentifierInfoObj(): any {
+    //所属機関識別子情報
+    let subIdentifierInfoObj = {
+      affiliationIdType: "1",
+      affiliationId: "",
+      identifierShowFlg: "true"
+    }
+    return subIdentifierInfoObj;
+    } 
+  
+    /**
+     * affiliationName情報を返す
+     */
+    returnSubAffiliationNameInfoObj(): any {
+    //所属機関名情報
+    let subAffiliationNameInfoObj = {
+      affiliationName: "",
+      affiliationNameLang: "ja",
+      affiliationNameShowFlg: "true"
+    }
+    return subAffiliationNameInfoObj;
+    }
+    /**
+     * affiliation情報を返す
+     */
+    returnSubAffiliationInfoObj(): any {
+    //所属情報
+    let subAffiliationInfoObj = {
+      "identifierInfo": [], 
+      "affiliationNameInfo": []
+    }
+    let subIdentifierInfoObj = this.returnSubIdentifierInfoObj();
+    subAffiliationInfoObj.identifierInfo.push(subIdentifierInfoObj);
+    
+    let subAffiliationNameInfoObj = this.returnSubAffiliationNameInfoObj();
+    subAffiliationInfoObj.affiliationNameInfo.push(subAffiliationNameInfoObj);
+    return subAffiliationInfoObj;
+    }
   /**
    *placeholder案内内容を返す
    */
@@ -445,6 +628,11 @@ export class AddAuthorComponent implements OnInit {
         jsonStrCopy.emailInfo.splice(i, 1);
       }
     }
+    for (let affiliationIndex = 0; affiliationIndex < jsonStrCopy.affiliationInfo.length; affiliationIndex++) {
+      if (jsonStrCopy.affiliationInfo[affiliationIndex].affiliation == "") {
+        jsonStrCopy.affiliationInfo.splice(affiliationIndex, 1);
+      }
+    }
     return jsonStrCopy;
   }
   /**
@@ -534,4 +722,23 @@ deleteById(esIdJsonObj: any): Promise<any> {
         '&times;</button>' + this.langJson.Author_Confirm_Msg[1] + '</div>');
     }
   }
+  /**
+   * affiliation confirm identifier url
+   */
+  affiliationConfirm(affiliationIdType: any, affiliationId: any) {
+    let url_identifier = "";
+    for (let i = 0; i < this.identifierOptions.length; i++) {
+      if (affiliationIdType == this.identifierOptions[i].id) {
+        url_identifier = this.identifierOptions[i].url;
+      }
+    }
+    if (url_identifier != "") {
+      window.open(url_identifier.replace(/#+$/, affiliationId), "_blank");
+    } else {
+      $('#alerts').append(
+        '<div class="alert alert-danger" id="">' +
+        '<button type="button" class="close" data-dismiss="alert">' +
+        '&times;</button>' + this.langJson.Author_Confirm_Msg[1] + '</div>');
+    }
+  }    
 }

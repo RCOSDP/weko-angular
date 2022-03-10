@@ -8,13 +8,13 @@
               <thead>
                 <tr class="success">
                   <th width="300" class="name">
-                    {{langJson.Prefix_Name[1]}}
+                    {{langJson.Affiliation_Name[1]}}
                   </th>
                   <th width="250" class="scheme">
-                    {{langJson.Prefix_Scheme[1]}}
+                    {{langJson.Affiliation_Scheme[1]}}
                   </th>
                   <th width="">
-                    {{langJson.Prefix_URL[1]}}
+                    {{langJson.Affiliation_URL[1]}}
                   </th>
                   <th width="140">
                     {{langJson.Author_Control[1]}}
@@ -51,7 +51,7 @@
                         [(ngModel)]="data.url_temp">
                     </td>
                     <td>
-                      <button *ngIf="data.scheme != 'WEKO'" [disabled]="control.edit_flag[i] == true" type="button" class="btn btn-primary edit-button" (click)="edit(i)">
+                      <button [disabled]="control.edit_flag[i] == true" type="button" class="btn btn-primary edit-button" (click)="edit(i)">
                         <span class="glyphicon glyphicon-edit"></span>
                         {{langJson.Author_Button_Edit[1]}}
                       </button>

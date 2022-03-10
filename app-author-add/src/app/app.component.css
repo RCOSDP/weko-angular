@@ -7,3 +7,8 @@
 .author-id-add input[type=radio] {
   margin-left: 10px;
 }
+
+.author-id-add .affiliation-panel{
+  border-left: transparent;
+  border-right: transparent;
+}
