@@ -94,7 +94,7 @@ export class TreeList2Service {
       window.location.href.indexOf("/edit/") != -1){
         return;
     }
-    let search = window.location.search || ""
+    let search = ""
     let reponse = this.getDefaultSettingSearch(hostUrl);
     search = this.insertParam(search, "search_type", "2")
     search = this.insertParam(search, "q", String(nodeId))
