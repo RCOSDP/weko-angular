@@ -152,7 +152,23 @@ export class TreeList2Service {
       search = this.insertParam(search, "item_link", activity_id)
     }
 
-    window.location.assign("/search"+ search);
+    window.location.assign("/search"+ search + this.getFacetParameter());
+  }
+
+  getFacetParameter()
+  {
+    var result = "";
+    var params = window.location.search.substring(1).split('&');
+    const conds = ['page', 'size', 'sort', 'timestamp', 'search_type', 'q', 'title', 'creator', 'date_range1_from', 'date_range1_to','time'];
+    for (var i = 0; i < params.length; i++) {
+        var keyValue = decodeURIComponent(params[i]).split('=');
+        var key = keyValue[0];
+        var value = keyValue[1];
+        if(key && !conds.includes(key) && !key.startsWith("text")) {
+            result += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        }
+    }
+    return result;
   }
 
   insertParam(search: string, key: string, value: string)
