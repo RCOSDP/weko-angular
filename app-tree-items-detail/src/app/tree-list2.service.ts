@@ -39,7 +39,7 @@ export class TreeList2Service {
     let comm_ide;
     let hrl ="";
     comm_ide = $("#community").val();
-    const currentTime = new Date().getTime();
+    // const currentTime = new Date().getTime();
     if(inx != -1){
       for(let i=0;i<urlArr.length;i++){
         if(urlArr[i]=='communities'){
@@ -48,25 +48,25 @@ export class TreeList2Service {
         }
       }
       if(moreNodes != null){
-        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes + "&time="+ currentTime;
+        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes;
       }else{
-        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide + "&time="+ currentTime;
+        hrl = hostUrl + "/api/tree?action=browsing&community="+comm_ide ;
       }
 
     }else if($("#community")!=undefined && $("#community").val()){
       comm_ide = $("#community").val();
       console.log(comm_ide)
       if(moreNodes != null){
-        hrl = hostUrl+"/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes + "&time="+ currentTime;
+        hrl = hostUrl+"/api/tree?action=browsing&community="+comm_ide+"&more_ids="+moreNodes ;
       }else{
-        hrl = hostUrl+"/api/tree?action=browsing&community="+ comm_ide + "&time="+ currentTime;
+        hrl = hostUrl+"/api/tree?action=browsing&community="+ comm_ide;
       }
 
     }else{
       if(moreNodes != null){
-        hrl = hostUrl+"/api/tree?action=browsing&more_ids="+ moreNodes + "&time=" + currentTime;
+        hrl = hostUrl+"/api/tree?action=browsing&more_ids="+ moreNodes;
       }else{
-        hrl = hostUrl+"/api/tree?action=browsing?time=" + currentTime;
+        hrl = hostUrl+"/api/tree?action=browsing";
       }
     }
     return this.http.get(hrl)
@@ -88,7 +88,7 @@ export class TreeList2Service {
   async setSearchNodeId(url:any,nodeId:any){
     var urlArr = window.location.href.split('/');
     let hostUrl = urlArr[0]+"//"+urlArr[2];
-    const currentTime = new Date().getTime();
+    // const currentTime = new Date().getTime();
     // Community edit
     if(window.location.href.indexOf(hostUrl+"/communities/") != -1 &&
       window.location.href.indexOf("/edit/") != -1){
@@ -98,7 +98,7 @@ export class TreeList2Service {
     let reponse = this.getDefaultSettingSearch(hostUrl);
     search = this.insertParam(search, "search_type", "2")
     search = this.insertParam(search, "q", String(nodeId))
-    search = this.insertParam(search, "time", String(currentTime))
+    // search = this.insertParam(search, "time", String(currentTime))
     
     let data = {
       "dlt_dis_num_selected": "",

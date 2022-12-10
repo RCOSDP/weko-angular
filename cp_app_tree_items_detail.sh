@@ -18,7 +18,7 @@ TARGETDIR=$WEKODIR/modules
 # args-check-end
 
 # copy-begin
-cp -p ./app-tree-items-detail/dist/inline.*.js    ${TARGETDIR}/weko-theme/weko_theme/static/js/weko_theme/inline.bundle.js
+cp -p ./app-tree-items-detail/dist/runtime.*.js    ${TARGETDIR}/weko-theme/weko_theme/static/js/weko_theme/inline.bundle.js
 cp -p ./app-tree-items-detail/dist/main.*.js      ${TARGETDIR}/weko-theme/weko_theme/static/js/weko_theme/main.bundle.js
 cp -p ./app-tree-items-detail/dist/polyfills.*.js ${TARGETDIR}/weko-theme/weko_theme/static/js/weko_theme/polyfills.bundle.js
 cp -p ./app-tree-items-detail/dist/styles.*.css   ${TARGETDIR}/weko-theme/weko_theme/static/css/weko_theme/styles.bundle.css
