@@ -31,7 +31,13 @@
             </div>
           </div>
           <div class="panel-footer">
-           <button type="button" class="btn btn-primary save-button" [disabled]="isDisabledSave" (click)="save()">
+            <button type="button" class="btn btn-info next-button" (click)="back()">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <!-- Back -->
+              {{langJson.Back[1]}}
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-primary save-button" [disabled]="isDisabledSave" (click)="save()">
               <span class="glyphicon glyphicon-saved"></span>
               <!-- Save -->
               {{langJson.Save[1]}}
