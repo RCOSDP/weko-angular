@@ -15,10 +15,10 @@ export class TreeList2Service {
   ) { }
 
  /**
-  *æœ€æ–°treeæƒ…å ±ã‚’å–å¾—ã™ã‚‹
+  *ÅVtreeî•ñ‚ğæ“¾‚·‚é
  */
   getTreeInfo(url: string): Promise<any> {
-    //APIã‹ã‚‰treeæƒ…å ±ã‚’å–å¾—ã™ã‚‹
+    //API‚©‚çtreeî•ñ‚ğæ“¾‚·‚é
     let moreNodes = window.sessionStorage.getItem("moreNodes");
     let selNode = window.sessionStorage.getItem("selNode")
 
@@ -76,7 +76,7 @@ export class TreeList2Service {
     };
 
   /**
-   * nodeã‚’é¸æŠã—ãŸ
+   * node‚ğ‘I‘ğ‚µ‚½
    */
   getDefaultSettingSearch(url) {
     return this.http.get(url + "/get_search_setting")
@@ -150,6 +150,18 @@ export class TreeList2Service {
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
       search = this.insertParam(search, "item_link", activity_id)
+    }else {
+      let searchParam = (window as any).facetSearchFunctions.getFacetSearchCondition ?
+        (window as any).facetSearchFunctions.getFacetSearchCondition() : new URLSearchParams(window.location.search);
+      let appendSearchParam = new URLSearchParams(search);
+      searchParam.set('search_type', appendSearchParam.get('search_type'));
+      searchParam.set('q', appendSearchParam.get('q'));
+      if((window as any).invenioSearchFunctions.reSearchInvenio){
+        (window as any).invenioSearchFunctions.reSearchInvenio(searchParam);
+      }else{
+        window.location.assign("/search?"+ searchParam);
+      }
+      return;
     }
 
     window.location.assign("/search"+ search);
@@ -173,7 +185,7 @@ export class TreeList2Service {
   }
 
   /**
-   * ã‚¨ãƒ©ãƒ¼å‡¦ç†
+   * ƒGƒ‰[ˆ—
    */
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); //
