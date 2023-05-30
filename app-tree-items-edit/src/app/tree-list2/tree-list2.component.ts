@@ -58,6 +58,7 @@ export class TreeList2Component implements OnInit {
   public langJson = {
     Index_Tree:[],
     Designate_Index: [],
+    Back: [],
     Send: [],
     Save: [],
     Quit: []
@@ -226,6 +227,14 @@ export class TreeList2Component implements OnInit {
         $('.modal-body').html('Server Error. Please reload this page.');
       }
     });
+  }
+  /**
+   * back button process
+   */
+  back() {
+    let origin = new URL(window.location.href).origin;
+    let redirect_uri = origin + "/workflow/activity/detail/" + $("#activity_id_text").text().trim();
+    document.location.href = redirect_uri;
   }
   /**
    * サービスインデックス編集画面の送信ボタン
