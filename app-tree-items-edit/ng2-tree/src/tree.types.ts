@@ -95,6 +95,8 @@ export class TreeModelSettings {
 
   public checked?: boolean;
 
+  public can_edit?: boolean;
+
   public selectionAllowed?: boolean;
 
   public keepNodesInDOM?: boolean;
@@ -109,6 +111,7 @@ export class TreeModelSettings {
       rightMenu: true,
       isCollapsedOnInit: false,
       checked: false,
+      can_edit: true,
       keepNodesInDOM: false,
       selectionAllowed: true
     });
