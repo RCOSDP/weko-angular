@@ -61,7 +61,7 @@
     "@angular/common": "5.0.2",
     "@angular/compiler": "5.0.2",
     "@angular/compiler-cli": "5.0.2",
-    "@angular/core": "5.0.2",
+    "@angular/core": "10.2.5",
     "@angular/forms": "5.0.2",
     "@angular/http": "5.0.2",
     "@angular/language-service": "5.0.2",
