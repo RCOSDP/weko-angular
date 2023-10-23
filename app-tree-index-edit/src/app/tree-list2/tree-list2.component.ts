@@ -280,6 +280,7 @@ export class TreeList2Component implements OnInit {
           if (res.errors && res.errors.length > 0) {
             res.errors.forEach(err => {
               this.addAlert(err);
+              document.documentElement.scrollTop = 0;
             });
           }
           this.setIndexTree();
@@ -292,9 +293,11 @@ export class TreeList2Component implements OnInit {
           if (res.errors && res.errors.length > 0) {
             res.errors.forEach(err => {
               this.addAlert(err);
+              document.documentElement.scrollTop = 0;
             });
           } else {
-            alert(this.langJson.Del_Success[1]);
+            this.addAlert(this.langJson.Del_Success[1], "success");
+            document.documentElement.scrollTop = 0;
           }
           this.setIndexTree();
           this.setRootDetailInit();
@@ -405,11 +408,13 @@ export class TreeList2Component implements OnInit {
   sendingdetail() {
     // ツリー詳細を編集＞サービスを呼び出す
     if (this.inputCheck()) {
-      alert(this.langJson.Enter_Required_Fields[1]);
+      this.addAlert(this.langJson.Enter_Required_Fields[1]);
+      document.documentElement.scrollTop = 0;
       return;
     }
     if (!this.moreCheck()) {
-      alert('Invalid display number of index.');
+      this.addAlert('Invalid display number of index.');
+      document.documentElement.scrollTop = 0;
       return;
     }
 
@@ -438,9 +443,11 @@ export class TreeList2Component implements OnInit {
           if (res.errors && res.errors.length > 0) {
             res.errors.forEach(err => {
               this.addAlert(err);
+              document.documentElement.scrollTop = 0;
             });
           } else {
-            alert(this.langJson.Add_Update_Success[1]);
+            this.addAlert(this.langJson.Add_Update_Success[1], "success");
+            document.documentElement.scrollTop = 0;
           }
           this.setIndexTree();
         });
@@ -450,9 +457,11 @@ export class TreeList2Component implements OnInit {
         if (res.errors && res.errors.length > 0) {
           res.errors.forEach(err => {
             this.addAlert(err);
+            document.documentElement.scrollTop = 0;
           });
         } else {
-          alert(this.langJson.Add_Update_Success[1]);
+          this.addAlert(this.langJson.Add_Update_Success[1], "success");
+          document.documentElement.scrollTop = 0;
         }
         if (res.delete_flag) {
           $('.img-thumbnail').remove();
@@ -499,12 +508,14 @@ export class TreeList2Component implements OnInit {
       if (res.errors && res.errors.length > 0) {
         res.errors.forEach(err => {
           this.addAlert(err);
+          document.documentElement.scrollTop = 0;
         });
       }
       this.setIndexTree();
     }).catch(
       res => {
-        alert(res.message);
+        this.addAlert(res.message);
+        document.documentElement.scrollTop = 0;
       }
     );
   }
@@ -680,6 +691,7 @@ export class TreeList2Component implements OnInit {
       this.setIndexTree();
       if (res.status == 202) {
         this.addAlert(res.message);
+        document.documentElement.scrollTop = 0;
       }
     }).catch(res => {
       this.setIndexTree();
@@ -694,7 +706,8 @@ export class TreeList2Component implements OnInit {
       const exts = ['gif', 'jpg', 'jpe', 'jpeg', 'png', 'bmp'];
       const ext = file.name.substring(file.name.lastIndexOf('.') + 1);
       if (!exts.includes(ext)) {
-        alert(this.langJson.Err_File_Ext[1] + '\n' + file.name);
+        this.addAlert(this.langJson.Err_File_Ext[1] + '\n' + file.name);
+        document.documentElement.scrollTop = 0;
       } else {
         this.formData = new FormData();
         this.detailData.image_name = file.name;
@@ -736,9 +749,9 @@ export class TreeList2Component implements OnInit {
   /**
    * Add alert
    */
-  addAlert(message) {
+  addAlert(message, type="danger") {
     $('#alerts').append(
-      '<div class="alert alert-danger" id="">' +
+      '<div class="alert alert-' + type + '" id="">' +
       '<button type="button" class="close" data-dismiss="alert">' +
       '&times;</button>' + message + '</div>');
   }
