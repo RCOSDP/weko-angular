@@ -435,8 +435,10 @@ export class AppComponent implements OnInit {
       .then(response => {
         this.checkUpdateTaskJson = response.json();
         if (this.checkUpdateTaskJson.is_running) {
-          this.errMsgHide = false;
-          this.addAlert("Cannot merge authors becase update item task is running.");
+          if (flag === 0) {
+            this.errMsgHide = false;
+            this.addAlert("Cannot merge authors becase update item task is running.");
+          }
           this.mergeDisabled = true;
         } else {
           this.errMsgHide = true;
