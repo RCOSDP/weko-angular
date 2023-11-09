@@ -5,6 +5,11 @@
       <div class="row">
         <div class="row">
           <div class="col-sm-12 col-md-12 textRight">
+              <button type="button" class="btn btn-primary action-button" [disabled]="downloadDisabled" (click)="downloadStatus()">
+                <i class="glyphicon glyphicon-download-alt"></i>
+                Download
+              </button>
+              &nbsp;&nbsp;
               <button type="button" class="btn btn-primary action-button" [disabled]="mergeDisabled" data-toggle="modal" data-target="#exampleModal">
                 <i class="fa fa-hand-o-right"></i>
                 {{langJson.Author_Button_Merge[1]}}
@@ -14,6 +19,9 @@
               <span class="glyphicon glyphicon-plus"></span>
               {{langJson.Author_Add_Author[1]}}
             </button>
+          </div>
+          <div class="col-sm-12 col-md-12 alignCenter">
+            <div id="alerts" [hidden]="errMsgHide"></div>
           </div>
         </div>
         <div class="row">

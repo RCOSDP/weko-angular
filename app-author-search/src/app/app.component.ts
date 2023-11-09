@@ -30,6 +30,14 @@ export class AppComponent implements OnInit {
     Author_Button_Back: [],
     Author_Button_Execute: []
   };
+  public checkUpdateTaskJson: any = {
+    has_file: false,
+    is_running: false,
+    target_id: "",
+    error_id: ""
+  };
+  public errMsgHide: boolean = true;
+  public downloadDisabled: boolean = true;
   // JPCORE 対応start 20180402
   public authorJsonObj: any = {
     creator: {
@@ -134,6 +142,8 @@ export class AppComponent implements OnInit {
 
     // Show first page results upon load
     this.search(1);
+
+    this.checkUpdateItemTask(-1);
   }
   /**
    * i18n
@@ -179,7 +189,11 @@ export class AppComponent implements OnInit {
         originAuthors.push(data.id);
       }
     }
-    this.mergeDisabled = originAuthors.length === 0;
+    if (originAuthors.length !== 0) {
+      this.checkUpdateItemTask();
+    } else {
+      this.mergeDisabled = true;
+    }
   }
   /**
    *著者追加
@@ -329,6 +343,8 @@ export class AppComponent implements OnInit {
       }
     }
     jsonData.idTo = this.gatherId;
+    this.downloadDisabled = false;
+    this.mergeDisabled = true;
     this.gatherApi(jsonData).then(res => {
       $('#back_modal').click();
       $('div').removeClass('modal-backdrop');
@@ -407,7 +423,71 @@ export class AppComponent implements OnInit {
     }
     // console.log(JSON.stringify(this.displayData))
   }
+  /**
+   * check update item task
+   */
+  checkUpdateItemTask(flag = 0) {
+    let urlArr = window.location.href.split('/');
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/check_item_update_task";
+    this.http
+      .get(url)
+      .toPromise()
+      .then(response => {
+        this.checkUpdateTaskJson = response.json();
+        if (this.checkUpdateTaskJson.is_running) {
+          this.errMsgHide = false;
+          this.addAlert("Cannot merge authors becase update item task is running.");
+          this.mergeDisabled = true;
+        } else {
+          this.errMsgHide = true;
+          if (flag === 0) {
+            this.mergeDisabled = false;
+          }
+        }
+        this.downloadDisabled = !this.checkUpdateTaskJson.has_file && !this.checkUpdateTaskJson.is_running;
+        if (flag === 1) {
+          if (this.checkUpdateTaskJson.has_file) {
+            this.errMsgHide = true;
+          } else {
+            this.errMsgHide = false;
+            if (this.checkUpdateTaskJson.is_running) {
+              this.addAlert("The update item task is running. Wait a little.", "success");
+            } else {
+              this.addAlert("The update item status file is not exist.");
+            }
+          }
+        }
+      }).catch();
+  }
+  /**
+   * download update item status
+   */
+  downloadStatus() {
+    let urlArr = window.location.href.split('/');
+    this.checkUpdateItemTask(1)
+    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/download_process_status";
+    this.http
+      .get(url)
+      .toPromise()
+      .then(response => {
+        if (response.text()) {
+          let blob = new Blob([response.text()], { type: 'text/tsv' });
+          let url = window.URL.createObjectURL(blob);
+          let tempLink = document.createElement('a');
+          tempLink.style.display = 'none';
+          tempLink.href = url;
+          tempLink.download = "author_merge_status.tsv";
+          document.body.appendChild(tempLink);
+          tempLink.click();
 
+          setTimeout(function () {
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(url);
+          }, 20)
+          window.location.reload();
+        }
+      }).catch();
+  }
   /**
    * search
    */
@@ -421,7 +501,7 @@ export class AppComponent implements OnInit {
       .catch(this.handleError);
   }
   /**
-   * search
+   * merge
    */
   gatherApi(searchJsonObj: any): Promise<void> {
     var urlArr = window.location.href.split('/');
@@ -437,5 +517,14 @@ export class AppComponent implements OnInit {
    */
   private handleError(error: any): Promise<any> {
     return Promise.reject(error.message || error);
+  }
+  /**
+   * Add alert
+   */
+  addAlert(message, type="danger") {
+    $('#alerts').append(
+      '<div class="alert alert-' + type + '" id="">' +
+      '<button type="button" class="close" data-dismiss="alert">' +
+      '&times;</button>' + message + '</div>');
   }
 }
