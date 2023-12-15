@@ -87,7 +87,8 @@ export class TreeList2Component implements OnInit {
     biblio_flag: false,
     display_format: '1',
     thumbnail_delete_flag: false,
-    image_name: ''
+    image_name: '',
+    can_edit: false
   };
   public roleModel = {
     browsing_role_able: [],
@@ -151,6 +152,7 @@ export class TreeList2Component implements OnInit {
     RSS_Icon: [],
     Display: [],
     Del_Success: [],
+    Del_failure: [],
     Add_Update_Success: [],
     Err_File_Ext: [],
     Enter_Required_Fields: [],
@@ -160,7 +162,7 @@ export class TreeList2Component implements OnInit {
   private imgSrc = '';
   private uploadFlg = false;
   private privousUploadFlg = false;
-  public deleteFlg = false;
+  public deleteFlg = true;
   private checkIndexNameFlg= false;
   private checkIndexLinkFlg= false;
 
@@ -286,7 +288,10 @@ export class TreeList2Component implements OnInit {
           this.setIndexTree();
           this.setRootDetailInit();
         }).then(() => this.deleteFlg = false)
-          .catch(() => this.deleteFlg = false);
+          .catch(() => {
+            this.deleteFlg = false;
+            alert(this.langJson.Del_failure[1]);
+          });
       } else {
         // 削除サービスを呼び出し
         this.treeList2Service.delOrMoveNodeInfo(this.selNodeId, 'all').then(res => {
@@ -303,7 +308,10 @@ export class TreeList2Component implements OnInit {
           this.setRootDetailInit();
         })
           .then(() => this.deleteFlg = false)
-          .catch(() => this.deleteFlg = false);
+          .catch(() => {
+            this.deleteFlg = false;
+            alert(this.langJson.Del_failure[1]);
+          });
       }
     }
     $('input[name=uploadFile]').val('');
@@ -365,11 +373,17 @@ export class TreeList2Component implements OnInit {
     this.uploadFlg = false;
     this.checkIndexNameFlg = false;
     this.checkIndexLinkFlg = false;
-    if (this.selNodeId != '0') {
-      this.inputFlg = true;
-      const modTreeDetailUrl = document.getElementById('mod_tree_detail').innerText + this.selNodeId;
-      this.treeList2Service.getNodeInfo(modTreeDetailUrl).then(res => {
-        this.detailData = res;
+    this.inputFlg = true;
+    const modTreeDetailUrl = document.getElementById('mod_tree_detail').innerText + this.selNodeId;
+    this.treeList2Service.getNodeInfo(modTreeDetailUrl).then(res => {
+      this.detailData = res;
+      this.deleteFlg = false;
+      if (!this.detailData.can_edit) {
+        this.deleteFlg = true;
+        this.inputFlg = false;
+        this.detailData.comment = '';
+      }
+      if (this.selNodeId != '0') {
         if (this.detailData.image_name != '') {
           const urlArr = window.location.href.split('/');
           this.imgSrc = urlArr[0] + '//' + urlArr[2] + this.detailData.image_name;
@@ -377,11 +391,10 @@ export class TreeList2Component implements OnInit {
         } else {
           this.privousUploadFlg = false;
         }
-
-      });
-    } else {
-      this.setRootDetailInit();
-    }
+      } else {
+        this.setRootDetailInit();
+      }
+    });
   }
 
   /**
