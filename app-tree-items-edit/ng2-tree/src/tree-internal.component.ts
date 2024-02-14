@@ -40,8 +40,13 @@ import { get, isNil } from './utils/fn.utils';
         <div class="folding" (click)="onSwitchFoldingType()" [ngClass]="tree.foldingCssClass"></div>
 
         <div class="node-checkbox" *ngIf="settings.showCheckboxes">
-        <input checkbox  type="checkbox" [disabled]="isReadOnly" [checked]="this.tree.checked" (change)="switchNodeCheckStatus()" #checkbox />
-         </div>
+          <div *ngIf="tree.can_edit">
+            <input checkbox  type="checkbox" [checked]="this.tree.checked" (change)="switchNodeCheckStatus()" #checkbox />
+          </div>
+          <div *ngIf="!tree.can_edit">
+            <input checkbox  type="checkbox" disabled="disabled" [checked]="this.tree.checked" (change)="switchNodeCheckStatus()" #checkbox />
+          </div>
+        </div>
 
         <div class="node-value"
           *ngIf="!shouldShowInputForTreeValue()"
@@ -94,7 +99,6 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
   public isSelected = false;
   public isRightMenuVisible = false;
   public isLeftMenuVisible = false;
-  public isReadOnly = false;
   public controller: TreeController;
 
   @ViewChild('checkbox') public checkboxElementRef: ElementRef;
@@ -123,7 +127,6 @@ export class TreeInternalComponent implements OnInit, OnChanges, OnDestroy, Afte
     }
 
     this.settings = this.settings || new Ng2TreeSettings();
-    this.isReadOnly = !get(this.settings, 'enableCheckboxes', true);
 
     if (this.tree.isRoot() && this.settings.rootIsVisible === false) {
       this.tree.disableCollapseOnInit();
