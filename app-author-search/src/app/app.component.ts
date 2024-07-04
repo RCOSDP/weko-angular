@@ -132,7 +132,8 @@ export class AppComponent implements OnInit {
   public cntOfpage:number = 25;
 
   public mergeDisabled:boolean = true;
-
+  //著者統合タスク実行チェック
+  public isCheckUpdateIntervalRunning:boolean = false;
 
   constructor(private http: Http,
   ) { }
@@ -189,11 +190,7 @@ export class AppComponent implements OnInit {
         originAuthors.push(data.id);
       }
     }
-    if (originAuthors.length !== 0) {
-      this.checkUpdateItemTask();
-    } else {
-      this.mergeDisabled = true;
-    }
+    this.mergeDisabled = originAuthors.length === 0;
   }
   /**
    *著者追加
@@ -345,12 +342,25 @@ export class AppComponent implements OnInit {
     jsonData.idTo = this.gatherId;
     this.downloadDisabled = false;
     this.mergeDisabled = true;
-    this.gatherApi(jsonData).then(res => {
-      $('#back_modal').click();
-      $('div').removeClass('modal-backdrop');
-      this.search(1);
-    }).catch(this.handleError)
+    if (!this.checkUpdateItemTask()){
+      this.gatherApi(jsonData).then(res => {
+        $('#back_modal').click();
+        $('div').removeClass('modal-backdrop');
+        this.search(1);
+      }).catch(this.handleError)
 
+      //5秒ごとにタスク実行チェック
+      if (!this.isCheckUpdateIntervalRunning){
+        this.isCheckUpdateIntervalRunning = true;
+        const checkUpdateIntervalId = setInterval(() =>{
+          if (!this.checkUpdateItemTask(-1)){
+            this.isCheckUpdateIntervalRunning = false;
+            this.search(1);
+            clearInterval(checkUpdateIntervalId);
+          }
+        }, 5000);
+      }
+    }
   }
   /**
    *ページをクリック
@@ -441,7 +451,7 @@ export class AppComponent implements OnInit {
           }
           this.mergeDisabled = true;
         } else {
-          this.errMsgHide = true;
+          this.hideAlert();
           if (flag === 0) {
             this.mergeDisabled = false;
           }
@@ -449,7 +459,7 @@ export class AppComponent implements OnInit {
         this.downloadDisabled = !this.checkUpdateTaskJson.has_file && !this.checkUpdateTaskJson.is_running;
         if (flag === 1) {
           if (this.checkUpdateTaskJson.has_file) {
-            this.errMsgHide = true;
+            this.hideAlert();
           } else {
             this.errMsgHide = false;
             if (this.checkUpdateTaskJson.is_running) {
@@ -460,6 +470,7 @@ export class AppComponent implements OnInit {
           }
         }
       }).catch();
+    return this.checkUpdateTaskJson.is_running;
   }
   /**
    * download update item status
@@ -528,5 +539,12 @@ export class AppComponent implements OnInit {
       '<div class="alert alert-' + type + '" id="">' +
       '<button type="button" class="close" data-dismiss="alert">' +
       '&times;</button>' + message + '</div>');
+  }
+  /**
+   * Hide alert
+   */
+  hideAlert() {
+    $('#alerts').empty();
+    this.errMsgHide = true;
   }
 }
