@@ -236,6 +236,14 @@ export class Tree {
     return !!get(this.node.settings, 'checked');
   }
 
+  public set can_edit(can_edit: boolean) {
+    this.node.settings = Object.assign({}, this.node.settings, { can_edit });
+  }
+
+  public get can_edit(): boolean {
+    return !!get(this.node.settings, 'can_edit');
+  }
+
   public get checkedChildren(): Tree[] {
     return this.hasLoadedChildern() ? this.children.filter(child => child.checked) : [];
   }
