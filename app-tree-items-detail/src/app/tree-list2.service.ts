@@ -150,6 +150,18 @@ export class TreeList2Service {
     if($("#item_link").length!=0){
       let activity_id = $("#item_link").text();
       search = this.insertParam(search, "item_link", activity_id)
+    }else {
+      let searchParam = (window as any).facetSearchFunctions && (window as any).facetSearchFunctions.getFacetSearchCondition ?
+        (window as any).facetSearchFunctions.getFacetSearchCondition() : new URLSearchParams();
+      let appendSearchParam = new URLSearchParams(search);
+      searchParam.set('search_type', appendSearchParam.get('search_type'));
+      searchParam.set('q', appendSearchParam.get('q'));
+      if((window as any).invenioSearchFunctions && (window as any).invenioSearchFunctions.reSearchInvenio){
+        (window as any).invenioSearchFunctions.reSearchInvenio(searchParam);
+      }else{
+        window.location.assign("/search?"+ searchParam);
+      }
+      return;
     }
 
     window.location.assign("/search"+ search);
