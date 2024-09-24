@@ -183,7 +183,7 @@ export class AppComponent implements OnInit {
       this.searchJson = res;
       this.setDisplayData();
       //総数を設定する
-      this.total = this.searchJson.hits.total;
+      this.total = this.searchJson.hits.total.value;
       if(this.total == 0){
         this.searchZero = true;
         this.numberFrom = 0;
