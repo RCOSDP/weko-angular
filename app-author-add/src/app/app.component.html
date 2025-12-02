@@ -13,16 +13,6 @@
               </h5>
             </div>
             <div class="panel-body">
-              <div class="row" *ngIf="displayPkId">
-                <div class="col-sm-12 col-md-12">
-                  <div class="col-sm-1 col-md-1 textRight">
-                    pk_id 
-                  </div>
-                  <div class="col-sm-11 col-md-11">
-                  : {{authorJsonObj.pk_id}}
-                  </div>
-                </div>
-              </div>
               <!-- 氏名　start -->
               <div class="row">
                 <div class="col-sm-12 col-md-12">
@@ -126,7 +116,7 @@
                             </select>
                           </div>
                           <div class="col-sm-5 col-md-5">
-                            <input type="text" class="form-control" placeholder="" [(ngModel)]="authorIdData.authorId">
+                            <input [disabled]="authorIdData.idType == 1" type="text" class="form-control" placeholder="" [(ngModel)]="authorIdData.authorId">
                           </div>
                           <div class="col-sm-2 col-md-2">
                             <div class="">

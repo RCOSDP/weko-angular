@@ -60,7 +60,7 @@ export class AddAuthorComponent implements OnInit {
     ],
     authorIdInfo: [
       {
-        idType: "1",
+        idType: "2",
         authorId: "",
         authorIdShowFlg: "true"
       }
@@ -159,18 +159,6 @@ export class AddAuthorComponent implements OnInit {
     this.getAuthorData();
   }
   /**
-   * call api (get max weko id)
-   */
-    getDataOfMaxWekoId(){
-      var urlArr = window.location.href.split('/');
-      const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/get_max_weko_id"
-      return this.http
-        .get(url)
-        .toPromise()
-        .then(response => response.json() as any)
-        .catch(this.handleError);
-    }
-  /**
    * get authors prefix settings
    */
   getAuthorsPrefixSettings() {
@@ -247,12 +235,7 @@ export class AddAuthorComponent implements OnInit {
           console.log(res)
         }
       ).catch()
-    }else{      // 初期値でweko_idの最大値+1を設定する。
-      this.getDataOfMaxWekoId().then(
-        res => {
-          this.authorJsonObj.authorIdInfo[0].authorId = String(res.max_author_id + 1);
-        }
-      ).catch()
+    }else{
       this.deleteBtn = false;
     }
   }

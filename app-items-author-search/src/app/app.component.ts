@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
     ],
     anthorIdInfo: [
       {
-        idType: "1",
+        idType: "2",
         anthorId: "",
         authorIdShowFlg: "true"
       }

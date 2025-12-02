@@ -46,7 +46,6 @@ export class AppComponent implements OnInit {
   public deleteBtn :boolean = false;
   public forceChangeCheck: boolean = false;
   public forceChangeFlag: boolean = false;
-  public displayPkId: boolean = false;
   //set data of page by json
   public authorJsonObj: any = {
     id: "",
@@ -63,7 +62,7 @@ export class AppComponent implements OnInit {
     ],
     authorIdInfo: [
       {
-        idType: "1",
+        idType: "2",
         authorId: "",
         authorIdShowFlg: "true"
       }
@@ -177,7 +176,6 @@ export class AppComponent implements OnInit {
     if (urlStr.indexOf("edit")!= -1) {
       this.deleteBtn = true;
       this.forceChangeCheck = true;
-      this.displayPkId = true;
       let paramJson = { Id: "" }
       paramJson.Id = urlStr.substring(urlStr.indexOf("=")).replace("=", "");
       this.getDataOfAuthor(paramJson).then(
@@ -186,14 +184,7 @@ export class AppComponent implements OnInit {
           console.log(res)
         }
       ).catch()
-    // addの場合
     }else{
-      // 初期値でweko_idの最大値+1を設定する。
-      this.getDataOfMaxWekoId().then(
-        res => {
-          this.authorJsonObj.authorIdInfo[0].authorId = String(res.max_author_id + 1);
-        }
-      ).catch()
       this.deleteBtn = false;
     }
   }
@@ -809,19 +800,6 @@ export class AppComponent implements OnInit {
     const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/search_edit"
     return this.http
       .post(url, esid)
-      .toPromise()
-      .then(response => response.json() as any)
-      .catch(this.handleError);
-  }
-
-  /**
-   * call api (get max weko id)
-   */
-  getDataOfMaxWekoId(){
-    var urlArr = window.location.href.split('/');
-    const url = urlArr[0] + "//" + urlArr[2] + "/api/authors/get_max_weko_id"
-    return this.http
-      .get(url)
       .toPromise()
       .then(response => response.json() as any)
       .catch(this.handleError);

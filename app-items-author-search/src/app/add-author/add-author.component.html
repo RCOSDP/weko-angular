@@ -93,9 +93,9 @@
                       <div class="">
                         <div class="col-sm-12 col-md-12 divBottom remove-padding-right">
                           <div class="col-sm-2 col-md-2 remove-padding-right">
-                            <select [disabled]="authorIdData.idType == 1" class="form-control" id="authorIdOption" [(ngModel)]="authorIdData.idType">
+                            <select class="form-control" id="authorIdOption" [(ngModel)]="authorIdData.idType"></select>
                               <ng-container *ngFor="let authorIdOption of authorIdOptions">
-                                <ng-container *ngIf="authorIdData.idType == 1 || authorIdOption.id != 1">
+                                <ng-container *ngIf="authorIdOption.id != 1"></ng-container>
                                   <option [value]="authorIdOption.id">{{authorIdOption.name}}</option>
                                 </ng-container>
                               </ng-container>
@@ -106,7 +106,7 @@
                           </div>
                           <div class="col-sm-1 col-md-1 remove-padding-right">
                             <div class="">
-                              <div class="col-sm-12 col-md-12 textRight remove-padding-right remove-padding-left" *ngIf="authorIdData.idType != 1">
+                              <div class="col-sm-12 col-md-12 textRight remove-padding-right remove-padding-left">
                                 <button [disabled]="(!authorIdData.authorId)" (click)="authorConfirm(authorIdData.idType, authorIdData.authorId)" type="button" class="btn btn-info">
                                   <!-- 確認 -->
                                   <!-- Confirm -->
